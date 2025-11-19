@@ -35,8 +35,9 @@ describe('Device domain & service tests', () => {
     process.env.USE_MOCK_DATA = 'true';
     await DeviceRegistry.init();
     const devices = await deviceService.list();
-    const d = devices[0];
-    const res = await deviceService.executeAction(d.id, 'turn_on', {});
+    let d = devices[0];
+    d.id = "";
+    const res = await deviceService.executeAction(d.id !== undefined ? d.id || "", 'turn_on', {});
     expect(res).toBeUndefined();
   });
 });

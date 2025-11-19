@@ -23,7 +23,7 @@ app.use("/health", healthRoutes);
 let server: http.Server;
 
 export const startServer = async () => {
-  // Setup cache adapter if Redis configured
+  // Setup cache adapter if Redis configured TODO configure redis
   if (config.redisUrl) {
     const r = new RedisCache(config.redisUrl);
     await r.connect();
