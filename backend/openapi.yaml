@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: HomeAssistant Unifier API
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /devices:
+    get:
+      summary: Lista dispositivos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+  /devices/{id}:
+    get:
+      summary: Obtener dispositivo
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+  /devices/{id}/actions/{action}:
+    post:
+      summary: Ejecutar acción en dispositivo
+      parameters:
+        - in: path
+          name: id
+          schema: { type: string }
+        - in: path
+          name: action
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Acción enviada
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        type: { type: string }
+        state: { type: string }
+        capabilities:
+          type: array
+          items: { type: string }
+        attributes:
+          type: object
