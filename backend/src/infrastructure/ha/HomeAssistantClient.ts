@@ -4,7 +4,6 @@ import { Device } from "../../domain/entities/Device";
 import { DeviceFactory } from "../../domain/factories/DeviceFactory";
 import { resolveHAUrl } from "./HAUrlResolver";
 import { logger } from "../logger";
-import { Capability } from "../../domain/capabilities/Capability";
 
 export class HomeAssistantClient implements IHomeAssistantAPI {
   private ws!: WebSocket;
@@ -72,24 +71,7 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
       this.ws.once("message", (raw) => {
         const msg = JSON.parse(raw.toString());
         const states = Array.isArray(msg.result) ? msg.result : [];
-        const devices = states.map((s: any) => DeviceFactory.fromHA(s, this));
-        //Logs para ver la info que recibo de dispositivos
-        logger.info(devices.length + " devices found");
-        devices.forEach((dev : Device) => {
-        console.log(" Device id: " + dev.id +  " Device name: " + dev.name + " Device domain: " + dev.domain);
-        Object.keys(dev.state).forEach((key) => {
-            const value = dev.state[key]; 
-            console.log(`State key: ${key}, value:`, value);
-          });
-        if (Array.isArray(dev.capabilities)) {
-          dev.capabilities.forEach((c : Capability) => { 
-            console.log("\n Capability " + c.name);
-          });
-          console.log("\n");
-        } else {
-          console.log("No capabilities found for device: " + dev.id);
-        }
-      });
+        const devices = states.map((s: any) => DeviceFactory.fromHA(s, this)).filter((d : any) : d is Device => d !== null);
         resolve(devices);
       });
     });
@@ -100,8 +82,6 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
     return new Promise((resolve) => {
       const id = this.msgId++;
       this.ws.send(JSON.stringify({ id, type: "ping" }));
-      // HA doesn't define ping but you can implement custom ping via call_service to a small service, or measure RTT with message id handling.
-      // For simplicity, return 0 (implement platform-specific ping if needed).
       resolve(Date.now() - t0);
     });
   }

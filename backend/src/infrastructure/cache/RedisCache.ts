@@ -11,4 +11,5 @@ export class RedisCache implements ICache {
   async connect() { await this.client.connect(); logger.info("Redis connected"); }
   async get<T>(key: string) { const raw = await this.client.get(key); return raw ? JSON.parse(raw) as T : null; }
   async set<T>(key: string, value: T, ttlSeconds = 60) { await this.client.set(key, JSON.stringify(value), { EX: ttlSeconds }); }
+  async delete(key: string): Promise<void> { await this.client.del(key); }
 }

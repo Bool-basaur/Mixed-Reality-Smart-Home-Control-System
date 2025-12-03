@@ -10,8 +10,9 @@ import { deviceRepository } from "./application/services/DeviceRepository";
 import { cacheService } from "./application/services/CacheService";
 import { RedisCache } from "./infrastructure/cache/RedisCache";
 import { logger } from "./infrastructure/logger";
-import { HAListenerService } from "./application/services/HAListenerService";
 import { SyncHADevicesUseCase } from "./application/usecases/SyncHADevicesUseCase";
+import { DeviceMonitorService } from "./application/services/DeviceMonitorService";
+import { DeviceRegistry } from "./application/services/DeviceRegistry";
 
 export const app = express();
 app.use(cors());
@@ -30,9 +31,12 @@ export const startServer = async () => {
     cacheService.setCacheAdapter(r);
   }
 
+  await DeviceRegistry.init();
   // Create HA client (adapter)
   const haClient = new HomeAssistantClient(config.haUrl, config.haToken);
 
+  if(!haClient) throw new Error("Home  Assistant client not initialized");
+  
   // Sync devices
   if (config.useMockData) {
     await deviceRepository.loadFromMock();
@@ -40,9 +44,12 @@ export const startServer = async () => {
     await haClient.connect();
     const sync = new SyncHADevicesUseCase(haClient);
     await sync.execute();
-    const haListener = new HAListenerService(haClient);
-    haListener.start();
   }
+
+  //Create DeviceMonitor
+  const monitor = new DeviceMonitorService(DeviceRegistry, haClient);
+  monitor.start();
+
 
   server = http.createServer(app);
   server.listen(config.port, () => logger.info(`Server on ${config.port}`));
@@ -52,3 +59,5 @@ export const startServer = async () => {
 if (require.main === module) startServer();
 
 export { server };
+
+

@@ -7,6 +7,7 @@ import { HomeAssistantClient } from "../../infrastructure/ha/HomeAssistantClient
 import { resolveHAUrl } from "../../infrastructure/ha/HAUrlResolver";
 import { logger } from "../../infrastructure/logger";
 import { RedisCache } from "../../infrastructure/cache/RedisCache";
+import { deviceFilterService } from "./DeviceFilterService";
 
 class DeviceRegistryClass extends EventEmitter {
   private devices = new Map<string, Device>();
@@ -36,6 +37,7 @@ class DeviceRegistryClass extends EventEmitter {
     this.haClient = new HomeAssistantClient(haUrl, config.haToken);
     await this.haClient.connect();
 
+    // Listener para state_changed
     this.haClient.onEvent((event: any) => {
       if (event.type !== "state_changed") return;
 
@@ -49,14 +51,38 @@ class DeviceRegistryClass extends EventEmitter {
     });
 
     // Load initial devices
-    const initialDevices = await this.haClient.getAllEntities();
+    const rawDevices = await this.haClient.getAllEntities();
+    const initialDevices = deviceFilterService.filter(rawDevices);
+
+    logger.info(`[INFO] INITIALIZATION DEVICES`);
 
     initialDevices.forEach((dev: Device) => {
+      if (!dev) return;
       this.devices.set(dev.id, dev);
       this.cache?.set(`device:${dev.id}`, dev.toJSON());
+
+      logger.info(
+        ` Device id: ${dev.id} Device name: ${dev.name} Device domain: ${dev.domain}`
+      );
+      Object.keys(dev.state).forEach((key) => {
+        const value = dev.state[key];
+        console.log(`State key: ${key}, value:`, value);
+      });
     });
 
     logger.info(`Loaded ${initialDevices.length} devices from Home Assistant`);
+  }
+
+  addDevice(device: Device) {
+    this.devices.set(device.id, device);
+    this.cache?.set(`device:${device.id}`, device.toJSON());
+    this.emit("device_added", device);
+  }
+
+  removeDevice(id: string) {
+    this.devices.delete(id);
+    this.cache?.delete(`device:${id}`);
+    this.emit("device_removed", id);
   }
 
   getAll(): Device[] {
@@ -73,3 +99,5 @@ class DeviceRegistryClass extends EventEmitter {
 }
 
 export const DeviceRegistry = new DeviceRegistryClass();
+export type DeviceRegistry = DeviceRegistryClass;
+

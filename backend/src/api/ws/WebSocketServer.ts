@@ -1,6 +1,7 @@
 import { Server } from "http";
 import WebSocket from "ws";
 import { DeviceRegistry } from "../../application/services/DeviceRegistry";
+import { logger } from "../../infrastructure/logger";
 
 let wss: WebSocket.Server;
 
@@ -38,6 +39,8 @@ export const initWebSocketServer = (server: Server) => {
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) client.send(payload);
     });
+
+    logger.info("[UPDATE]", "ID: " + device.id + " STATE: " + device.state);
   });
 
   console.log("WS Server initialized at /ws");
