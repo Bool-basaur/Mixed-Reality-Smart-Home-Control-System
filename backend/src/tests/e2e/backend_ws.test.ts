@@ -5,6 +5,7 @@ import { closeWebSocketServer } from "../../api/ws/WebSocketServer";
 describe("GET /devices (E2E)", () => {
   beforeAll(async () => {
     process.env.USE_MOCK_DATA = "true";
+    process.env.ENABLE_WS = "false";
     await startServer();
   });
 
@@ -15,7 +16,6 @@ describe("GET /devices (E2E)", () => {
 
   test("returns device list", async () => {
     const res = await request(app).get("/devices");
-
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });

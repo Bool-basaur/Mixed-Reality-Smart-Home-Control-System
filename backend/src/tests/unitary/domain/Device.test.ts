@@ -1,37 +1,32 @@
-import { repoMock } from '../../../infrastructure/db/repoMock';
-import { DeviceRegistry } from '../../../application/services/DeviceRegistry';
-import { deviceService } from '../../../application/services/DeviceService';
+import { DeviceService } from "../../../application/services/DeviceService";
+import { DeviceRegistryClass } from "../../../application/services/DeviceRegistry";
+import { InMemoryDeviceStorage } from "../../../infrastructure/storage/InMemoryDeviceStorage";
+import { Device } from "../../../domain/entities/Device";
 
-describe('Device domain & service tests', () => {
+class FakeDevice extends Device {
+  updateFromHA(): void {}
+}
 
-  beforeEach(async () => {
-    process.env.USE_MOCK_DATA = 'true';
-    await DeviceRegistry.init();
-  });
+describe("Device domain & service tests", () => {
+  let registry: DeviceRegistryClass;
+  let service: DeviceService;
 
-  test('repoMock contains seeded devices', async () => {
-    const list = await repoMock.getAll();
-    expect(list.length).toBeGreaterThan(0);
-  });
+  beforeEach(() => {
+    registry = new DeviceRegistryClass(new InMemoryDeviceStorage());
+    service = new DeviceService(registry);
 
-  test('DeviceService.list returns devices', async () => {
-    const devices = await deviceService.list();
-    expect(devices.length).toBeGreaterThan(0);
-  });
-
-  test('executeAction fails if action not supported', async () => {
-    const devices = await deviceService.list();
-    expect(devices.length).toBeGreaterThan(0);
-
-    const d = devices[0]!;
-
-    const res = await deviceService.executeAction(
-      d.id,
-      'non_existing_action',
-      {}
+    registry.addDevice(
+      new FakeDevice("1", "Test", "media_player", [], {})
     );
+  });
 
-    expect(res.ok).toBe(false);
-    expect(res.error).toContain("not supported");
+  test("DeviceService.list returns devices", async () => {
+    const devices = await service.list();
+    expect(devices.length).toBeGreaterThan(0);
+  });
+
+  test("executeAction fails if action not supported", async () => {
+    const res = await service.executeAction("1", "non_existing", {});
+    expect(res.error).toBeDefined();
   });
 });

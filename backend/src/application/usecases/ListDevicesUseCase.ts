@@ -1,9 +1,12 @@
-import { DeviceRegistry } from "../services/DeviceRegistry";
+import { DeviceRegistryClass } from "../services/DeviceRegistry";
+import { Device } from "../../domain/entities/Device";
 
 export class ListDevicesUseCase {
-  async execute() {
-    return DeviceRegistry.getAll();
+  constructor(
+    private readonly registry: DeviceRegistryClass
+  ) {}
+
+  async execute(): Promise<Device[]> {
+    return this.registry.getAll();
   }
 }
-
-export const listDevicesUseCase = new ListDevicesUseCase();

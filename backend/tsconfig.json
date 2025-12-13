@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
+    
 
     "rootDir": "./src",
     "outDir": "./dist",
@@ -18,7 +19,12 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "paths": {
+      "@services/*": ["/src/application/services/*"],
+      "@usecases/*": ["/src/application/usecases/*"],
+      "@logger/*": ["/src/infrastructure/logger/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "tests"]

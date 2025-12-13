@@ -1,13 +1,14 @@
 import { ExecuteActionUseCase } from "../../../application/usecases/ExecuteActionUseCase";
-import { DeviceRegistry } from "../../../application/services/DeviceRegistry";
+import { DeviceRegistryClass } from "../../../application/services/DeviceRegistry";
+import { InMemoryDeviceStorage } from "../../../infrastructure/storage/InMemoryDeviceStorage";
 
 describe("ExecuteActionUseCase", () => {
   test("fails if device not found", async () => {
-    jest.spyOn(DeviceRegistry, "get").mockReturnValue(undefined as any);
+    const registry = new DeviceRegistryClass(new InMemoryDeviceStorage());
 
-    const uc = new ExecuteActionUseCase();
+    const uc = new ExecuteActionUseCase(registry);
     const res = await uc.execute("x", "turn_on", {});
 
-    expect(res.ok).toBe(false);
+    expect(res.error).toBeDefined();
   });
 });

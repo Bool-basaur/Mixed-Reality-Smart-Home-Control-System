@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { listDevicesUseCase } from "../../application/usecases/ListDevicesUseCase";
-import { deviceService } from "../../application/services/DeviceService";
+import { listDevicesUseCase } from "../../application/usecases";
+import { deviceService } from "../../application/services";
+
 export const listDevices = async (_req: Request, res: Response) => {
   const list = await listDevicesUseCase.execute();
   res.json(list.map(d => d.toJSON()));

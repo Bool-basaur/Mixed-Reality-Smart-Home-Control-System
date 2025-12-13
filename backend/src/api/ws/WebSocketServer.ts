@@ -1,6 +1,6 @@
 import { Server } from "http";
 import WebSocket from "ws";
-import { DeviceRegistry } from "../../application/services/DeviceRegistry";
+import { DeviceRegistry } from "../../application/services";
 import { logger } from "../../infrastructure/logger";
 
 let wss: WebSocket.Server | null = null;

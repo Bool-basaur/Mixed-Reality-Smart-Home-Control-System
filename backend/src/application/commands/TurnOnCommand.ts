@@ -1,13 +1,13 @@
-import { Command } from "./types";
-import { Device } from "../../domain/entities/Device";
-import { IHomeAssistantAPI } from "../../domain/interfaces/IHomeAssistantAPI";
+export class TurnOnCommand {
+  constructor(private readonly haClient: any) {}
 
-export class TurnOnCommand implements Command {
-  constructor(private device: Device, private ha: IHomeAssistantAPI) {}
-
-  async execute() {
-    return this.ha.callService("switch", "turn_on", {
-      entity_id: this.device.id,
+  async execute(entityId: string): Promise<void> {
+    await this.haClient.callService({
+      domain: entityId.split(".")[0],
+      service: "turn_on",
+      service_data: {
+        entity_id: entityId
+      }
     });
   }
 }

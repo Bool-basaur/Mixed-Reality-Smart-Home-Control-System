@@ -1,13 +1,23 @@
-import { DeviceRegistry } from "../../application/services/DeviceRegistry";
+import { DeviceRegistryClass } from "../../application/services/DeviceRegistry";
+import { InMemoryDeviceStorage } from "../../infrastructure/storage/InMemoryDeviceStorage";
+import { Device } from "../../domain/entities/Device";
 
-describe("DeviceRegistry (mock)", () => {
-  beforeAll(async () => {
-    process.env.USE_MOCK_DATA = "true";
-    await DeviceRegistry.init();
+class FakeDevice extends Device {
+  updateFromHA(): void {}
+}
+
+describe("DeviceRegistry", () => {
+  let registry: DeviceRegistryClass;
+
+  beforeEach(() => {
+    registry = new DeviceRegistryClass(new InMemoryDeviceStorage());
   });
 
-  test("loads mock devices", () => {
-    const devices = DeviceRegistry.getAll();
-    expect(devices.length).toBeGreaterThan(0);
+  test("adds and retrieves devices", () => {
+    registry.addDevice(
+      new FakeDevice("1", "Test", "media_player", [], {})
+    );
+
+    expect(registry.getAll().length).toBe(1);
   });
 });

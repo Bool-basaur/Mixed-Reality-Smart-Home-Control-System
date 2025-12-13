@@ -2,19 +2,20 @@ import { DeviceFilterService } from "../../../application/services/DeviceFilterS
 import { GenericDevice } from "../../../domain/entities/GenericDevice";
 
 describe("DeviceFilterService", () => {
-  test("filters technical and diagnostic entities", () => {
+  test("filters technical entities by id", () => {
     const service = new DeviceFilterService();
 
     const devices = [
-      new GenericDevice("switch.enchufe_tapo", "Tapo", "switch", [], { }),
-      new GenericDevice("switch.enchufe_tapo_led", "LED", "switch", [], { entity_category: "diagnostic" }),
-      new GenericDevice("media_player.tv", "TV", "media_player", [], { }),
+      new GenericDevice("switch.enchufe_tapo", "Tapo", "switch", [], {}),
+      new GenericDevice("switch.enchufe_tapo_led", "LED", "switch", [], {}),
+      new GenericDevice("media_player.tv", "TV", "media_player", [], {}),
     ];
 
     const result = service.filter(devices);
 
-    expect(result).toHaveLength(2);
-    expect(result.map(d => d.id)).toContain("switch.enchufe_tapo");
-    expect(result.map(d => d.id)).toContain("media_player.tv");
+    expect(result.map(d => d.id)).toEqual([
+      "switch.enchufe_tapo",
+      "media_player.tv"
+    ]);
   });
 });

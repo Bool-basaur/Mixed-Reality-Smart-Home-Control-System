@@ -1,11 +1,22 @@
-import { deviceService } from "../../../application/services/DeviceService";
-import { DeviceRegistry } from "../../../application/services/DeviceRegistry";
+import { DeviceService } from "../../../application/services/DeviceService";
+import { DeviceRegistryClass } from "../../../application/services/DeviceRegistry";
+import { InMemoryDeviceStorage } from "../../../infrastructure/storage/InMemoryDeviceStorage";
+import { Device } from "../../../domain/entities/Device";
+
+class FakeDevice extends Device {
+  updateFromHA(): void {}
+}
 
 describe("DeviceService", () => {
   test("list delegates to registry", async () => {
-    jest.spyOn(DeviceRegistry, "getAll").mockReturnValue([]);
+    const registry = new DeviceRegistryClass(new InMemoryDeviceStorage());
+    const service = new DeviceService(registry);
 
-    const result = await deviceService.list();
-    expect(result).toEqual([]);
+    registry.addDevice(
+      new FakeDevice("1", "Test", "light", [], {})
+    );
+
+    const result = await service.list();
+    expect(result.length).toBe(1);
   });
 });

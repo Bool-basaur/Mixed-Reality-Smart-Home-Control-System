@@ -11,10 +11,10 @@ import { RedisCache } from "./infrastructure/cache/RedisCache";
 import { logger } from "./infrastructure/logger";
 import { SyncHADevicesUseCase } from "./application/usecases/SyncHADevicesUseCase";
 import { DeviceMonitorService } from "./application/services/DeviceMonitorService";
-import { DeviceRegistry } from "./application/services/DeviceRegistry";
+import { DeviceRegistry } from "./application/services";
 import { authMiddleware } from "./api/middlewares/authMiddleware";
 import { initWebSocketServer } from "./api/ws/WebSocketServer";
-import { InMemoryDeviceRepository } from "./infrastructure/db/InMemoryDeviceRepository";
+import { InMemoryDeviceRepository } from "./infrastructure/storage/InMemoryDeviceRepository";
 
 export const app = express();
 app.use(cors());

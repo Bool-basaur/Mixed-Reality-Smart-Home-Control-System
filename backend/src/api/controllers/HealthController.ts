@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeviceRegistry } from "../../application/services/DeviceRegistry";
+import { DeviceRegistry } from "../../application/services";
 import { config } from "../../config/config";
 
 export const healthController = {

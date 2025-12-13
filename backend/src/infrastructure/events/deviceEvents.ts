@@ -1,5 +1,5 @@
 import { EventBus, EVENTS } from "../../infrastructure/events/events";
-import { InMemoryDeviceRepository } from "../db/InMemoryDeviceRepository"
+import { InMemoryDeviceRepository } from "../storage/InMemoryDeviceRepository"
 import { logger } from "../logger";
 
 const repo = new InMemoryDeviceRepository();
