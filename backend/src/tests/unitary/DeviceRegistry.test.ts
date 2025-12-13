@@ -1,5 +1,5 @@
-import { DeviceRegistry } from "../../../application/services/DeviceRegistry";
-import { GenericDevice } from "../../../domain/entities/GenericDevice";
+import { DeviceRegistry } from "../../application/services/DeviceRegistry";
+import { GenericDevice } from "../../domain/entities/GenericDevice";
 
 describe("DeviceRegistry", () => {
   test("adds and retrieves device", () => {
