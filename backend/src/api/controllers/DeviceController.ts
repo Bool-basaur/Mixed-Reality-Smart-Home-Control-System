@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { listDevicesUseCase } from "../../application/usecases/ListDevicesUseCase";
-import { deviceService } from "../../application/services/DeviceService";  // 👈 IMPORT CORRECTO
-
+import { deviceService } from "../../application/services/DeviceService";
 export const listDevices = async (_req: Request, res: Response) => {
   const list = await listDevicesUseCase.execute();
   res.json(list.map(d => d.toJSON()));
@@ -18,15 +17,16 @@ export const getDevice = async (req: Request, res: Response) => {
 };
 
 export const postAction = async (req: Request, res: Response) => {
-  try {
-    const result = await deviceService.executeAction(
-      req.params.id !== undefined ? req.params.id : "", //TODO revisar esto
-      req.params.action !== undefined ? req.params.action : "", //TODO revisar esto
-      req.body
-    );
-
-    res.json({ ok: true, result });
-  } catch (e: any) {
-    res.status(400).json({ error: e.message });
+  const { id, action } = req.params;
+  if (!id || !action) {
+    return res.status(400).json({ error: "Missing id or action" });
   }
+
+  const result = await deviceService.executeAction(id, action, req.body);
+
+  if (!result.ok) {
+    return res.status(400).json({ error: result.error });
+  }
+
+  res.json({ ok: true });
 };

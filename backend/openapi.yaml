@@ -51,6 +51,16 @@ paths:
       responses:
         '200':
           description: Acción enviada
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+  /health:
+  get:
+    summary: Health check
+    responses:
+      '200':
+        description: OK
 components:
   schemas:
     Device:
@@ -65,3 +75,6 @@ components:
           items: { type: string }
         attributes:
           type: object
+x-websocket:
+  /ws:
+    description: WebSocket endpoint that pushes device updates and initial device list

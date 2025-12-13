@@ -3,15 +3,16 @@ import WebSocket from "ws";
 import { DeviceRegistry } from "../../application/services/DeviceRegistry";
 import { logger } from "../../infrastructure/logger";
 
-let wss: WebSocket.Server;
+let wss: WebSocket.Server | null = null;
 
 export const initWebSocketServer = (server: Server) => {
+  if (wss) return;
+
   wss = new WebSocket.Server({ server, path: "/ws" });
 
   wss.on("connection", (ws) => {
-    console.log("WS Client connected");
+    logger.info("WS client connected");
 
-    // Enviar lista inicial de dispositivos
     ws.send(
       JSON.stringify({
         type: "devices",
@@ -22,26 +23,36 @@ export const initWebSocketServer = (server: Server) => {
     ws.on("message", (msg) => {
       try {
         const data = JSON.parse(msg.toString());
-        console.log("WS received:", data);
+        logger.info("WS received", data);
       } catch (err) {
-        console.error("Invalid WS message:", err);
+        logger.error("Invalid WS message", err);
       }
     });
   });
 
-  // Suscripción a eventos de DeviceRegistry
   DeviceRegistry.on("device_updated", (device) => {
+    if (!wss) return;
+
     const payload = JSON.stringify({
       type: "device_update",
       payload: device.toJSON()
     });
 
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) client.send(payload);
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(payload);
+      }
     });
 
-    logger.info("[UPDATE]", "ID: " + device.id + " STATE: " + device.state);
+    logger.info("Device updated", { id: device.id });
   });
 
-  console.log("WS Server initialized at /ws");
+  logger.info("WS Server initialized at /ws");
+};
+
+export const closeWebSocketServer = () => {
+  if (wss) {
+    wss.close();
+    wss = null;
+  }
 };

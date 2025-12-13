@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
+import { DeviceRegistry } from "../../application/services/DeviceRegistry";
 import { config } from "../../config/config";
-import { DeviceRepository } from "../../application/services/DeviceRepository";
 
 export const healthController = {
   async check(_req: Request, res: Response) {
-    const devicesCount = DeviceRepository.prototype.getAll.call({}) ? 0 : 0;
-   
+    const devices = DeviceRegistry.getAll();
+
     res.json({
       status: "ok",
       uptime: process.uptime(),
-      ha_connected: false,
+      ha_connected: !!DeviceRegistry.getHA(),
       redis: { connected: !!config.redisUrl },
-      devices: { count: 0 },
+      devices: { count: devices.length },
       timestamp: new Date().toISOString()
     });
   }

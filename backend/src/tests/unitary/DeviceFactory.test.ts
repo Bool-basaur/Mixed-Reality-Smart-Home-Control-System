@@ -2,6 +2,8 @@ import { DeviceFactory } from "../../domain/factories/DeviceFactory";
 
 describe("DeviceFactory", () => {
   test("maps media_player to MediaPlayerDevice", () => {
+    const fakeHA = {} as any;
+
     const entity = {
       entity_id: "media_player.tv",
       domain: "media_player",
@@ -9,8 +11,9 @@ describe("DeviceFactory", () => {
       state: "on",
     };
 
-    const device = DeviceFactory.fromHAEntity(entity);
+    const device = DeviceFactory.fromHA(entity as any, fakeHA);
 
-    expect(device.constructor.name).toBe("MediaPlayerDevice");
+    expect(device).not.toBeNull();
+    expect(device!.constructor.name).toBe("MediaPlayerDevice");
   });
 });

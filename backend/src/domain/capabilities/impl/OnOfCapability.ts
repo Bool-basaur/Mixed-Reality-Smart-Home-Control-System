@@ -7,7 +7,6 @@ export class OnOffCapability extends CapabilityStrategy {
     return action === "turn_on" || action === "turn_off";
   }
   buildServiceCall(action: string) {
-    // service is same as action (Home Assistant uses turn_on / turn_off)
     return { service: action };
   }
 }
