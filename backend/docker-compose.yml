@@ -1,16 +1,22 @@
-version: "3.8"
-
 services:
   backend:
     build: .
     ports:
       - "3000:3000"
     env_file:
-      - .env.mock
+      - .env
     depends_on:
       - redis
+    profiles:
+      - dev-ha
+      - dev-mock
+      - full
 
   redis:
     image: redis:7
     ports:
       - "6379:6379"
+    profiles:
+      - dev-ha
+      - dev-mock
+      - full
