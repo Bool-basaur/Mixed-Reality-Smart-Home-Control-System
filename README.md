@@ -2,9 +2,9 @@
 
 ## Backend
 
-Backend modular para la unificación, monitorización y control de dispositivos Home Assistant, con soporte para HTTP, WebSocket y Redis.
+Modular backend that was built for the unification, monitoring, and control of Home Assistant devices, supporting HTTP, WebSocket, and Redis.
 
-### Tecnologías utilizadas
+### Technologies Used
 - Node.js con TypeScript
 - Express
 - WebSocket y REST
@@ -12,53 +12,60 @@ Backend modular para la unificación, monitorización y control de dispositivos 
 - Jest
 - Docker
 - Home Assistant WebSocket API (para el Home Assistant Green)
-- Se ha probado con los siguientes dispositivos de domótica: Google Home Nest mini, Enchufe inteligente TAPO, y TV Android TCL.
+- It has been tested with the following smart home devices: Google Home Nest Mini, TAPO Smarty Plug, and TCL Android TV.
 
-### Arquitectura y estructura del proyecto
-Se ha realizado con arquitectura hexagonal, dividiendo la estructura del proyecto de la siguiente manera:
+### Architecture and Project Structure
+It was build using a hexagonal architecture, dividing the project structure as it's showed below:
 
-- api/ : Contiene toda la parte de la conexión HTTP y los WebSocket adapters.
+- api/ : It contains the HTTP connection and WebSocket adapters.
 
-- application/ : Contiene los casos de uso y los servicios de la aplicación.
+- application/ : It contains the use cases and application services.
 
-- domain/ : Incluye toda la parte del code del modelo de dominio.
+- domain/ : It includes the core domain model.
 
-- infrastructure/ : Contiene las integraciones externas.
-
-
-### Características
-
-- Integración con Home Assistant vía WebSocket
-- Registro y sincronización de dispositivos
-- Ejecución de acciones por capacidades (ONGOING)
-- API REST documentada con OpenAPI
-- Comunicación en tiempo real vía WebSocket
-- Cache opcional con Redis
-- Arquitectura desacoplada y testeable
-- Cobertura de tests unitarios, integración y E2E
+- infrastructure/ : It contains external integrations..
 
 
-### Modos de ejecución disponibles
+### Features
 
-- Desarrollo con un HA real: `npm run dev:ha`
+- Integration with Home Assistant via WebSocket
 
-- Desarrollo con un mock del HA: `npm run dev:mock`
+- Device registration and synchronization
 
-- Ejecución de tests: `npm test`
+- Action execution by capabilities (ONGOING)
+
+- REST API documented with OpenAPI
+
+- Real-time communication via WebSocket
+
+- Optional Redis caching
+
+- Decoupled and testable architecture
+
+- Unit, integration, and E2E test coverage
+
+
+### Available Execution Modes
+
+- Development with a real HA instance: `npm run dev:ha`
+
+- Development with a mock HA: `npm run dev:mock`
+
+- Running tests: `npm test`
 
 ### Docker
 
-- Levantar entorno con HA real
+- Start environment with real HA
 1. `cp .env.ha .env`
 2. `docker-compose --profile dev-ha up --build`
 
-- Levantar entorno con un mock de un HA
+- Start environment with a mock HA
 1. `cp .env.mock .env`
 2. `docker-compose --profile dev-mock up --build`
 
 ### Endpoints
 
-URL principal: `http://localhost:3000`
+Base URL: `http://localhost:3000`
 
 - `GET /devices`
 
