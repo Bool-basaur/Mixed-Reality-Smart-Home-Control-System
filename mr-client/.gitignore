@@ -51,3 +51,8 @@ Thumbs.db
 # ============ XR / Quest (opcional) ============
 # cache de plugins
 Assets/Plugins/Android/*.aar.unitypackage
+
+
+# ============  Tooling local  ============ 
+.utmp/
+.vsconfig
