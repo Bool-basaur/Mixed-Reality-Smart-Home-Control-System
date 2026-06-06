@@ -1,0 +1,53 @@
+# ============ Unity Generated ============
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+# Addressables
+Assets/AddressableAssetsData/*/*.bin*
+
+# ============ Unity Cache / Imports ============
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ============ Unity meta ============
+
+# ============ IDE ============
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.unityproj
+*.user
+*.userprefs
+*.tmp
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+
+# ============ Build / APK ============
+*.apk
+*.aab
+*.unitypackage
+
+# ============ Logs ============
+*.log
+
+# ============ Android ============
+.gradle/
+*.keystore
+
+# ============ XR / Quest (opcional) ============
+# cache de plugins
+Assets/Plugins/Android/*.aar.unitypackage
