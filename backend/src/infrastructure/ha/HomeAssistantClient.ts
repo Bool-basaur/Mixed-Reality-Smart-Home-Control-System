@@ -4,6 +4,8 @@ import { Device } from "../../domain/entities/Device";
 import { DeviceFactory } from "../../domain/factories/DeviceFactory";
 import { resolveHAUrl } from "./HAUrlResolver";
 import { logger } from "../logger";
+import fs from "fs";
+import path from "path";
 
 export class HomeAssistantClient implements IHomeAssistantAPI {
   private ws!: WebSocket;
@@ -67,11 +69,63 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
   async getAllEntities(): Promise<Device[]> {
     return new Promise((resolve, reject) => {
       const id = this.msgId++;
-      this.ws.send(JSON.stringify({ id, type: "get_states" }));
+
+      this.ws.send(
+        JSON.stringify({
+          id,
+          type: "get_states"
+        })
+      );
+
       this.ws.once("message", (raw) => {
         const msg = JSON.parse(raw.toString());
-        const states = Array.isArray(msg.result) ? msg.result : [];
-        const devices = states.map((s: any) => DeviceFactory.fromHA(s, this)).filter((d : any) : d is Device => d !== null);
+
+        const states = Array.isArray(msg.result)
+          ? msg.result
+          : [];
+
+        /*try {
+          const logsDir = path.resolve(
+            process.cwd(),
+            "logs"
+          );
+
+          if (!fs.existsSync(logsDir)) {
+            fs.mkdirSync(logsDir, {
+              recursive: true
+            });
+          }
+
+          fs.writeFileSync(
+            path.join(
+              logsDir,
+              "raw-ha-response.json"
+            ),
+            JSON.stringify(states, null, 2)
+          );
+
+          logger.info(
+            "RAW HA SNAPSHOT SAVED",
+            {
+              entities: states.length
+            }
+          );
+        } catch (err) {
+          logger.error(
+            "Error writing raw-ha-response.json",
+            err
+          );
+        }
+        */
+        const devices = states
+          .map((s: any) =>
+            DeviceFactory.fromHA(s, this)
+          )
+          .filter(
+            (d: any): d is Device =>
+              d !== null
+          );
+
         resolve(devices);
       });
     });

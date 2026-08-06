@@ -1,0 +1,1073 @@
+[
+  {
+    "entity_id": "update.home_assistant_supervisor_update",
+    "state": "off",
+    "attributes": {
+      "auto_update": true,
+      "display_precision": 0,
+      "installed_version": "2026.06.2",
+      "in_progress": false,
+      "latest_version": "2026.06.2",
+      "release_summary": null,
+      "release_url": "https://github.com/home-assistant/supervisor/releases/tag/2026.06.2",
+      "skipped_version": null,
+      "title": "Home Assistant Supervisor",
+      "update_percentage": null,
+      "entity_picture": "https://brands.home-assistant.io/hassio/icon.png",
+      "friendly_name": "Home Assistant Supervisor Actualizar",
+      "supported_features": 1
+    },
+    "last_changed": "2026-08-02T08:48:46.176013+00:00",
+    "last_reported": "2026-08-02T08:48:46.176013+00:00",
+    "last_updated": "2026-08-02T08:48:46.176013+00:00",
+    "context": {
+      "id": "01KZ0TJKK0M8W9ZHJ6TPW5J7NX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "update.home_assistant_core_update",
+    "state": "on",
+    "attributes": {
+      "auto_update": false,
+      "display_precision": 0,
+      "installed_version": "2025.5.3",
+      "in_progress": false,
+      "latest_version": "2026.6.4",
+      "release_summary": null,
+      "release_url": "https://www.home-assistant.io/latest-release-notes/",
+      "skipped_version": null,
+      "title": "Home Assistant Core",
+      "update_percentage": null,
+      "entity_picture": "https://brands.home-assistant.io/homeassistant/icon.png",
+      "friendly_name": "Home Assistant Core Actualizar",
+      "supported_features": 11
+    },
+    "last_changed": "2026-08-02T08:48:46.178969+00:00",
+    "last_reported": "2026-08-02T08:48:46.178969+00:00",
+    "last_updated": "2026-08-02T08:48:46.178969+00:00",
+    "context": {
+      "id": "01KZ0TJKK2KY1CYXMX21CXBNF9",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "update.home_assistant_operating_system_update",
+    "state": "on",
+    "attributes": {
+      "auto_update": false,
+      "display_precision": 0,
+      "installed_version": "14.2",
+      "in_progress": false,
+      "latest_version": "15.2",
+      "release_summary": null,
+      "release_url": "https://github.com/home-assistant/operating-system/releases/tag/15.2",
+      "skipped_version": null,
+      "title": "Home Assistant Operating System",
+      "update_percentage": null,
+      "entity_picture": "https://brands.home-assistant.io/homeassistant/icon.png",
+      "friendly_name": "Home Assistant Operating System Actualizar",
+      "supported_features": 11
+    },
+    "last_changed": "2026-08-02T08:48:46.181396+00:00",
+    "last_reported": "2026-08-02T08:48:46.181396+00:00",
+    "last_updated": "2026-08-02T08:48:46.181396+00:00",
+    "context": {
+      "id": "01KZ0TJKK5A35NNQ82JK1PM5J9",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "conversation.home_assistant",
+    "state": "unknown",
+    "attributes": {
+      "friendly_name": "Home Assistant",
+      "supported_features": 1
+    },
+    "last_changed": "2026-08-02T08:48:52.471353+00:00",
+    "last_reported": "2026-08-02T08:48:52.471353+00:00",
+    "last_updated": "2026-08-02T08:48:52.471353+00:00",
+    "context": {
+      "id": "01KZ0TJSQQ2DXCHFWQHF112JMY",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.backup_backup_manager_state",
+    "state": "idle",
+    "attributes": {
+      "options": [
+        "idle",
+        "create_backup",
+        "blocked",
+        "receive_backup",
+        "restore_backup"
+      ],
+      "device_class": "enum",
+      "friendly_name": "Backup Estado del administrador de copias de seguridad"
+    },
+    "last_changed": "2026-08-02T08:48:59.328182+00:00",
+    "last_reported": "2026-08-02T08:48:59.328182+00:00",
+    "last_updated": "2026-08-02T08:48:59.328182+00:00",
+    "context": {
+      "id": "01KZ0TK0E0CJJPVGVVHWCCCXT2",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.backup_next_scheduled_automatic_backup",
+    "state": "unknown",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Backup Próxima copia de seguridad automática programada"
+    },
+    "last_changed": "2026-08-02T08:48:52.939243+00:00",
+    "last_reported": "2026-08-02T08:48:59.328532+00:00",
+    "last_updated": "2026-08-02T08:48:52.939243+00:00",
+    "context": {
+      "id": "01KZ0TJT6BW9XE30NCBK74MC76",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.backup_last_successful_automatic_backup",
+    "state": "unknown",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Backup Última copia de seguridad automática realizada correctamente"
+    },
+    "last_changed": "2026-08-02T08:48:52.940860+00:00",
+    "last_reported": "2026-08-02T08:48:59.328630+00:00",
+    "last_updated": "2026-08-02T08:48:52.940860+00:00",
+    "context": {
+      "id": "01KZ0TJT6CBTJHMB1YGHHNSGBB",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "zone.home",
+    "state": "0",
+    "attributes": {
+      "latitude": 38.01623,
+      "longitude": -3.3794423,
+      "radius": 100,
+      "passive": false,
+      "persons": [],
+      "editable": true,
+      "icon": "mdi:home",
+      "friendly_name": "Casa"
+    },
+    "last_changed": "2026-08-02T08:48:53.490205+00:00",
+    "last_reported": "2026-08-02T08:48:53.490205+00:00",
+    "last_updated": "2026-08-02T08:48:53.490205+00:00",
+    "context": {
+      "id": "01KZ0TJTQJ7Z8KFQW5ZTY9NDM2",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "person.alex",
+    "state": "unknown",
+    "attributes": {
+      "editable": true,
+      "id": "alex",
+      "device_trackers": [
+        "device_tracker.home_assistant_green"
+      ],
+      "user_id": "632fccc752cd4093bb74895f048156ea",
+      "friendly_name": "Alex"
+    },
+    "last_changed": "2026-08-02T08:48:53.578409+00:00",
+    "last_reported": "2026-08-02T08:48:59.317842+00:00",
+    "last_updated": "2026-08-02T08:48:59.317842+00:00",
+    "context": {
+      "id": "01KZ0TK0DN2PT1E19H7WNXFAKC",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sun.sun",
+    "state": "above_horizon",
+    "attributes": {
+      "next_dawn": "2026-08-07T04:52:31.294505+00:00",
+      "next_dusk": "2026-08-06T19:46:37.995770+00:00",
+      "next_midnight": "2026-08-07T00:19:18+00:00",
+      "next_noon": "2026-08-07T12:19:22+00:00",
+      "next_rising": "2026-08-07T05:21:48.807105+00:00",
+      "next_setting": "2026-08-06T19:17:21.365289+00:00",
+      "elevation": 24.15,
+      "azimuth": 272.65,
+      "rising": false,
+      "friendly_name": "Sun"
+    },
+    "last_changed": "2026-08-06T05:19:34.239401+00:00",
+    "last_reported": "2026-08-06T17:07:29.185709+00:00",
+    "last_updated": "2026-08-06T17:07:29.185709+00:00",
+    "context": {
+      "id": "01KZC0PN91Q26VHG7S4ACSFHZ8",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_dawn",
+    "state": "2026-08-07T04:52:31+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próximo amanecer"
+    },
+    "last_changed": "2026-08-06T04:51:34.229118+00:00",
+    "last_reported": "2026-08-06T12:19:29.006827+00:00",
+    "last_updated": "2026-08-06T04:51:34.229118+00:00",
+    "context": {
+      "id": "01KZAPK56NTZN1J6BVFC4EMB0F",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_dusk",
+    "state": "2026-08-06T19:46:37+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próximo anochecer"
+    },
+    "last_changed": "2026-08-05T19:47:48.427894+00:00",
+    "last_reported": "2026-08-06T12:19:29.006970+00:00",
+    "last_updated": "2026-08-05T19:47:48.427894+00:00",
+    "context": {
+      "id": "01KZ9QFG2B00YXFXGVMXP5CDH0",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_midnight",
+    "state": "2026-08-07T00:19:18+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próxima medianoche"
+    },
+    "last_changed": "2026-08-06T00:19:26.005763+00:00",
+    "last_reported": "2026-08-06T12:19:29.007080+00:00",
+    "last_updated": "2026-08-06T00:19:26.005763+00:00",
+    "context": {
+      "id": "01KZA70VNN1GVQ14CFAKZ02SKX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_noon",
+    "state": "2026-08-07T12:19:22+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próximo mediodía"
+    },
+    "last_changed": "2026-08-06T12:19:29.007190+00:00",
+    "last_reported": "2026-08-06T12:19:29.007190+00:00",
+    "last_updated": "2026-08-06T12:19:29.007190+00:00",
+    "context": {
+      "id": "01KZBG7A3FK22D9RTFA23J8CKB",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_rising",
+    "state": "2026-08-07T05:21:48+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próxima salida del sol"
+    },
+    "last_changed": "2026-08-06T05:20:56.865234+00:00",
+    "last_reported": "2026-08-06T12:19:29.007341+00:00",
+    "last_updated": "2026-08-06T05:20:56.865234+00:00",
+    "context": {
+      "id": "01KZAR8YH168QHRABXHM8FWSDF",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sun_next_setting",
+    "state": "2026-08-06T19:17:21+00:00",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Sun Próxima puesta de sol"
+    },
+    "last_changed": "2026-08-05T19:18:26.646635+00:00",
+    "last_reported": "2026-08-06T12:19:29.007452+00:00",
+    "last_updated": "2026-08-05T19:18:26.646635+00:00",
+    "context": {
+      "id": "01KZ9NSQJPAANAV1MEHJ70Q5Z1",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "tts.google_translate_en_com",
+    "state": "2025-06-07T07:59:22.837722+00:00",
+    "attributes": {
+      "friendly_name": "Google Translate en com"
+    },
+    "last_changed": "2026-08-02T08:48:58.927846+00:00",
+    "last_reported": "2026-08-02T08:48:58.927846+00:00",
+    "last_updated": "2026-08-02T08:48:58.927846+00:00",
+    "context": {
+      "id": "01KZ0TK01F9NWVMF5GRXN6J4Q1",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "todo.lista_de_la_compra",
+    "state": "0",
+    "attributes": {
+      "friendly_name": "Lista de la compra",
+      "supported_features": 15
+    },
+    "last_changed": "2026-08-02T08:48:58.951821+00:00",
+    "last_reported": "2026-08-02T08:48:58.951821+00:00",
+    "last_updated": "2026-08-02T08:48:58.951821+00:00",
+    "context": {
+      "id": "01KZ0TK0272K5R6EV6Y62ZTY32",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "device_tracker.home_assistant_green",
+    "state": "unknown",
+    "attributes": {
+      "source_type": "gps",
+      "friendly_name": "SM-S926B"
+    },
+    "last_changed": "2026-08-02T08:48:59.142327+00:00",
+    "last_reported": "2026-08-02T08:48:59.142327+00:00",
+    "last_updated": "2026-08-02T08:48:59.142327+00:00",
+    "context": {
+      "id": "01KZ0TK0866TPDK3V94M3NA79S",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sm_s926b_battery_level",
+    "state": "63",
+    "attributes": {
+      "state_class": "measurement",
+      "unit_of_measurement": "%",
+      "device_class": "battery",
+      "icon": "mdi:battery-60",
+      "friendly_name": "SM-S926B Battery level"
+    },
+    "last_changed": "2026-08-06T15:58:50.197428+00:00",
+    "last_reported": "2026-08-06T15:58:50.197428+00:00",
+    "last_updated": "2026-08-06T15:58:50.197428+00:00",
+    "context": {
+      "id": "01KZBWRYTNR4K3MG7975J0A545",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sm_s926b_battery_state",
+    "state": "discharging",
+    "attributes": {
+      "options": [
+        "charging",
+        "discharging",
+        "full",
+        "not_charging"
+      ],
+      "device_class": "enum",
+      "icon": "mdi:battery-minus",
+      "friendly_name": "SM-S926B Battery state"
+    },
+    "last_changed": "2026-08-06T05:58:18.726395+00:00",
+    "last_reported": "2026-08-06T05:58:18.726395+00:00",
+    "last_updated": "2026-08-06T05:58:18.726395+00:00",
+    "context": {
+      "id": "01KZATDBV6M5CCAS9XYA93D37X",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.sm_s926b_charger_type",
+    "state": "none",
+    "attributes": {
+      "options": [
+        "ac",
+        "usb",
+        "wireless",
+        "dock",
+        "none"
+      ],
+      "device_class": "enum",
+      "icon": "mdi:battery",
+      "friendly_name": "SM-S926B Charger type"
+    },
+    "last_changed": "2026-08-06T05:58:18.726804+00:00",
+    "last_reported": "2026-08-06T05:58:18.726804+00:00",
+    "last_updated": "2026-08-06T05:58:18.726804+00:00",
+    "context": {
+      "id": "01KZATDBV64H28X0GP6GTCJHKX",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "weather.forecast_casa",
+    "state": "sunny",
+    "attributes": {
+      "temperature": 40.2,
+      "dew_point": 8.8,
+      "temperature_unit": "°C",
+      "humidity": 15,
+      "cloud_coverage": 3.1,
+      "uv_index": 3,
+      "pressure": 1014.9,
+      "pressure_unit": "hPa",
+      "wind_bearing": 274.2,
+      "wind_speed": 17.6,
+      "wind_speed_unit": "km/h",
+      "visibility_unit": "km",
+      "precipitation_unit": "mm",
+      "attribution": "Weather forecast from met.no, delivered by the Norwegian Meteorological Institute.",
+      "friendly_name": "Forecast Casa",
+      "supported_features": 3
+    },
+    "last_changed": "2026-08-06T05:48:59.175545+00:00",
+    "last_reported": "2026-08-06T16:48:59.187836+00:00",
+    "last_updated": "2026-08-06T16:48:59.187836+00:00",
+    "context": {
+      "id": "01KZBZMS9KTA6DFHSW13AQHE2Y",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "media_player.dormitorio",
+    "state": "paused",
+    "attributes": {
+      "volume_level": 0.8188976645469666,
+      "is_volume_muted": false,
+      "media_content_id": "Bluetooth Audio",
+      "media_content_type": "music",
+      "media_position": 0,
+      "media_position_updated_at": "2026-08-06T17:03:43.581544+00:00",
+      "media_title": "Baldur's Gate 3 Mejor build para CLERIGO DOMINIO DE VIDA (efectiva para shadowheart)",
+      "media_artist": "Lo mio lo mio, son los videojuegos",
+      "app_id": "89EA58C1",
+      "app_name": "BluetoothIot",
+      "entity_picture_local": null,
+      "device_class": "speaker",
+      "friendly_name": "Dormitorio",
+      "supported_features": 152461
+    },
+    "last_changed": "2026-08-06T17:03:43.582409+00:00",
+    "last_reported": "2026-08-06T17:03:43.582409+00:00",
+    "last_updated": "2026-08-06T17:03:43.582409+00:00",
+    "context": {
+      "id": "01KZC0FRYYE69DF8TAZZKK2YQ7",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "media_player.ta_chiquita",
+    "state": "unavailable",
+    "attributes": {
+      "restored": true,
+      "supported_features": 152461
+    },
+    "last_changed": "2026-08-02T08:48:59.314328+00:00",
+    "last_reported": "2026-08-02T08:48:59.314328+00:00",
+    "last_updated": "2026-08-02T08:48:59.314328+00:00",
+    "context": {
+      "id": "01KZ0TK0DJV07MVANXGXPSFAXZ",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube",
+    "state": "on",
+    "attributes": {
+      "device_class": "connectivity",
+      "friendly_name": "Enchufe tapo p100 Conexión a la nube"
+    },
+    "last_changed": "2026-08-06T15:43:02.403842+00:00",
+    "last_reported": "2026-08-06T16:21:03.636317+00:00",
+    "last_updated": "2026-08-06T15:43:02.403842+00:00",
+    "context": {
+      "id": "01KZBVW183RQ0B3TJARM31FZVQ",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "number.enchufe_tapo_p100_apagar_en",
+    "state": "120",
+    "attributes": {
+      "min": 0,
+      "max": 65536,
+      "step": 1,
+      "mode": "box",
+      "friendly_name": "Enchufe tapo p100 Apagar en"
+    },
+    "last_changed": "2026-08-06T15:43:02.468656+00:00",
+    "last_reported": "2026-08-06T16:21:03.636695+00:00",
+    "last_updated": "2026-08-06T15:43:02.468656+00:00",
+    "context": {
+      "id": "01KZBVW1A4WNCTV1XAE58CAXV9",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.enchufe_tapo_p100_nivel_de_senal",
+    "state": "2",
+    "attributes": {
+      "state_class": "measurement",
+      "friendly_name": "Enchufe tapo p100 Nivel de señal"
+    },
+    "last_changed": "2026-08-06T15:43:02.483552+00:00",
+    "last_reported": "2026-08-06T16:21:03.636912+00:00",
+    "last_updated": "2026-08-06T15:43:02.483552+00:00",
+    "context": {
+      "id": "01KZBVW1AKT3YKR4MVMBTC600X",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.enchufe_tapo_p100_apagado_automatico_a_las",
+    "state": "unknown",
+    "attributes": {
+      "device_class": "timestamp",
+      "friendly_name": "Enchufe tapo p100 Apagado automático a las"
+    },
+    "last_changed": "2026-08-06T15:43:02.490614+00:00",
+    "last_reported": "2026-08-06T16:21:03.637024+00:00",
+    "last_updated": "2026-08-06T15:43:02.490614+00:00",
+    "context": {
+      "id": "01KZBVW1ATFA0H953NYSC66GTT",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.enchufe_tapo_p100",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Enchufe tapo p100"
+    },
+    "last_changed": "2026-08-06T15:59:04.165058+00:00",
+    "last_reported": "2026-08-06T16:21:03.637167+00:00",
+    "last_updated": "2026-08-06T15:59:04.165058+00:00",
+    "context": {
+      "id": "01KZBWSC0BH5PMRQ63QFT6G0SB",
+      "parent_id": null,
+      "user_id": "632fccc752cd4093bb74895f048156ea"
+    }
+  },
+  {
+    "entity_id": "switch.enchufe_tapo_p100_apagado_automatico_habilitado",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Enchufe tapo p100 Apagado automático habilitado"
+    },
+    "last_changed": "2026-08-06T15:43:02.503522+00:00",
+    "last_reported": "2026-08-06T16:21:03.637266+00:00",
+    "last_updated": "2026-08-06T15:43:02.503522+00:00",
+    "context": {
+      "id": "01KZBVW1B7D3AJXP50KXZSKXMB",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.enchufe_tapo_p100_actualizacion_automatica_habilitada",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Enchufe tapo p100 Actualización automática habilitada"
+    },
+    "last_changed": "2026-08-06T15:43:02.505957+00:00",
+    "last_reported": "2026-08-06T16:21:03.637382+00:00",
+    "last_updated": "2026-08-06T15:43:02.505957+00:00",
+    "context": {
+      "id": "01KZBVW1B91TWQV9BFNKNJWEF9",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.enchufe_tapo_p100_led",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Enchufe tapo p100 LED"
+    },
+    "last_changed": "2026-08-06T15:43:02.508130+00:00",
+    "last_reported": "2026-08-06T16:21:03.637483+00:00",
+    "last_updated": "2026-08-06T15:43:02.508130+00:00",
+    "context": {
+      "id": "01KZBVW1BCHMBDB7Y9KZAQGDM2",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_girar_a_la_derecha",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la derecha"
+    },
+    "last_changed": "2026-08-06T15:47:42.971181+00:00",
+    "last_reported": "2026-08-06T15:48:58.108987+00:00",
+    "last_updated": "2026-08-06T15:47:42.971181+00:00",
+    "context": {
+      "id": "01KZBW4K7VCGMZ5CKAENJF03K6",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_girar_a_la_izquierda",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la izquierda"
+    },
+    "last_changed": "2026-08-06T15:47:42.973503+00:00",
+    "last_reported": "2026-08-06T15:48:58.109166+00:00",
+    "last_updated": "2026-08-06T15:47:42.973503+00:00",
+    "context": {
+      "id": "01KZBW4K7X878H7QAV6VS43771",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_inclinar_hacia_arriba",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Inclinar hacia arriba"
+    },
+    "last_changed": "2026-08-06T15:47:42.984241+00:00",
+    "last_reported": "2026-08-06T15:48:58.109280+00:00",
+    "last_updated": "2026-08-06T15:47:42.984241+00:00",
+    "context": {
+      "id": "01KZBW4K88HX92PMKT5BE9NNJ1",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_inclinar_hacia_abajo",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Inclinar hacia abajo"
+    },
+    "last_changed": "2026-08-06T15:47:42.986315+00:00",
+    "last_reported": "2026-08-06T15:48:58.109379+00:00",
+    "last_updated": "2026-08-06T15:47:42.986315+00:00",
+    "context": {
+      "id": "01KZBW4K8AEVGT3PYNW5G3X0GD",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "camera.tapo_c210_vista_en_vivo",
+    "state": "unavailable",
+    "attributes": {
+      "entity_picture": "/api/camera_proxy/camera.tapo_c210_vista_en_vivo?token=3c20932195d220778dddfd4db61d8ecb8c2ace6583b20e39d7809e64bc60b446",
+      "friendly_name": "Tapo_C210 Vista en vivo",
+      "supported_features": 3
+    },
+    "last_changed": "2026-08-06T15:47:42.991006+00:00",
+    "last_reported": "2026-08-06T17:03:56.101860+00:00",
+    "last_updated": "2026-08-06T17:03:54.776181+00:00",
+    "context": {
+      "id": "01KZC0G3WRXE67D2HVPD7RAZSK",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "number.tapo_c210_grados_de_giro",
+    "state": "30",
+    "attributes": {
+      "min": 0,
+      "max": 65536,
+      "step": 1,
+      "mode": "box",
+      "friendly_name": "Tapo_C210 Grados de giro"
+    },
+    "last_changed": "2026-08-06T15:47:43.000373+00:00",
+    "last_reported": "2026-08-06T16:21:06.073400+00:00",
+    "last_updated": "2026-08-06T15:47:43.000373+00:00",
+    "context": {
+      "id": "01KZBW4K8R3SQ4AR97YC59WDXW",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "number.tapo_c210_grados_de_inclinacion",
+    "state": "10",
+    "attributes": {
+      "min": 0,
+      "max": 65536,
+      "step": 1,
+      "mode": "box",
+      "friendly_name": "Tapo_C210 Grados de inclinación"
+    },
+    "last_changed": "2026-08-06T15:47:43.002907+00:00",
+    "last_reported": "2026-08-06T16:21:06.073520+00:00",
+    "last_updated": "2026-08-06T15:47:43.002907+00:00",
+    "context": {
+      "id": "01KZBW4K8TGZ37844TQSR3SFW0",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.tapo_c210_nivel_de_senal",
+    "state": "4",
+    "attributes": {
+      "state_class": "measurement",
+      "friendly_name": "Tapo_C210 Nivel de señal"
+    },
+    "last_changed": "2026-08-06T16:41:36.024868+00:00",
+    "last_reported": "2026-08-06T16:41:36.024868+00:00",
+    "last_updated": "2026-08-06T16:41:36.024868+00:00",
+    "context": {
+      "id": "01KZBZ78GRVBXS88WP3K3NVYZ7",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_llanto_de_bebe",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de llanto de bebé"
+    },
+    "last_changed": "2026-08-06T15:47:43.019176+00:00",
+    "last_reported": "2026-08-06T16:21:06.073966+00:00",
+    "last_updated": "2026-08-06T15:47:43.019176+00:00",
+    "context": {
+      "id": "01KZBW4K9BWZ49E791G3V0HAX1",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210"
+    },
+    "last_changed": "2026-08-06T15:47:43.021554+00:00",
+    "last_reported": "2026-08-06T16:21:06.074073+00:00",
+    "last_updated": "2026-08-06T15:47:43.021554+00:00",
+    "context": {
+      "id": "01KZBW4K9DQZ06B55TANG7AMAV",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_led",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210 LED"
+    },
+    "last_changed": "2026-08-06T15:47:43.023677+00:00",
+    "last_reported": "2026-08-06T16:21:06.074163+00:00",
+    "last_updated": "2026-08-06T15:47:43.023677+00:00",
+    "context": {
+      "id": "01KZBW4K9F0WE48YYMYJE5A8YV",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_movimiento",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de movimiento"
+    },
+    "last_changed": "2026-08-06T15:47:43.028744+00:00",
+    "last_reported": "2026-08-06T16:21:06.074253+00:00",
+    "last_updated": "2026-08-06T15:47:43.028744+00:00",
+    "context": {
+      "id": "01KZBW4K9M8PY24CNZXWEY05M1",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_personas",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de personas"
+    },
+    "last_changed": "2026-08-06T15:47:43.031138+00:00",
+    "last_reported": "2026-08-06T16:21:06.074341+00:00",
+    "last_updated": "2026-08-06T15:47:43.031138+00:00",
+    "context": {
+      "id": "01KZBW4K9QWPWDD138TXB10ZA8",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_manipulacion",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de manipulación"
+    },
+    "last_changed": "2026-08-06T15:47:43.033402+00:00",
+    "last_reported": "2026-08-06T16:21:06.074432+00:00",
+    "last_updated": "2026-08-06T15:47:43.033402+00:00",
+    "context": {
+      "id": "01KZBW4K9S9NDRHFC36BA0FF76",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_girar_a_la_derecha_2",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la derecha"
+    },
+    "last_changed": "2026-08-06T15:59:22.974639+00:00",
+    "last_reported": "2026-08-06T16:03:58.091703+00:00",
+    "last_updated": "2026-08-06T15:59:22.974639+00:00",
+    "context": {
+      "id": "01KZBWSYTY34FPKBPP9DZY43AW",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_girar_a_la_izquierda_2",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la izquierda"
+    },
+    "last_changed": "2026-08-06T15:59:22.975070+00:00",
+    "last_reported": "2026-08-06T16:03:58.091852+00:00",
+    "last_updated": "2026-08-06T15:59:22.975070+00:00",
+    "context": {
+      "id": "01KZBWSYTZFDY9JEHJQKMBQPDB",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_inclinar_hacia_arriba_2",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Inclinar hacia arriba"
+    },
+    "last_changed": "2026-08-06T15:59:22.975335+00:00",
+    "last_reported": "2026-08-06T16:03:58.091940+00:00",
+    "last_updated": "2026-08-06T15:59:22.975335+00:00",
+    "context": {
+      "id": "01KZBWSYTZKES86N7XB3R7D92C",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "button.tapo_c210_inclinar_hacia_abajo_2",
+    "state": "unavailable",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Inclinar hacia abajo"
+    },
+    "last_changed": "2026-08-06T15:59:22.975698+00:00",
+    "last_reported": "2026-08-06T16:03:58.092027+00:00",
+    "last_updated": "2026-08-06T15:59:22.975698+00:00",
+    "context": {
+      "id": "01KZBWSYTZRSMYBH32YRMXD4GC",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "camera.tapo_c210_vista_en_vivo_2",
+    "state": "unavailable",
+    "attributes": {
+      "entity_picture": "/api/camera_proxy/camera.tapo_c210_vista_en_vivo_2?token=1a7e113047170ea7659b83abdf129024e3731fad2f64e9443a213b0d79e7c685",
+      "friendly_name": "Tapo_C210 Vista en vivo",
+      "supported_features": 3
+    },
+    "last_changed": "2026-08-06T15:59:22.976025+00:00",
+    "last_reported": "2026-08-06T17:03:54.776504+00:00",
+    "last_updated": "2026-08-06T17:03:54.776504+00:00",
+    "context": {
+      "id": "01KZC0G3WRCP1B3K68Y4XQXB22",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "number.tapo_c210_grados_de_giro_2",
+    "state": "30",
+    "attributes": {
+      "min": 0,
+      "max": 65536,
+      "step": 1,
+      "mode": "box",
+      "friendly_name": "Tapo_C210 Grados de giro"
+    },
+    "last_changed": "2026-08-06T15:57:41.194189+00:00",
+    "last_reported": "2026-08-06T16:21:03.136085+00:00",
+    "last_updated": "2026-08-06T15:57:41.194189+00:00",
+    "context": {
+      "id": "01KZBWPVEA1T61W9MEFH1TA3NV",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "number.tapo_c210_grados_de_inclinacion_2",
+    "state": "10",
+    "attributes": {
+      "min": 0,
+      "max": 65536,
+      "step": 1,
+      "mode": "box",
+      "friendly_name": "Tapo_C210 Grados de inclinación"
+    },
+    "last_changed": "2026-08-06T15:57:41.199000+00:00",
+    "last_reported": "2026-08-06T16:21:03.136188+00:00",
+    "last_updated": "2026-08-06T15:57:41.199000+00:00",
+    "context": {
+      "id": "01KZBWPVEE3M5PPZTVW6763YT2",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "sensor.tapo_c210_nivel_de_senal_2",
+    "state": "2",
+    "attributes": {
+      "state_class": "measurement",
+      "friendly_name": "Tapo_C210 Nivel de señal"
+    },
+    "last_changed": "2026-08-06T15:57:41.208551+00:00",
+    "last_reported": "2026-08-06T16:21:03.136444+00:00",
+    "last_updated": "2026-08-06T15:57:41.208551+00:00",
+    "context": {
+      "id": "01KZBWPVERCHCH5R1ZPZS34ED8",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_llanto_de_bebe_2",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de llanto de bebé"
+    },
+    "last_changed": "2026-08-06T15:57:41.215613+00:00",
+    "last_reported": "2026-08-06T16:21:03.136601+00:00",
+    "last_updated": "2026-08-06T15:57:41.215613+00:00",
+    "context": {
+      "id": "01KZBWPVEZAZGHVHV24FBW2BXK",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_2",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210"
+    },
+    "last_changed": "2026-08-06T15:59:22.977221+00:00",
+    "last_reported": "2026-08-06T16:21:03.136696+00:00",
+    "last_updated": "2026-08-06T15:59:22.977221+00:00",
+    "context": {
+      "id": "01KZBWSX6JT3CTH6WGMN4XC7KZ",
+      "parent_id": null,
+      "user_id": "632fccc752cd4093bb74895f048156ea"
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_led_2",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Tapo_C210 LED"
+    },
+    "last_changed": "2026-08-06T15:57:41.222811+00:00",
+    "last_reported": "2026-08-06T16:21:03.136784+00:00",
+    "last_updated": "2026-08-06T15:57:41.222811+00:00",
+    "context": {
+      "id": "01KZBWPVF61T3K82EZQ6TM58SS",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_movimiento_2",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de movimiento"
+    },
+    "last_changed": "2026-08-06T15:57:41.233269+00:00",
+    "last_reported": "2026-08-06T16:21:03.136874+00:00",
+    "last_updated": "2026-08-06T15:57:41.233269+00:00",
+    "context": {
+      "id": "01KZBWPVFHAA77PSJP4NVS478J",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_personas_2",
+    "state": "on",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de personas"
+    },
+    "last_changed": "2026-08-06T15:57:41.235569+00:00",
+    "last_reported": "2026-08-06T16:21:03.136962+00:00",
+    "last_updated": "2026-08-06T15:57:41.235569+00:00",
+    "context": {
+      "id": "01KZBWPVFKCWN85AKTE4R8CCYW",
+      "parent_id": null,
+      "user_id": null
+    }
+  },
+  {
+    "entity_id": "switch.tapo_c210_deteccion_de_manipulacion_2",
+    "state": "off",
+    "attributes": {
+      "friendly_name": "Tapo_C210 Detección de manipulación"
+    },
+    "last_changed": "2026-08-06T15:57:41.237904+00:00",
+    "last_reported": "2026-08-06T16:21:03.137049+00:00",
+    "last_updated": "2026-08-06T15:57:41.237904+00:00",
+    "context": {
+      "id": "01KZBWPVFNPBEDM4BSZ3E3B41R",
+      "parent_id": null,
+      "user_id": null
+    }
+  }
+]

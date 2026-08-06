@@ -6,6 +6,7 @@ import { config } from "./config/config";
 import deviceRoutes from "./api/routes/deviceRoutes";
 import healthRoutes from "./api/routes/healthRoutes";
 import { HomeAssistantClient } from "./infrastructure/ha/HomeAssistantClient";
+import { MockHomeAssistantClient } from "./infrastructure/ha/MockHomeAssistantClient";
 import { cacheService } from "./application/services/CacheService";
 import { RedisCache } from "./infrastructure/cache/RedisCache";
 import { logger } from "./infrastructure/logger";
@@ -58,10 +59,25 @@ export const startServer = async () => {
   if (config.useMockData) {
     logger.info("Starting backend in MOCK mode");
 
-    const devices = await repoMock.getAll();
-    devices.forEach((d) => DeviceRegistry.addDevice(d));
+    const haClient = new MockHomeAssistantClient();
 
-  } else {
+    await haClient.connect();
+
+    DeviceRegistry.setHA(haClient);
+
+    const devices = await haClient.getAllEntities();
+
+    devices.forEach((device) =>
+      DeviceRegistry.addDevice(device)
+    );
+
+    const monitor = new DeviceMonitorService(
+      DeviceRegistry,
+      haClient as any
+    );
+
+    monitor.start();
+} else {
     logger.info("Starting backend connected to Home Assistant");
 
     const haClient = new HomeAssistantClient(
