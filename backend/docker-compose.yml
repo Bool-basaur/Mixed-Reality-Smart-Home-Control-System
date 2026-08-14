@@ -6,7 +6,9 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
+      - redis  
+    volumes:
+      - ./data:/app/data
     profiles:
       - dev-ha
       - dev-mock

@@ -1,147 +1,210 @@
 import WebSocket from "ws";
+
 import { IHomeAssistantAPI } from "../../domain/interfaces/IHomeAssistantAPI";
-import { Device } from "../../domain/entities/Device";
-import { DeviceFactory } from "../../domain/factories/DeviceFactory";
+import { HAEntity } from "../../domain/interfaces/HAEntity";
+import { HADevice } from "../../domain/interfaces/HADevice";
+import { HAEntityRegistryEntry } from "../../domain/interfaces/HAEntityRegistryEntry";
+import { HACommand } from "./HACommand";
 import { resolveHAUrl } from "./HAUrlResolver";
 import { logger } from "../logger";
-import fs from "fs";
-import path from "path";
 
 export class HomeAssistantClient implements IHomeAssistantAPI {
   private ws!: WebSocket;
+
   private msgId = 1;
+
   private url: string;
+
   private token: string;
+
   private shouldReconnect = true;
+
   private reconnectDelay = 1000;
 
-  constructor(url: string, token: string) { this.url = resolveHAUrl(url); this.token = token; }
+  constructor(url: string, token: string) {
+    this.url = resolveHAUrl(url);
+    this.token = token;
+  }
 
   async connect(): Promise<void> {
-    logger.info("Connecting to HA", { url: this.url });
+    logger.info("Connecting to HA", {
+      url: this.url,
+    });
+
     this.ws = new WebSocket(this.url);
 
     await new Promise<void>((resolve, reject) => {
       let authed = false;
-      this.ws.on("open", () => logger.info("WS open"));
-      this.ws.on("message", (raw) => {
+
+      this.ws.on("open", () => {
+        logger.info("WS open");
+      });
+
+      this.ws.on("message", raw => {
         const msg = JSON.parse(raw.toString());
+
         if (msg.type === "auth_required") {
-          this.ws.send(JSON.stringify({ type: "auth", access_token: this.token }));
+          this.ws.send(
+            JSON.stringify({
+              type: "auth",
+              access_token: this.token,
+            })
+          );
+
           return;
         }
-        if (msg.type === "auth_invalid") { reject(new Error("auth_invalid")); return; }
-        if (msg.type === "auth_ok") { authed = true; resolve(); return; }
+
+        if (msg.type === "auth_invalid") {
+          reject(new Error("auth_invalid"));
+          return;
+        }
+
+        if (msg.type === "auth_ok") {
+          authed = true;
+          resolve();
+          return;
+        }
       });
-      this.ws.on("error", (err) => reject(err));
+
+      this.ws.on("error", err => {
+        reject(err);
+      });
+
       this.ws.on("close", () => {
         logger.warn("WS closed");
-        if (!authed) reject(new Error("closed before auth"));
-        if (this.shouldReconnect) this.scheduleReconnect();
+
+        if (!authed) {
+          reject(new Error("closed before auth"));
+        }
+
+        if (this.shouldReconnect) {
+          this.scheduleReconnect();
+        }
       });
     });
-    // reset delay on success
+
     this.reconnectDelay = 1000;
   }
 
-  private scheduleReconnect() {
+  private scheduleReconnect(): void {
     setTimeout(async () => {
       try {
         await this.connect();
-      } catch (e) {
-        this.reconnectDelay = Math.min(this.reconnectDelay * 2, 30000);
+      } catch {
+        this.reconnectDelay = Math.min(
+          this.reconnectDelay * 2,
+          30000
+        );
+
         this.scheduleReconnect();
       }
     }, this.reconnectDelay);
   }
 
-  onEvent(handler: (event: any) => void): void {
-    this.ws.on("message", (raw) => {
+  onEvent(
+    handler: (event: unknown) => void
+  ): void {
+    this.ws.on("message", raw => {
       const msg = JSON.parse(raw.toString());
-      if (msg.type === "event") handler(msg.event);
+
+      if (msg.type === "event") {
+        handler(msg.event);
+      }
     });
   }
 
-  async callService(domain: string, service: string, data: any): Promise<any> {
-    this.ws.send(JSON.stringify({ id: this.msgId++, type: "call_service", domain, service, service_data: data }));
+    async callService(
+    domain: string,
+    service: string,
+    data: unknown
+  ): Promise<void> {
+    this.ws.send(
+      JSON.stringify({
+        id: this.msgId++,
+        type: HACommand.CALL_SERVICE,
+        domain,
+        service,
+        service_data: data,
+      })
+    );
   }
 
-  async getAllEntities(): Promise<Device[]> {
-    return new Promise((resolve, reject) => {
-      const id = this.msgId++;
+  async getAllEntities(): Promise<HAEntity[]> {
+    return this.sendCommand<HAEntity[]>(
+      HACommand.GET_STATES
+    );
+  }
 
-      this.ws.send(
-        JSON.stringify({
-          id,
-          type: "get_states"
-        })
-      );
+  async getDeviceRegistry(): Promise<HADevice[]> {
+    return this.sendCommand<HADevice[]>(
+      HACommand.DEVICE_REGISTRY_LIST
+    );
+  }
 
-      this.ws.once("message", (raw) => {
-        const msg = JSON.parse(raw.toString());
-
-        const states = Array.isArray(msg.result)
-          ? msg.result
-          : [];
-
-        /*try {
-          const logsDir = path.resolve(
-            process.cwd(),
-            "logs"
-          );
-
-          if (!fs.existsSync(logsDir)) {
-            fs.mkdirSync(logsDir, {
-              recursive: true
-            });
-          }
-
-          fs.writeFileSync(
-            path.join(
-              logsDir,
-              "raw-ha-response.json"
-            ),
-            JSON.stringify(states, null, 2)
-          );
-
-          logger.info(
-            "RAW HA SNAPSHOT SAVED",
-            {
-              entities: states.length
-            }
-          );
-        } catch (err) {
-          logger.error(
-            "Error writing raw-ha-response.json",
-            err
-          );
-        }
-        */
-        const devices = states
-          .map((s: any) =>
-            DeviceFactory.fromHA(s, this)
-          )
-          .filter(
-            (d: any): d is Device =>
-              d !== null
-          );
-
-        resolve(devices);
-      });
-    });
+  async getEntityRegistry(): Promise<HAEntityRegistryEntry[]> {
+    return this.sendCommand<HAEntityRegistryEntry[]>(HACommand.ENTITY_REGISTRY_LIST);
   }
 
   async ping(): Promise<number> {
-    const t0 = Date.now();
-    return new Promise((resolve) => {
-      const id = this.msgId++;
-      this.ws.send(JSON.stringify({ id, type: "ping" }));
-      resolve(Date.now() - t0);
-    });
+    await this.sendCommand<void>(HACommand.PING);
+
+    return 0;
   }
+
 
   async disconnect(): Promise<void> {
     this.shouldReconnect = false;
+
     this.ws.close();
   }
+
+  private sendCommand<T>(command: HACommand): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      const id = this.msgId++;
+
+      const handler = (raw: WebSocket.RawData) => {
+        try {
+          const msg = JSON.parse(
+            raw.toString()
+          );
+
+          if (msg.id !== id) {
+            return;
+          }
+
+          this.ws.off(
+            "message",
+            handler
+          );
+
+          if (!msg.success) {
+            reject(
+              new Error(
+                msg.error?.message ??
+                `Command ${command} failed`
+              )
+            );
+
+            return;
+          }
+
+          resolve(msg.result as T);
+
+        } catch (err) {
+          reject(err);
+        }
+      };
+
+      this.ws.on(
+        "message",
+        handler
+      );
+
+      this.ws.send(JSON.stringify({
+          id,
+          type: command}));
+    });
+          
+  }
+
 }

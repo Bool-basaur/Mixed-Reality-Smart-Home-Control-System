@@ -1,0 +1,181 @@
+[
+  {
+    "id": "google_nest_dormitorio",
+    "name": "Google Nest Dormitorio",
+    "category": "hybrid",
+    "state": {
+      "media_player.dormitorio": "paused"
+    },
+    "attributes": {
+      "volume_level": 0.8188976645469666,
+      "is_volume_muted": false,
+      "media_content_id": "Bluetooth Audio",
+      "media_content_type": "music",
+      "media_position": 0,
+      "media_position_updated_at": "2026-08-06T17:03:43.581544+00:00",
+      "media_title": "Baldur's Gate 3 Mejor build para CLERIGO DOMINIO DE VIDA (efectiva para shadowheart)",
+      "media_artist": "Lo mio lo mio, son los videojuegos",
+      "app_id": "89EA58C1",
+      "app_name": "BluetoothIot",
+      "entity_picture_local": null,
+      "device_class": "speaker",
+      "friendly_name": "Dormitorio",
+      "supported_features": 152461
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.dormitorio"
+    ]
+  },
+  {
+    "id": "tapo_p100",
+    "name": "Enchufe Tapo P100",
+    "category": "actuator",
+    "state": {
+      "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube": "on",
+      "number.enchufe_tapo_p100_apagar_en": "120",
+      "sensor.enchufe_tapo_p100_nivel_de_senal": "2",
+      "sensor.enchufe_tapo_p100_apagado_automatico_a_las": "unknown",
+      "switch.enchufe_tapo_p100": "off",
+      "switch.enchufe_tapo_p100_apagado_automatico_habilitado": "off",
+      "switch.enchufe_tapo_p100_actualizacion_automatica_habilitada": "on",
+      "switch.enchufe_tapo_p100_led": "on"
+    },
+    "attributes": {
+      "device_class": "connectivity",
+      "friendly_name": "Enchufe tapo p100 Conexión a la nube"
+    },
+    "capabilities": [
+      "on_off",
+      "sensor"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off"
+    ],
+    "relations": [
+      "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube",
+      "number.enchufe_tapo_p100_apagar_en",
+      "sensor.enchufe_tapo_p100_nivel_de_senal",
+      "sensor.enchufe_tapo_p100_apagado_automatico_a_las",
+      "switch.enchufe_tapo_p100",
+      "switch.enchufe_tapo_p100_apagado_automatico_habilitado",
+      "switch.enchufe_tapo_p100_actualizacion_automatica_habilitada",
+      "switch.enchufe_tapo_p100_led"
+    ]
+  },
+  {
+    "id": "tapo_c210",
+    "name": "Tapo C210",
+    "category": "actuator",
+    "state": {
+      "button.tapo_c210_girar_a_la_derecha": "unavailable",
+      "button.tapo_c210_girar_a_la_izquierda": "unavailable",
+      "button.tapo_c210_inclinar_hacia_arriba": "unavailable",
+      "button.tapo_c210_inclinar_hacia_abajo": "unavailable",
+      "camera.tapo_c210_vista_en_vivo": "unavailable",
+      "number.tapo_c210_grados_de_giro": "30",
+      "number.tapo_c210_grados_de_inclinacion": "10",
+      "sensor.tapo_c210_nivel_de_senal": "4",
+      "switch.tapo_c210_deteccion_de_llanto_de_bebe": "off",
+      "switch.tapo_c210": "off",
+      "switch.tapo_c210_led": "off",
+      "switch.tapo_c210_deteccion_de_movimiento": "on",
+      "switch.tapo_c210_deteccion_de_personas": "on",
+      "switch.tapo_c210_deteccion_de_manipulacion": "off"
+    },
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la derecha"
+    },
+    "capabilities": [
+      "on_off",
+      "live_stream",
+      "sensor"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "start_stream",
+      "stop_stream"
+    ],
+    "relations": [
+      "button.tapo_c210_girar_a_la_derecha",
+      "button.tapo_c210_girar_a_la_izquierda",
+      "button.tapo_c210_inclinar_hacia_arriba",
+      "button.tapo_c210_inclinar_hacia_abajo",
+      "camera.tapo_c210_vista_en_vivo",
+      "number.tapo_c210_grados_de_giro",
+      "number.tapo_c210_grados_de_inclinacion",
+      "sensor.tapo_c210_nivel_de_senal",
+      "switch.tapo_c210_deteccion_de_llanto_de_bebe",
+      "switch.tapo_c210",
+      "switch.tapo_c210_led",
+      "switch.tapo_c210_deteccion_de_movimiento",
+      "switch.tapo_c210_deteccion_de_personas",
+      "switch.tapo_c210_deteccion_de_manipulacion"
+    ]
+  },
+  {
+    "id": "tapo_c210_2",
+    "name": "Tapo C210 2",
+    "category": "actuator",
+    "state": {
+      "button.tapo_c210_girar_a_la_derecha_2": "unavailable",
+      "button.tapo_c210_girar_a_la_izquierda_2": "unavailable",
+      "button.tapo_c210_inclinar_hacia_arriba_2": "unavailable",
+      "button.tapo_c210_inclinar_hacia_abajo_2": "unavailable",
+      "camera.tapo_c210_vista_en_vivo_2": "unavailable",
+      "number.tapo_c210_grados_de_giro_2": "30",
+      "number.tapo_c210_grados_de_inclinacion_2": "10",
+      "sensor.tapo_c210_nivel_de_senal_2": "2",
+      "switch.tapo_c210_deteccion_de_llanto_de_bebe_2": "off",
+      "switch.tapo_c210_2": "off",
+      "switch.tapo_c210_led_2": "on",
+      "switch.tapo_c210_deteccion_de_movimiento_2": "on",
+      "switch.tapo_c210_deteccion_de_personas_2": "on",
+      "switch.tapo_c210_deteccion_de_manipulacion_2": "off"
+    },
+    "attributes": {
+      "friendly_name": "Tapo_C210 Girar a la derecha"
+    },
+    "capabilities": [
+      "on_off",
+      "live_stream",
+      "sensor"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "start_stream",
+      "stop_stream"
+    ],
+    "relations": [
+      "button.tapo_c210_girar_a_la_derecha_2",
+      "button.tapo_c210_girar_a_la_izquierda_2",
+      "button.tapo_c210_inclinar_hacia_arriba_2",
+      "button.tapo_c210_inclinar_hacia_abajo_2",
+      "camera.tapo_c210_vista_en_vivo_2",
+      "number.tapo_c210_grados_de_giro_2",
+      "number.tapo_c210_grados_de_inclinacion_2",
+      "sensor.tapo_c210_nivel_de_senal_2",
+      "switch.tapo_c210_deteccion_de_llanto_de_bebe_2",
+      "switch.tapo_c210_2",
+      "switch.tapo_c210_led_2",
+      "switch.tapo_c210_deteccion_de_movimiento_2",
+      "switch.tapo_c210_deteccion_de_personas_2",
+      "switch.tapo_c210_deteccion_de_manipulacion_2"
+    ]
+  }
+]

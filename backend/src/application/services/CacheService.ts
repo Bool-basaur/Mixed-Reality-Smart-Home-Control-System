@@ -4,5 +4,6 @@ export class CacheService {
   setCacheAdapter(cache?: ICache) { this.cache = cache; }
   async get<T>(key: string) { return this.cache ? this.cache.get<T>(key) : null; }
   async set<T>(key: string, value: T, ttl?: number) { if (this.cache) await this.cache.set(key, value, ttl); }
+  async delete(key: string): Promise<void> { if (this.cache) await this.cache.delete(key); }
 }
 export const cacheService = new CacheService();

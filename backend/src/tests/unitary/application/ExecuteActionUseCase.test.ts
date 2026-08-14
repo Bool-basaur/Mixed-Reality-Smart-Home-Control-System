@@ -1,10 +1,10 @@
 import { ExecuteActionUseCase } from "../../../application/usecases/ExecuteActionUseCase";
-import { DeviceRegistryClass } from "../../../application/services/DeviceRegistry";
-import { InMemoryDeviceStorage } from "../../../infrastructure/storage/InMemoryDeviceStorage";
+import { EntityRegistryClass } from "../../../application/services/EntityRegistry";
+import { InMemoryEntityStorage } from "../../../infrastructure/storage/InMemoryEntityStorage";
 
 describe("ExecuteActionUseCase", () => {
   test("fails if device not found", async () => {
-    const registry = new DeviceRegistryClass(new InMemoryDeviceStorage());
+    const registry = new EntityRegistryClass(new InMemoryEntityStorage());
 
     const uc = new ExecuteActionUseCase(registry);
     const res = await uc.execute("x", "turn_on", {});
