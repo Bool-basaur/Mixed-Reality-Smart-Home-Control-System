@@ -1,0 +1,26 @@
+[
+  {
+    "id": "tapo_p100",
+    "name": "Enchufe Tapo P100",
+    "manufacturer": "TP-Link",
+    "model": "P100"
+  },
+  {
+    "id": "tapo_c210",
+    "name": "Tapo C210",
+    "manufacturer": "TP-Link",
+    "model": "C210"
+  },
+  {
+    "id": "tapo_c210_2",
+    "name": "Tapo C210 2",
+    "manufacturer": "TP-Link",
+    "model": "C210"
+  },
+  {
+    "id": "google_nest_dormitorio",
+    "name": "Google Nest Dormitorio",
+    "manufacturer": "Google",
+    "model": "Nest"
+  }
+]

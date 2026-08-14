@@ -1,7 +1,8 @@
 import { Server } from "http";
 import WebSocket from "ws";
-import { DeviceRegistry } from "../../application/services";
+import { EntityRegistry } from "../../application/services";
 import { logger } from "../../infrastructure/logger";
+import {EventBus, EVENTS} from "../../infrastructure/events/events";
 
 let wss: WebSocket.Server | null = null;
 
@@ -13,10 +14,13 @@ export const initWebSocketServer = (server: Server) => {
   wss.on("connection", (ws) => {
     logger.info("WS client connected");
 
-    ws.send(
-      JSON.stringify({
-        type: "devices",
-        payload: DeviceRegistry.getAll().map((d) => d.toJSON())
+    ws.send(JSON.stringify({
+        type: "entities",
+        payload: EntityRegistry
+          .getAll()
+          .map(entity =>
+            entity.toJSON()
+          )
       })
     );
 
@@ -29,25 +33,38 @@ export const initWebSocketServer = (server: Server) => {
       }
     });
   });
+  
+  EventBus.on(EVENTS.ENTITY_ADDED,
+    entity => {
+      broadcast("entity_added", entity.toJSON());
+      logger.info("Entity added", { id: entity.id });
+    }
+  );
 
-  DeviceRegistry.on("device_updated", (device) => {
-    if (!wss) return;
+  EventBus.on(EVENTS.ENTITY_STATE_UPDATED,
+    entity => {
+      broadcast("entity_updated", entity.toJSON());
+      logger.info("Entity updated", { id: entity.id });
+    }
+  );
 
-    const payload = JSON.stringify({
-      type: "device_update",
-      payload: device.toJSON()
-    });
+  EventBus.on(EVENTS.ENTITY_REMOVED, id => {
+    broadcast("entity_removed", { id });
+    logger.info("Entity removed", { id });
+  }
+  );
+}
 
-    wss.clients.forEach((client) => {
+const broadcast = (type: string, payload: unknown) => {
+  if (wss) {
+    const message = JSON.stringify({type, payload});
+
+    wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(payload);
+        client.send(message);
       }
     });
-
-    logger.info("Device updated", { id: device.id });
-  });
-
-  logger.info("WS Server initialized at /ws");
+  }
 };
 
 export const closeWebSocketServer = () => {

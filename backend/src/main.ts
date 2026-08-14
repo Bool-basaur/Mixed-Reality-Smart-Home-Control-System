@@ -2,23 +2,31 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
+
 import { config } from "./config/config";
-import deviceRoutes from "./api/routes/deviceRoutes";
+
+import entityRoutes from "./api/routes/entitiesRoutes";
 import healthRoutes from "./api/routes/healthRoutes";
+import spatialRoutes from "./api/routes/spatialRoutes";
+import snapshotRoutes from "./api/routes/snapshotRoutes"
+
 import { HomeAssistantClient } from "./infrastructure/ha/HomeAssistantClient";
 import { MockHomeAssistantClient } from "./infrastructure/ha/MockHomeAssistantClient";
+
 import { cacheService } from "./application/services/CacheService";
 import { RedisCache } from "./infrastructure/cache/RedisCache";
+
 import { logger } from "./infrastructure/logger";
-import { SyncHADevicesUseCase } from "./application/usecases/SyncHADevicesUseCase";
-import { DeviceMonitorService } from "./application/services/DeviceMonitorService";
-import { DeviceRegistry } from "./application/services";
+
+import { EntityMonitorService } from "./application/services/EntityMonitorService";
+import { EntityRegistry } from "./application/services";
+
 import { authMiddleware } from "./api/middlewares/authMiddleware";
 import { initWebSocketServer } from "./api/ws/WebSocketServer";
-import { InMemoryDeviceRepository } from "./infrastructure/storage/InMemoryDeviceRepository";
-import { repoMock } from "./infrastructure/storage/repoMock";
 
+import "./infrastructure/events";
 export const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -27,34 +35,62 @@ app.use("/health", healthRoutes);
 let server: http.Server;
 
 export const startServer = async () => {
+  logger.info("START SERVER");
+
   /* ---------------- ROUTES ---------------- */
 
   if (config.env === "production") {
-    app.use("/devices", authMiddleware, deviceRoutes);
+    app.use("/entities",
+      authMiddleware,
+      entityRoutes);
+
+    app.use("/spatial",
+      authMiddleware,
+      spatialRoutes);
+
+    app.use("/snapshot",
+      authMiddleware,
+      snapshotRoutes);
+
   } else {
-    app.use("/devices", deviceRoutes);
+
+    app.use("/entities",
+      entityRoutes);
+
+    app.use("/spatial",
+      spatialRoutes);
+
+    app.use("/snapshot",
+      snapshotRoutes);
   }
 
-  // ---------------- CACHE / REDIS ---------------- 
+  /* ---------------- CACHE / REDIS ---------------- */
 
   if (config.redisUrl && config.redisUrl.trim() !== "") {
-    const r = new RedisCache(config.redisUrl);
+    const redisCache = new RedisCache(config.redisUrl);
+
     try {
-      await r.connect();
-      cacheService.setCacheAdapter(r);
-    } catch (err) {
-      logger.warn("Redis not available, continuing without cache");
+      await redisCache.connect();
+
+      cacheService.setCacheAdapter(
+        redisCache
+      );
+    } catch {
+      logger.warn(
+        "Redis not available, continuing without cache"
+      );
     }
   } else {
-    logger.info("Redis disabled (no REDIS_URL provided)");
+    logger.info(
+      "Redis disabled (no REDIS_URL provided)"
+    );
   }
 
+  /* ---------------- REGISTRY ---------------- */
 
-  // ---------------- REGISTRY ---------------- 
+  await EntityRegistry.init();
 
-  await DeviceRegistry.init();
-
-  // ---------------- DATA SOURCE SELECTION ---------------- 
+  /* ---------------- DATA SOURCE SELECTION ---------------- */
 
   if (config.useMockData) {
     logger.info("Starting backend in MOCK mode");
@@ -63,49 +99,38 @@ export const startServer = async () => {
 
     await haClient.connect();
 
-    DeviceRegistry.setHA(haClient);
+    EntityRegistry.setHA(haClient);
 
-    const devices = await haClient.getAllEntities();
+    const haEntities = await haClient.getAllEntities();
 
-    devices.forEach((device) =>
-      DeviceRegistry.addDevice(device)
-    );
+    const devices = await haClient.getDeviceRegistry();
 
-    const monitor = new DeviceMonitorService(
-      DeviceRegistry,
-      haClient as any
-    );
+    const entityRegistry = await haClient.getEntityRegistry();
+
+    logger.info(`[MOCK] Loaded ${haEntities.length} HA entities`);
+
+    logger.info(`[MOCK] Loaded ${devices.length} devices`);
+
+    logger.info(`[MOCK] Loaded ${entityRegistry.length} entity registry entries`);
+
+    const monitor = new EntityMonitorService(EntityRegistry,haClient);
 
     monitor.start();
 } else {
     logger.info("Starting backend connected to Home Assistant");
 
-    const haClient = new HomeAssistantClient(
-      config.haUrl,
-      config.haToken
-    );
+    const haClient = new HomeAssistantClient(config.haUrl, config.haToken);
 
     await haClient.connect();
-    DeviceRegistry.setHA(haClient);
 
-    const deviceRepository = new InMemoryDeviceRepository();
+    EntityRegistry.setHA(haClient);
 
-    const sync = new SyncHADevicesUseCase(
-      haClient,
-      deviceRepository
-    );
-
-    await sync.execute();
-
-    const monitor = new DeviceMonitorService(
-      DeviceRegistry,
-      haClient
-    );
+    const monitor = new EntityMonitorService(EntityRegistry, haClient);
 
     monitor.start();
   }
 
-  // ---------------- HTTP + WS ---------------- 
+  /* ---------------- HTTP + WS ---------------- */
 
   server = http.createServer(app);
 
@@ -114,13 +139,15 @@ export const startServer = async () => {
   }
 
   server.listen(config.port, () => {
-    logger.info(`Server running on port ${config.port}`);
+    logger.info(
+      `Server running on port ${config.port}`
+    );
   });
 
   return server;
 };
 
-// ---------------- BOOTSTRAP ----------------
+/* ---------------- BOOTSTRAP ---------------- */
 
 if (require.main === module) {
   startServer();

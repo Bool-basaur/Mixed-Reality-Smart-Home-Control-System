@@ -1,0 +1,153 @@
+[
+  {
+    "entityId": "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "number.enchufe_tapo_p100_apagar_en",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "sensor.enchufe_tapo_p100_nivel_de_senal",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "sensor.enchufe_tapo_p100_apagado_automatico_a_las",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "switch.enchufe_tapo_p100",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "switch.enchufe_tapo_p100_apagado_automatico_habilitado",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "switch.enchufe_tapo_p100_actualizacion_automatica_habilitada",
+    "deviceId": "tapo_p100"
+  },
+  {
+    "entityId": "switch.enchufe_tapo_p100_led",
+    "deviceId": "tapo_p100"
+  },
+
+  {
+    "entityId": "button.tapo_c210_girar_a_la_derecha",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "button.tapo_c210_girar_a_la_izquierda",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "button.tapo_c210_inclinar_hacia_arriba",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "button.tapo_c210_inclinar_hacia_abajo",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "camera.tapo_c210_vista_en_vivo",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "number.tapo_c210_grados_de_giro",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "number.tapo_c210_grados_de_inclinacion",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "sensor.tapo_c210_nivel_de_senal",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210_led",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_movimiento",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_personas",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_manipulacion",
+    "deviceId": "tapo_c210"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_llanto_de_bebe",
+    "deviceId": "tapo_c210"
+  },
+
+  {
+    "entityId": "button.tapo_c210_girar_a_la_derecha_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "button.tapo_c210_girar_a_la_izquierda_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "button.tapo_c210_inclinar_hacia_arriba_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "button.tapo_c210_inclinar_hacia_abajo_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "camera.tapo_c210_vista_en_vivo_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "number.tapo_c210_grados_de_giro_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "number.tapo_c210_grados_de_inclinacion_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "sensor.tapo_c210_nivel_de_senal_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_led_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_movimiento_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_personas_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_manipulacion_2",
+    "deviceId": "tapo_c210_2"
+  },
+  {
+    "entityId": "switch.tapo_c210_deteccion_de_llanto_de_bebe_2",
+    "deviceId": "tapo_c210_2"
+  },
+
+  {
+    "entityId": "media_player.dormitorio",
+    "deviceId": "google_nest_dormitorio"
+  }
+]

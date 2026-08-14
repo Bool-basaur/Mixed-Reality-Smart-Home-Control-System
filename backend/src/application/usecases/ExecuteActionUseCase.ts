@@ -1,23 +1,51 @@
-import { DeviceRegistryClass } from "../services/DeviceRegistry";
+import { EntityRegistryClass } from "../services/EntityRegistry";
 import { Result } from "../../domain/valueObjects/Result";
 
 export class ExecuteActionUseCase {
-  constructor(private readonly registry: DeviceRegistryClass) {}
+  constructor(
+    private readonly registry: EntityRegistryClass
+  ) {}
 
   async execute(
-    deviceId: string,
+    entityId: string,
     action: string,
     params: any
   ): Promise<Result<void>> {
-    const device = this.registry.get(deviceId);
-    if (!device) return Result.failure("Device not found");
 
-    const ha = this.registry.getHA();
-    if (!ha) return Result.failure("Home Assistant not connected");
+    const entity =
+      this.registry.getById(entityId);
 
-    const cap = device.capabilities.find((c) => c.supports(action));
-    if (!cap) return Result.failure(`Action ${action} not supported`);
+    if (!entity) {
+      return Result.failure(
+        "Entity not found"
+      );
+    }
 
-    return cap.execute(action, params, device, ha);
+    const ha =
+      this.registry.getHA();
+
+    if (!ha) {
+      return Result.failure(
+        "Home Assistant not connected"
+      );
+    }
+
+    const capability =
+      entity.capabilities.find(
+        c => c.supports(action)
+      );
+
+    if (!capability) {
+      return Result.failure(
+        `Action ${action} not supported`
+      );
+    }
+
+    return capability.execute(
+      action,
+      params,
+      entity,
+      ha
+    );
   }
 }

@@ -1,27 +1,105 @@
-// src/domain/capabilities/registries/CapabilityRegistry.ts
 import { HAEntity } from "../../interfaces/HAEntity";
-import { CapabilityStrategy } from "../CapabilityStrategy";
-import { OnOffCapability } from "../impl/OnOfCapability";
-import { BrightnessCapability } from "../impl/BrightnessCapability";
-import { VolumeCapability } from "../impl/VolumeCapability";
-import { MediaPlaybackCapability } from "../impl/MediaPlaybackCapability";
-import { SensorCapability } from "../impl/SensorCapability";
-import { normalizeDomain } from "../../valueObjects/Domain";
+
+import { CapabilityStrategy }
+  from "../CapabilityStrategy";
+
+import { OnOffCapability }
+  from "../impl/OnOfCapability";
+
+import { VolumeCapability }
+  from "../impl/VolumeCapability";
+
+import { MediaPlaybackCapability }
+  from "../impl/MediaPlaybackCapability";
+
+import { SensorCapability }
+  from "../impl/SensorCapability";
+
+import { LiveStreamCapability }
+  from "../impl/LiveStreamCapability";
+
+import { normalizeDomain }
+  from "../../valueObjects/Domain";
 
 export class CapabilityRegistry {
-  static map(entity: HAEntity): CapabilityStrategy[] {
-    const safeDomain = normalizeDomain(entity.entity_id?.split?.(".")[0]);
-    const caps: CapabilityStrategy[] = [];
 
-    if (["switch", "light"].includes(safeDomain)) caps.push(new OnOffCapability());
-    if (safeDomain === "light" && entity.attributes?.brightness !== undefined) caps.push(new BrightnessCapability());
-    if (safeDomain === "media_player") {
-      caps.push(new OnOffCapability());
-      caps.push(new VolumeCapability());
-      caps.push(new MediaPlaybackCapability());
+  static map(
+    entities: HAEntity[]
+  ): CapabilityStrategy[] {
+
+    const capabilities:
+      CapabilityStrategy[] = [];
+
+    const domains = entities.map(entity => normalizeDomain(entity.entity_id ?.split(".")[0]));
+
+    const uniqueDomains =
+      [...new Set(domains)];
+
+    const addCapability = (
+      capability:
+        CapabilityStrategy
+    ) => {
+
+      const alreadyExists =
+        capabilities.some(
+          existing =>
+            existing.name ===
+            capability.name
+        );
+
+      if (!alreadyExists) {
+
+        capabilities.push(
+          capability
+        );
+      }
+    };
+
+    // Encendido / apagado
+    if (
+      uniqueDomains.includes("switch") ||
+      uniqueDomains.includes("media_player")
+    ) {
+
+      addCapability(
+        new OnOffCapability()
+      );
     }
-    if (safeDomain === "sensor") caps.push(new SensorCapability());
 
-    return caps;
+    // Streaming de cámaras
+    if (
+      uniqueDomains.includes("camera")
+    ) {
+
+      addCapability(
+        new LiveStreamCapability()
+      );
+    }
+
+    // Sensores
+    if (
+      uniqueDomains.includes("sensor")
+    ) {
+
+      addCapability(
+        new SensorCapability()
+      );
+    }
+
+    // Multimedia
+    if (
+      uniqueDomains.includes("media_player")
+    ) {
+
+      addCapability(
+        new VolumeCapability()
+      );
+
+      addCapability(
+        new MediaPlaybackCapability()
+      );
+    }
+
+    return capabilities;
   }
 }

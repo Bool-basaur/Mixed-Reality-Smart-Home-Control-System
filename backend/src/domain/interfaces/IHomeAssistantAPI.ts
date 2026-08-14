@@ -1,4 +1,6 @@
-import { Device } from "../entities/Device";
+import { HAEntity } from "./HAEntity";
+import { HADevice } from "./HADevice";
+import { HAEntityRegistryEntry } from "./HAEntityRegistryEntry";
 
 export interface IHomeAssistantAPI {
 
@@ -6,12 +8,23 @@ export interface IHomeAssistantAPI {
 
   disconnect?(): Promise<void>;
 
-  onEvent(handler: (event: any) => void): void;
+  onEvent(
+    handler: (event: unknown) => void
+  ): void;
 
-  callService(domain: string, service: string, data: any): Promise<any>;
+  callService(
+    domain: string,
+    service: string,
+    data: unknown
+  ): Promise<void>;
 
-  getAllEntities(): Promise<Device[]>;
+  getAllEntities(): Promise<HAEntity[]>;
+
+  getDeviceRegistry(): Promise<HADevice[]>;
+
+  getEntityRegistry(): Promise<
+    HAEntityRegistryEntry[]
+  >;
 
   ping?(): Promise<number>;
-  
 }
