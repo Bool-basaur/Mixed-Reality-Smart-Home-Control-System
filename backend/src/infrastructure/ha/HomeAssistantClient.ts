@@ -136,13 +136,14 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
   }
 
   async getDeviceRegistry(): Promise<HADevice[]> {
-    return this.sendCommand<HADevice[]>(
-      HACommand.DEVICE_REGISTRY_LIST
-    );
+    const result = await this.sendCommand<any[]>(HACommand.DEVICE_REGISTRY_LIST);
+    console.log("FIRST DEVICE:", JSON.stringify(result[0], null, 2));
+    return result.map(device => ({id: device.id, name: device.name, manufacturer: device.manufacturer, model: device.model}));
   }
 
   async getEntityRegistry(): Promise<HAEntityRegistryEntry[]> {
-    return this.sendCommand<HAEntityRegistryEntry[]>(HACommand.ENTITY_REGISTRY_LIST);
+    const result = await this.sendCommand<any[]>(HACommand.ENTITY_REGISTRY_LIST);
+    return result.map(entry => ({entityId: entry.entity_id, deviceId: entry.device_id}));
   }
 
   async ping(): Promise<number> {

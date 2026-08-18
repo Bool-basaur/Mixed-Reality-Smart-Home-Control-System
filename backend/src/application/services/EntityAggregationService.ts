@@ -2,6 +2,7 @@ import { PhysicalDevice } from "../../domain/entities/PhysicalDevice";
 import { HAEntity } from "../../domain/interfaces/HAEntity";
 import { HADevice } from "../../domain/interfaces/HADevice";
 import { HAEntityRegistryEntry } from "../../domain/interfaces/HAEntityRegistryEntry";
+import { logger } from "../../infrastructure/logger";
 
 export class EntityAggregationService {
 
@@ -9,21 +10,14 @@ export class EntityAggregationService {
     entities: HAEntity[],
     devices: HADevice[],
     entityRegistry: HAEntityRegistryEntry[]): PhysicalDevice[] {
-
     const entityToDevice = this.buildEntityToDeviceIndex(entityRegistry);
 
     const groupedEntities = this.groupEntitiesByDevice(entities, entityToDevice);
-
     return this.buildPhysicalDevices(groupedEntities, devices);
   }
 
   private buildEntityToDeviceIndex(entityRegistry: HAEntityRegistryEntry[]): Map<string, string> {
-
-    return new Map(
-      entityRegistry
-        .filter(entry => entry.deviceId)
-        .map(entry => [entry.entityId, entry.deviceId!])
-    );
+    return new Map(entityRegistry.filter(entry => entry.deviceId).map(entry => [entry.entityId, entry.deviceId!]));
   }
 
   private groupEntitiesByDevice(

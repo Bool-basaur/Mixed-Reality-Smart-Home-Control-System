@@ -26,6 +26,7 @@ export class IoTEntityFactory {
       "IoTEntity created",
       {
         deviceId: device.id,
+        deviceName: device.name,
         entities: device.entities.map(
           e => e.entity_id
         ),

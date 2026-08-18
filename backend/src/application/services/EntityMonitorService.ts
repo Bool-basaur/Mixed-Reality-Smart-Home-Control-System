@@ -60,6 +60,8 @@ export class EntityMonitorService {
 
     const entityRegistry = await this.haClient.getEntityRegistry();
 
+    logger.info(JSON.stringify(entityRegistry[0], null,2));
+
     const aggregator = new EntityAggregationService();
 
     const physicalDevices = aggregator.aggregate(entities, devices, entityRegistry);
