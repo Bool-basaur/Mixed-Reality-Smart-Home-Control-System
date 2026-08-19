@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 
 app.use("/health", healthRoutes);
 
-const server: http.Server;
+let server: http.Server;
 
 export const startServer = async () => {
   logger.info("START SERVER");
