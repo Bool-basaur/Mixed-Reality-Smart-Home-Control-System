@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 
 app.use("/health", healthRoutes);
 
-let server: http.Server;
+const server: http.Server;
 
 export const startServer = async () => {
   logger.info("START SERVER");
@@ -139,9 +139,7 @@ export const startServer = async () => {
   }
 
   server.listen(config.port, () => {
-    logger.info(
-      `Server running on port ${config.port}`
-    );
+    logger.info(`Server running on port ${config.port}`);
   });
 
   return server;

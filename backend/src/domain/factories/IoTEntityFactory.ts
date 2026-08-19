@@ -26,13 +26,7 @@ export class IoTEntityFactory {
       "IoTEntity created",
       {
         deviceId: device.id,
-        deviceName: device.name,
-        entities: device.entities.map(
-          e => e.entity_id
-        ),
-        capabilities: capabilities.map(
-          c => c.name
-        )
+        deviceName: device.name
       }
     );
     const state = this.buildState(device.entities);

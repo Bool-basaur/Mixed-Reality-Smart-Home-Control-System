@@ -13,9 +13,9 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
 
   private msgId = 1;
 
-  private url: string;
+  private readonly url: string;
 
-  private token: string;
+  private readonly token: string;
 
   private shouldReconnect = true;
 
@@ -62,7 +62,6 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
         if (msg.type === "auth_ok") {
           authed = true;
           resolve();
-          return;
         }
       });
 
@@ -137,7 +136,6 @@ export class HomeAssistantClient implements IHomeAssistantAPI {
 
   async getDeviceRegistry(): Promise<HADevice[]> {
     const result = await this.sendCommand<any[]>(HACommand.DEVICE_REGISTRY_LIST);
-    console.log("FIRST DEVICE:", JSON.stringify(result[0], null, 2));
     return result.map(device => ({id: device.id, name: device.name, manufacturer: device.manufacturer, model: device.model}));
   }
 

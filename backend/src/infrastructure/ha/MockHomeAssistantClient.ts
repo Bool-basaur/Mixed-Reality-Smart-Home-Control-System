@@ -5,20 +5,16 @@ import { IHomeAssistantAPI } from "../../domain/interfaces/IHomeAssistantAPI";
 import { HAEntity } from "../../domain/interfaces/HAEntity";
 import { HADevice } from "../../domain/interfaces/HADevice";
 import { HAEntityRegistryEntry } from "../../domain/interfaces/HAEntityRegistryEntry";
-
+import { logger } from "../logger";
 export class MockHomeAssistantClient
   implements IHomeAssistantAPI {
 
   async connect(): Promise<void> {
-    console.log(
-      "[MOCK] Home Assistant connected"
-    );
+    logger.info("[MOCK] Home Assistant connected");
   }
 
   async disconnect(): Promise<void> {
-    console.log(
-      "[MOCK] Home Assistant disconnected"
-    );
+    logger.info("[MOCK] Home Assistant disconnected");
   }
 
   onEvent( _handler: (event: unknown) => void): void {
@@ -30,9 +26,7 @@ export class MockHomeAssistantClient
     _service: string,
     _data: unknown
   ): Promise<void> {
-    console.log(
-      "[MOCK] callService"
-    );
+    logger.info("[MOCK] callService");
   }
 
   async getAllEntities(): Promise<HAEntity[]> {

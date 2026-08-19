@@ -2,7 +2,6 @@ import { PhysicalDevice } from "../../domain/entities/PhysicalDevice";
 import { HAEntity } from "../../domain/interfaces/HAEntity";
 import { HADevice } from "../../domain/interfaces/HADevice";
 import { HAEntityRegistryEntry } from "../../domain/interfaces/HAEntityRegistryEntry";
-import { logger } from "../../infrastructure/logger";
 
 export class EntityAggregationService {
 
@@ -50,18 +49,38 @@ export class EntityAggregationService {
 
     const devicesById = new Map( devices.map(device => [device.id, device]));
 
-    return [...groupedEntities.entries()]
-      .map(([deviceId, entities]) => {
+    return [...groupedEntities.entries()].filter(([deviceId]) => {
+      const device = devicesById.get(deviceId);
+      return this.shouldExposeDevice(device);
+    }).map(([deviceId, entities]) => {
 
-        const device = devicesById.get(deviceId);
+      const device = devicesById.get(deviceId);
 
-        const primaryEntity = entities[0];
+      const primaryEntity = entities[0];
 
-        if (!primaryEntity) {
-          throw new Error(`Device ${deviceId} has no entities`);
-        }
-        console.log(deviceId, entities.map(e => e.entity_id));
-        return new PhysicalDevice(deviceId, device?.name ?? deviceId, primaryEntity as HAEntity, entities);});
+      if (!primaryEntity) {
+        throw new Error( `Device ${deviceId} has no entities`);
+      }
+
+      return new PhysicalDevice(deviceId, device?.name ?? deviceId, primaryEntity as HAEntity, entities);
+    });
   }
   
+  private shouldExposeDevice(device: HADevice | undefined): boolean {
+    if (!device) {
+      return false;
+    }
+
+    const excludedDevices = new Set([
+      "Home Assistant Supervisor",
+      "Home Assistant Core",
+      "Home Assistant Operating System",
+      "Backup",
+      "Sun",
+      "Forecast",
+      "SM-S926B"
+    ]);
+
+    return !excludedDevices.has(device.name ?? "");
+  }
 }
