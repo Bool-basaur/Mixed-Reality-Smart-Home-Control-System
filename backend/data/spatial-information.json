@@ -1,18 +1,2 @@
 [
-  {
-    "entityId": "tapo_p100",
-    "homeId": "casa",
-    "roomId": "salon",
-    "zoneId": "tv",
-    "position": {
-      "x": 1.5,
-      "y": 0.8,
-      "z": 2.3
-    },
-    "rotation": {
-      "x": 0,
-      "y": 90,
-      "z": 0
-    }
-  }
 ]
