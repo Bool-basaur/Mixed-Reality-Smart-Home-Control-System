@@ -18,7 +18,7 @@ public class DeviceSpawner : MonoBehaviour
                 spawnPosition = context.spatialInformation.position.ToVector3();
                 Debug.Log("[APP] Using saved position: " + spawnPosition);
             }
-            else<{
+            else{
                 Vector3 basePosition = cam.transform.position + cam.transform.forward * 1.5f;
 
                 Vector3 offset = cam.transform.right * (i * spacing);
