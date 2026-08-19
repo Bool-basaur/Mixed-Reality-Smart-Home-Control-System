@@ -9,7 +9,8 @@ import { GetAllSpatialContextsUseCase } from "./GetAllSpatialContextsUseCase";
 import { spatialEntityContextService } from "../services";
 import { GetSpatialContextUseCase } from "./GetSpatialContextUseCase";
 import { ExecuteActionUseCase } from "./ExecuteActionUseCase";
-import { GetSystemSnapshotUseCase} from "./GetSystemSnapshotUseCase";
+import { GetSystemSnapshotUseCase } from "./GetSystemSnapshotUseCase";
+import { GetUnconfiguredSpatialContextsUseCase } from "./GetUnconfiguredSpatialContextsUseCase";
 
 
 export const listEntitiesUseCase = new ListEntitiesUseCase(EntityRegistry );
@@ -29,3 +30,5 @@ export const getSpatialContextUseCase = new GetSpatialContextUseCase(spatialEnti
 export const executeActionUseCase = new ExecuteActionUseCase(EntityRegistry);
 
 export const getSystemSnapshotUseCase = new GetSystemSnapshotUseCase(EntityRegistry, spatialEntityContextService);
+
+export const getUnconfiguredSpatialContextsUseCase = new GetUnconfiguredSpatialContextsUseCase(spatialEntityContextService);

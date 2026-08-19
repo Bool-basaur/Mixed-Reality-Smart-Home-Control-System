@@ -6,7 +6,8 @@ import {
   getSpatialDigitalTwin,
   getAllSpatialDigitalTwins,
   getAllSpatialContexts,
-  getSpatialContext
+  getSpatialContext,
+  getUnconfiguredSpatialContexts
 } from "../controllers/SpatialController";
 
 
@@ -35,6 +36,11 @@ router.get(
 router.get(
   "/spatial-contexts",
   getAllSpatialContexts
+);
+
+router.get(
+  "/spatial-contexts/unconfigured",
+  getUnconfiguredSpatialContexts
 );
 
 router.get(
