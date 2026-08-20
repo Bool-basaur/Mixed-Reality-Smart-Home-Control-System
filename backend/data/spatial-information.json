@@ -1,2 +1,34 @@
 [
+  {
+    "entityId": "de3201f6b44ab1cea1f43780b81a13d1",
+    "homeId": "main-home",
+    "roomId": "main-room",
+    "zoneId": "main-zone",
+    "position": {
+      "x": 0,
+      "y": 1.3614399433135986,
+      "z": 1.5
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "entityId": "991dd39ef16471aa6664aeda0177ee5f",
+    "homeId": "main-home",
+    "roomId": "main-room",
+    "zoneId": "main-zone",
+    "position": {
+      "x": 0,
+      "y": 1.3614399433135986,
+      "z": 1.5
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
 ]

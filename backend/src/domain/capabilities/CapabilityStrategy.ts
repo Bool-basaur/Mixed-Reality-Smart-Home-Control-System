@@ -25,8 +25,7 @@ export abstract class CapabilityStrategy {
 
     if (typeof this.buildServiceCall ==="function") {
       const call = this.buildServiceCall(action, params, entity);
-
-      try {
+      try {        
         await ha.callService(call.domain ?? "", call.service, {entity_id: call.entityId, ...(call.data ?? {}),});
         logger.info("Action executed", {entity, action});
         return Result.success();
