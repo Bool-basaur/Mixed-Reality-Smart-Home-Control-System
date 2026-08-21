@@ -139,9 +139,7 @@ export const startServer = async () => {
   }
 
   server.listen(config.port, () => {
-    logger.info(
-      `Server running on port ${config.port}`
-    );
+    logger.info(`Server running on port ${config.port}`);
   });
 
   return server;

@@ -9,7 +9,6 @@ import {
   getEntityActions,
   getEntityRelations,
   getEntityCount,
-  postAction,
   executeAction
 } from "../controllers/EntityController";
 
@@ -30,8 +29,6 @@ router.get("/:id/relations", getEntityRelations);
 router.get("/:id/capabilities", getEntityCapabilities);
 
 router.get("/:id/actions", getEntityActions);
-
-router.post("/:id/actions/:action", postAction);
 
 router.post("/:entityId/actions/:action", executeAction);
 

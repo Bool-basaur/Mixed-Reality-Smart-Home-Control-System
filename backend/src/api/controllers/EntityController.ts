@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { IoTEntity } from "../../domain/entities/IoTEntity";
-import { listEntitiesUseCase } from "../../application/usecases";
-import { executeActionUseCase } from "../../application/usecases";
+import { listEntitiesUseCase, executeActionUseCase } from "../../application/usecases";
 
-import { EntityRegistry, entityService } from "../../application/services";
+import { EntityRegistry} from "../../application/services";
 
 export const listEntities = async (_req: Request, res: Response) => {
 
@@ -136,28 +135,6 @@ export const getEntityCount = (
   });
 };
 
-export const postAction = async (req: Request, res: Response) => {
-
-  const {id, action} = req.params;
-
-  if (!id || !action) {
-    return res.status(400).json({
-      error: "Missing id or action"
-    });
-  }
-
-  const result = await entityService.executeAction(id, action, req.body);
-
-  if (!result.ok) {
-    return res.status(400).json({
-      error: result.error
-    });
-  }
-
-  return res.json({
-    ok: true
-  });
-};
 
 export const executeAction = async (req: Request, res: Response) => {
 

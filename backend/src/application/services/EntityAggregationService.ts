@@ -9,21 +9,14 @@ export class EntityAggregationService {
     entities: HAEntity[],
     devices: HADevice[],
     entityRegistry: HAEntityRegistryEntry[]): PhysicalDevice[] {
-
     const entityToDevice = this.buildEntityToDeviceIndex(entityRegistry);
 
     const groupedEntities = this.groupEntitiesByDevice(entities, entityToDevice);
-
     return this.buildPhysicalDevices(groupedEntities, devices);
   }
 
   private buildEntityToDeviceIndex(entityRegistry: HAEntityRegistryEntry[]): Map<string, string> {
-
-    return new Map(
-      entityRegistry
-        .filter(entry => entry.deviceId)
-        .map(entry => [entry.entityId, entry.deviceId!])
-    );
+    return new Map(entityRegistry.filter(entry => entry.deviceId).map(entry => [entry.entityId, entry.deviceId!]));
   }
 
   private groupEntitiesByDevice(
@@ -56,18 +49,38 @@ export class EntityAggregationService {
 
     const devicesById = new Map( devices.map(device => [device.id, device]));
 
-    return [...groupedEntities.entries()]
-      .map(([deviceId, entities]) => {
+    return [...groupedEntities.entries()].filter(([deviceId]) => {
+      const device = devicesById.get(deviceId);
+      return this.shouldExposeDevice(device);
+    }).map(([deviceId, entities]) => {
 
-        const device = devicesById.get(deviceId);
+      const device = devicesById.get(deviceId);
 
-        const primaryEntity = entities[0];
+      const primaryEntity = entities[0];
 
-        if (!primaryEntity) {
-          throw new Error(`Device ${deviceId} has no entities`);
-        }
-        console.log(deviceId, entities.map(e => e.entity_id));
-        return new PhysicalDevice(deviceId, device?.name ?? deviceId, primaryEntity as HAEntity, entities);});
+      if (!primaryEntity) {
+        throw new Error( `Device ${deviceId} has no entities`);
+      }
+
+      return new PhysicalDevice(deviceId, device?.name ?? deviceId, primaryEntity as HAEntity, entities);
+    });
   }
   
+  private shouldExposeDevice(device: HADevice | undefined): boolean {
+    if (!device) {
+      return false;
+    }
+
+    const excludedDevices = new Set([
+      "Home Assistant Supervisor",
+      "Home Assistant Core",
+      "Home Assistant Operating System",
+      "Backup",
+      "Sun",
+      "Forecast",
+      "SM-S926B"
+    ]);
+
+    return !excludedDevices.has(device.name ?? "");
+  }
 }

@@ -48,9 +48,7 @@ export class IoTEntity {
       category: this.category,
       state: this.state,
       attributes: this.attributes,
-      capabilities: this.capabilities.map(
-        capability => capability.name
-      ),
+      capabilities: this.capabilities.map(capability => capability.name),
       actions: this.actions,
       relations: this.relations
     };

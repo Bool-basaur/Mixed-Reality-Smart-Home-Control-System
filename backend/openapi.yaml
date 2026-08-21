@@ -1,80 +1,457 @@
 openapi: 3.0.3
+
 info:
-  title: HomeAssistant Unifier API
-  version: 0.1.0
+  title: Home Assistant Unifier API
+  version: 0.2.0
+  description: >
+    API para descubrimiento, consulta y control de entidades IoT
+    provenientes de Home Assistant.
+
 servers:
   - url: http://localhost:3000
+
 paths:
-  /devices:
+
+  /health:
     get:
-      summary: Lista dispositivos
+      tags:
+        - Health
+      summary: Health check
       responses:
-        '200':
-          description: OK
+        "200":
+          description: Estado de la aplicación
+
+  /snapshot:
+    get:
+      tags:
+        - Snapshot
+      summary: Obtener snapshot completo
+      responses:
+        "200":
+          description: Snapshot actual
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SystemSnapshot"
+
+  /entities:
+    get:
+      tags:
+        - Entities
+      summary: Listar entidades
+      responses:
+        "200":
+          description: Lista de entidades
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Device'
-  /devices/{id}:
+                  $ref: "#/components/schemas/IoTEntity"
+
+  /entities/count:
     get:
-      summary: Obtener dispositivo
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      tags:
+        - Entities
+      summary: Número total de entidades
       responses:
-        '200':
-          description: OK
+        "200":
+          description: Contador
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
-  /devices/{id}/actions/{action}:
-    post:
-      summary: Ejecutar acción en dispositivo
+                type: object
+                properties:
+                  count:
+                    type: integer
+
+  /entities/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Obtener entidad
       parameters:
-        - in: path
-          name: id
-          schema: { type: string }
-        - in: path
-          name: action
-          schema: { type: string }
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Entidad encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IoTEntity"
+        "404":
+          description: No encontrada
+
+  /entities/{id}/state:
+    get:
+      tags:
+        - Entities
+      summary: Obtener estado de una entidad
+      parameters:
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Estado actual
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /entities/{id}/attributes:
+    get:
+      tags:
+        - Entities
+      summary: Obtener atributos
+      parameters:
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Atributos
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                
+  /entities/{id}/capabilities:
+    get:
+      tags:
+        - Entities
+      summary: Obtener capacidades
+      parameters:
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Capacidades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /entities/{id}/actions:
+    get:
+      tags:
+        - Entities
+      summary: Obtener acciones disponibles
+      parameters:
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Acciones disponibles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /entities/{id}/relations:
+    get:
+      tags:
+        - Entities
+      summary: Obtener relaciones Home Assistant
+      parameters:
+        - $ref: "#/components/parameters/EntityId"
+      responses:
+        "200":
+          description: Relaciones de la entidad
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /entities/{entityId}/actions/{action}:
+    post:
+      tags:
+        - Actions
+      summary: Ejecutar acción sobre una entidad
+      parameters:
+        - name: enti/entities/{id}/capabilities:tyId
+          in: path
+          required: true
+          schema:
+            type: string
+
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: string
+
       requestBody:
+        required: false
         content:
           application/json:
             schema:
               type: object
+              additionalProperties: true
+
       responses:
-        '200':
-          description: Acción enviada
-        '400':
-          description: Bad request
-        '404':
-          description: Not found
-  /health:
-  get:
-    summary: Health check
-    responses:
-      '200':
-        description: OK
+        "200":
+          description: Acción ejecutada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+        "400":
+          description: Error al ejecutar la acción
+
+  /spatial-information:
+    post:
+      tags:
+        - Spatial
+      summary: Guardar información espacial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpatialInformation"
+
+      responses:
+        "200":
+          description: Información espacial almacenada
+
+  /spatial-information/{entityId}:
+    get:
+      tags:
+        - Spatial
+      summary: Obtener información espacial
+      parameters:
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Información espacial encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpatialInformation"
+
+        "404":
+          description: Información espacial no encontrada
+
+  /spatial-contexts:
+    get:
+      tags:
+        - Spatial
+      summary: Obtener todos los contextos espaciales
+      responses:
+        "200":
+          description: Lista de contextos espaciales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SpatialEntityContext"
+
+  /spatial-contexts/{entityId}:
+    get:
+      tags:
+        - Spatial
+      summary: Obtener contexto espacial de una entidad
+      parameters:
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Contexto espacial
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpatialEntityContext"
+
+        "404":
+          description: Contexto no encontrado
+
+  /spatial-digital-twins:
+    get:
+      tags:
+        - Spatial
+      summary: Obtener todos los gemelos digitales
+      responses:
+        "200":
+          description: Lista de gemelos digitales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /spatial-digital-twins/{entityId}:
+    get:
+      tags:
+        - Spatial
+      summary: Obtener gemelo digital de una entidad
+      parameters:
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Gemelo digital
+          content:
+            application/json:
+              schema:
+                type: object
+
+        "404":
+          description: Gemelo digital no encontrado
+
 components:
+
+  parameters:
+
+    EntityId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+
   schemas:
-    Device:
+
+    SystemSnapshot:
       type: object
+
       properties:
-        id: { type: string }
-        name: { type: string }
-        type: { type: string }
-        state: { type: string }
-        capabilities:
+
+        entities:
           type: array
-          items: { type: string }
+          items:
+            $ref: "#/components/schemas/IoTEntity"
+
+        spatialContexts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SpatialEntityContext"
+
+    IoTEntity:
+      type: object
+
+      properties:
+
+        id:
+          type: string
+          description: Identificador único de la entidad
+
+        name:
+          type: string
+          description: Nombre amigable
+
+        category:
+          type: string
+          enum:
+            - sensor
+            - actuator
+            - hybrid
+
+        state:
+          type: object
+          additionalProperties: true
+
         attributes:
           type: object
+          additionalProperties: true
+
+        capabilities:
+          type: array
+          items:
+            type: string
+
+        actions:
+          type: array
+          items:
+            type: string
+
+        relations:
+          type: array
+          items:
+            type: string
+
+      required:
+        - id
+        - name
+        - category
+        - state
+        - capabilities
+        - actions
+        - relations
+
+    SpatialInformation:
+      type: object
+
+      properties:
+
+        entityId:
+          type: string
+
+        homeId:
+          type: string
+          nullable: true
+
+        roomId:
+          type: string
+          nullable: true
+
+        zoneId:
+          type: string
+          nullable: true
+
+        position:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+        rotation:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+    SpatialEntityContext:
+      type: object
+
+      properties:
+
+        entity:
+          $ref: "#/components/schemas/IoTEntity"
+
+        spatialInfo:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/SpatialInformation"
+            
 x-websocket:
   /ws:
-    description: WebSocket endpoint that pushes device updates and initial device list
+    description: >
+      Endpoint WebSocket para sincronización en tiempo real de entidades.
+
+      Eventos soportados:
+
+      - ENTITY_ADDED
+
+      - ENTITY_STATE_UPDATED
+
+      - ENTITY_REMOVED

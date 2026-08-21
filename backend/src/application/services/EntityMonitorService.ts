@@ -19,10 +19,7 @@ export class EntityMonitorService {
 
   private saveSnapshot(entities: IoTEntity[]): void {
     try {
-      const dataDir = path.resolve(
-        process.cwd(),
-        "data"
-      );
+      const dataDir = path.resolve(process.cwd(), "data");
 
       if (!fs.existsSync(dataDir)) {
         fs.mkdirSync(
@@ -45,10 +42,7 @@ export class EntityMonitorService {
       );
 
     } catch (err) {
-      logger.error(
-        "Error saving entity snapshot",
-        err
-      );
+      logger.error("Error saving entity snapshot", err);
     }
   }
 
@@ -82,9 +76,6 @@ export class EntityMonitorService {
 
     this.saveSnapshot(latest);
 
-    logger.info(`Monitored ${latest.length} entities`);
-
-    logger.info(`Registry contains ${this.registry.count()} entities`);
   }
 
   start(): void {

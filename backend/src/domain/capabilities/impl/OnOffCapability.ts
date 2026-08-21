@@ -1,4 +1,3 @@
-// src/domain/capabilities/impl/OnOffCapability.ts
 import { CapabilityStrategy } from "../CapabilityStrategy";
 import { IoTEntity } from "../../entities/IoTEntity";
 
@@ -9,12 +8,7 @@ export class OnOffCapability extends CapabilityStrategy {
   }
   
   buildServiceCall(action: string, _params?: Record<string, unknown>, entity?: IoTEntity) {
-
-    const targetEntityId =
-      entity?.entityIds.find(
-        id => id.startsWith("switch.")
-      );
-
+    const targetEntityId = entity?.relations.filter(id => id.startsWith("switch.")).sort((a, b) => a.length - b.length)[0];
     return {
       domain: "switch",
       service: action,

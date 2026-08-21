@@ -4,7 +4,7 @@ import { CapabilityStrategy }
   from "../CapabilityStrategy";
 
 import { OnOffCapability }
-  from "../impl/OnOfCapability";
+  from "../impl/OnOffCapability";
 
 import { VolumeCapability }
   from "../impl/VolumeCapability";

@@ -1,20 +1,20 @@
 [
   {
-    "id": "google_nest_dormitorio",
-    "name": "Google Nest Dormitorio",
+    "id": "de3201f6b44ab1cea1f43780b81a13d1",
+    "name": "Dormitorio",
     "category": "hybrid",
     "state": {
       "media_player.dormitorio": "paused"
     },
     "attributes": {
-      "volume_level": 0.8188976645469666,
+      "volume_level": 0.748031497001648,
       "is_volume_muted": false,
       "media_content_id": "Bluetooth Audio",
       "media_content_type": "music",
       "media_position": 0,
-      "media_position_updated_at": "2026-08-06T17:03:43.581544+00:00",
-      "media_title": "Baldur's Gate 3 Mejor build para CLERIGO DOMINIO DE VIDA (efectiva para shadowheart)",
-      "media_artist": "Lo mio lo mio, son los videojuegos",
+      "media_position_updated_at": "2026-08-20T16:56:26.837432+00:00",
+      "media_title": "4x02 Erase un cultivo.",
+      "media_album_name": "Aqui no Hay Quien Viva",
       "app_id": "89EA58C1",
       "app_name": "BluetoothIot",
       "entity_picture_local": null,
@@ -40,8 +40,36 @@
     ]
   },
   {
-    "id": "tapo_p100",
-    "name": "Enchufe Tapo P100",
+    "id": "991dd39ef16471aa6664aeda0177ee5f",
+    "name": "Tá chiquita",
+    "category": "hybrid",
+    "state": {
+      "media_player.ta_chiquita": "unavailable"
+    },
+    "attributes": {
+      "friendly_name": "Tá chiquita",
+      "supported_features": 152461
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.ta_chiquita"
+    ]
+  },
+  {
+    "id": "e443abe291a4b7359afa277783368dc9",
+    "name": "Enchufe tapo p100",
     "category": "actuator",
     "state": {
       "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube": "on",
@@ -77,8 +105,8 @@
     ]
   },
   {
-    "id": "tapo_c210",
-    "name": "Tapo C210",
+    "id": "0d7beae5ea6135097b11231f2c09c552",
+    "name": "Tapo_C210",
     "category": "actuator",
     "state": {
       "button.tapo_c210_girar_a_la_derecha": "unavailable",
@@ -128,8 +156,8 @@
     ]
   },
   {
-    "id": "tapo_c210_2",
-    "name": "Tapo C210 2",
+    "id": "6824c9fd14fe1fa71b04c9792db3f28f",
+    "name": "Tapo_C210",
     "category": "actuator",
     "state": {
       "button.tapo_c210_girar_a_la_derecha_2": "unavailable",
@@ -137,15 +165,15 @@
       "button.tapo_c210_inclinar_hacia_arriba_2": "unavailable",
       "button.tapo_c210_inclinar_hacia_abajo_2": "unavailable",
       "camera.tapo_c210_vista_en_vivo_2": "unavailable",
-      "number.tapo_c210_grados_de_giro_2": "30",
-      "number.tapo_c210_grados_de_inclinacion_2": "10",
-      "sensor.tapo_c210_nivel_de_senal_2": "2",
-      "switch.tapo_c210_deteccion_de_llanto_de_bebe_2": "off",
-      "switch.tapo_c210_2": "off",
-      "switch.tapo_c210_led_2": "on",
-      "switch.tapo_c210_deteccion_de_movimiento_2": "on",
-      "switch.tapo_c210_deteccion_de_personas_2": "on",
-      "switch.tapo_c210_deteccion_de_manipulacion_2": "off"
+      "number.tapo_c210_grados_de_giro_2": "unavailable",
+      "number.tapo_c210_grados_de_inclinacion_2": "unavailable",
+      "sensor.tapo_c210_nivel_de_senal_2": "unavailable",
+      "switch.tapo_c210_deteccion_de_llanto_de_bebe_2": "unavailable",
+      "switch.tapo_c210_2": "unavailable",
+      "switch.tapo_c210_led_2": "unavailable",
+      "switch.tapo_c210_deteccion_de_movimiento_2": "unavailable",
+      "switch.tapo_c210_deteccion_de_personas_2": "unavailable",
+      "switch.tapo_c210_deteccion_de_manipulacion_2": "unavailable"
     },
     "attributes": {
       "friendly_name": "Tapo_C210 Girar a la derecha"

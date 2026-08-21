@@ -2,47 +2,84 @@ using UnityEngine;
 
 public class DeviceSpawner : MonoBehaviour
 {
-    public GameObject devicePrefab;
+    public GameObject sensorPrefab;
+    public GameObject actuatorPrefab;
+    public GameObject hybridPrefab;
 
-    public void SpawnContexts(SpatialContext[] contexts){
-        Camera cam = FindFirstObjectByType<Camera>();
+    private GameObject currentConfiguredDevice;
 
-        float spacing = 0.5f;
 
-        for (int i = 0; i < contexts.Length; i++){
-            SpatialContext context = contexts[i];
-
-            Vector3 spawnPosition;
-
-            if (context.spatialInformation != null && context.spatialInformation.position != null){
-                spawnPosition = context.spatialInformation.position.ToVector3();
-                Debug.Log("[APP] Using saved position: " + spawnPosition);
-            }
-            else<{
-                Vector3 basePosition = cam.transform.position + cam.transform.forward * 1.5f;
-
-                Vector3 offset = cam.transform.right * (i * spacing);
-
-                spawnPosition = basePosition + offset;
-
-                Debug.Log("[APP] Using fallback position");
+    public void SpawnConfiguredDevices(SpatialContext[] contexts){
+        foreach (var context in contexts){
+            if (context.spatialInformation != null &&
+            context.spatialInformation.position != null &&
+            context.spatialInformation.rotation != null){
+                SpawnConfiguredDevice(context);
             }
 
-            Quaternion rotation = Quaternion.identity;
+        }
+    }
 
-            if ( context.spatialInformation != null && context.spatialInformation.rotation != null){
-                rotation = context.spatialInformation.rotation.ToQuaternion();
-            }
+    private GameObject GetPrefab(string category){
+        switch (category)
+        {
+            case "sensor": return sensorPrefab;
 
-            GameObject go = Instantiate(devicePrefab, spawnPosition, rotation);
+            case "actuator": return actuatorPrefab;
 
-            go.transform.localScale = Vector3.one * 0.3f;
+            case "hybrid": return hybridPrefab;
 
-            DeviceView view = go.GetComponent<DeviceView>();
+            default: return sensorPrefab;
+        }
+    }
+    private void SpawnConfiguredDevice(SpatialContext context){
+        GameObject prefab = GetPrefab(context.entity.category);
 
-            if (view != null){
-                view.Setup(context);
-            }
+        Vector3 position = context.spatialInformation.position.ToVector3();
+
+        Quaternion rotation = context.spatialInformation.rotation.ToQuaternion();
+
+        GameObject go = Instantiate(prefab, position, rotation);
+
+        DeviceView view = go.GetComponent<DeviceView>();
+
+        if (view != null) view.Setup(context);
+
+    }
+
+    public GameObject SpawnUnconfiguredDevice(UnconfiguredDevice device){
+        Camera cam = Camera.main;
+
+        Vector3 position = cam.transform.position + cam.transform.forward * 1.5f;
+
+        GameObject prefab = GetPrefab(device.category);
+
+        GameObject go = Instantiate(prefab, position, Quaternion.identity);
+
+        ConfigurableDevice config = go.GetComponent<ConfigurableDevice>();
+
+        if (config != null){
+            config.entityId = device.id;
+
+            config.deviceName = device.name;
+
+            config.category = device.category;
+        }
+
+        currentConfiguredDevice = go;
+
+        return go;
+    }
+
+    public GameObject GetCurrentConfiguredDevice(){
+        return currentConfiguredDevice;
+    }
+
+    public void ClearCurrentConfiguredDevice(){
+        if (currentConfiguredDevice != null)
+        {
+            Destroy(currentConfiguredDevice);
+            currentConfiguredDevice = null;
         }
     }
 }

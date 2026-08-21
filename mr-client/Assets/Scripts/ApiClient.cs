@@ -5,18 +5,22 @@ using System.Collections;
 
 public class ApiClient : MonoBehaviour
 {
-    public string baseUrl = "http://192.168.1.42:3000";
+    public static string baseUrl = "http://localhost:3000";
+    private static string snapshotUrl = baseUrl + "/snapshot";
+    private static string spatialPath = "/spatial";
+    private static string spatialContextsPath = "/spatial-contexts";
+    private static string unconfiguredDevices = baseUrl + spatialPath + spatialContextsPath + "/unconfigured";
+    private static string spatialInformationUrl = baseUrl + spatialPath + "/spatial-information";
 
     public void GetSnapshot(Action<Snapshot> onSuccess){
-        StartCoroutine( GetSnapshotCoroutine(onSuccess));
+        StartCoroutine(GetSnapshotCoroutine(onSuccess));
     }
 
     IEnumerator GetSnapshotCoroutine(Action<Snapshot> onSuccess){
-        string url = baseUrl + "/snapshot";
 
-        Debug.Log("[APP] Calling: " + url);
+        Debug.Log("[APP] Calling: " + snapshotUrl);
 
-        UnityWebRequest request = UnityWebRequest.Get(url);
+        UnityWebRequest request = UnityWebRequest.Get(snapshotUrl);
 
         yield return request.SendWebRequest();
 
@@ -32,5 +36,61 @@ public class ApiClient : MonoBehaviour
         Snapshot snapshot =  JsonUtility.FromJson<Snapshot>(json);
 
         onSuccess?.Invoke(snapshot);
+    }
+
+    public void GetUnconfiguredDevices(Action<UnconfiguredDevice[]> onSuccess){
+        StartCoroutine(GetUnconfiguredDevicesCoroutine(onSuccess));
+    }
+
+    IEnumerator GetUnconfiguredDevicesCoroutine(Action<UnconfiguredDevice[]> onSuccess){
+
+        Debug.Log("[APP] Calling: " + unconfiguredDevices);
+
+        UnityWebRequest request = UnityWebRequest.Get(unconfiguredDevices);
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success){
+            Debug.LogError("[APP] ERROR: " + request.error);
+            yield break;
+        }
+
+        string json = request.downloadHandler.text;
+
+        UnconfiguredDevice[] devices = JsonArrayHelper.FromJson<UnconfiguredDevice>(json);
+
+        onSuccess?.Invoke(devices);
+    }
+
+    public void SaveSpatialInformation(SpatialInformationRequest request, Action onSuccess){
+        StartCoroutine(SaveSpatialInformationCoroutine(request, onSuccess));
+    }
+
+    IEnumerator SaveSpatialInformationCoroutine(SpatialInformationRequest request, Action onSuccess){
+ 
+        string json = JsonUtility.ToJson(request);
+
+        Debug.Log("[APP] Saving spatial information:\n" + json);
+
+        UnityWebRequest webRequest = new UnityWebRequest(spatialInformationUrl, "POST");
+
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+
+        webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result != UnityWebRequest.Result.Success) {
+            Debug.LogError("[APP] ERROR saving spatial information: " + webRequest.error);
+            yield break;
+        }
+
+        Debug.Log("[APP] Spatial information saved");
+
+        onSuccess?.Invoke();
     }
 }
