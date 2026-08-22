@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9185487416380609964}
   - component: {fileID: 3770241719500391992}
   - component: {fileID: 8980608042432442339}
+  - component: {fileID: -4877298698031004147}
   m_Layer: 0
   m_Name: HybridPrefab
   m_TagString: DigitalTwinDevice
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,4 +128,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConfigurableDevice
   entityId: 
   deviceName: 
-  category: hybrid
+  category: 
+--- !u!114 &-4877298698031004147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767859580821648129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553497a3ab6f8da4eb5dff89e9230262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PendingDeviceFollower

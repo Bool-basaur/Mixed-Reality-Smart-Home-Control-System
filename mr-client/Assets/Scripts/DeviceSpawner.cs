@@ -21,6 +21,7 @@ public class DeviceSpawner : MonoBehaviour
     }
 
     private GameObject GetPrefab(string category){
+        Debug.Log($"[APP] GetPrefab({category})");
         switch (category)
         {
             case "sensor": return sensorPrefab;
@@ -40,21 +41,27 @@ public class DeviceSpawner : MonoBehaviour
         Quaternion rotation = context.spatialInformation.rotation.ToQuaternion();
 
         GameObject go = Instantiate(prefab, position, rotation);
-
+        Debug.Log($"[APP] Spawning device at {position}");
+        Debug.Log($"[APP] Prefab: {prefab.name}");
         DeviceView view = go.GetComponent<DeviceView>();
 
         if (view != null) view.Setup(context);
 
     }
 
-    public GameObject SpawnUnconfiguredDevice(UnconfiguredDevice device){
+    public GameObject SpawnUnconfiguredDevice(UnconfiguredDevice device) {
         Camera cam = Camera.main;
-
-        Vector3 position = cam.transform.position + cam.transform.forward * 1.5f;
-
+        Vector3 pos = cam.transform.position + cam.transform.forward * 0.5f + cam.transform.up * -0.3f;
+        Quaternion rot = cam.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+        Debug.Log($"[APP] Device '{device.name}' category '{device.category}'");
         GameObject prefab = GetPrefab(device.category);
 
-        GameObject go = Instantiate(prefab, position, Quaternion.identity);
+        Debug.Log($"[APP] Spawning {prefab.name}");
+        Debug.Log($"[APP] Position {pos}");
+
+        GameObject go = Instantiate(prefab, pos, rot);
+
+        Debug.Log($"[APP] Spawned {go.name}");
 
         ConfigurableDevice config = go.GetComponent<ConfigurableDevice>();
 
@@ -76,4 +83,5 @@ public class DeviceSpawner : MonoBehaviour
             currentConfiguredDevice = null;
         }
     }
+
 }

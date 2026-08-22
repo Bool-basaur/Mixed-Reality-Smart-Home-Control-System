@@ -1,77 +1,8 @@
 [
   {
-    "id": "de3201f6b44ab1cea1f43780b81a13d1",
-    "name": "Dormitorio",
-    "category": "hybrid",
-    "state": {
-      "media_player.dormitorio": "paused"
-    },
-    "attributes": {
-      "volume_level": 0.699999988079071,
-      "is_volume_muted": false,
-      "media_content_id": "Bluetooth Audio",
-      "media_content_type": "music",
-      "media_duration": 4714.997,
-      "media_position": 575.299,
-      "media_position_updated_at": "2026-08-22T12:02:46.974597+00:00",
-      "media_title": "4x14 Erase una nueva vida.",
-      "media_album_name": "Aqui no Hay Quien Viva",
-      "app_id": "89EA58C1",
-      "app_name": "BluetoothIot",
-      "entity_picture_local": null,
-      "device_class": "speaker",
-      "friendly_name": "Dormitorio",
-      "supported_features": 152461
-    },
-    "capabilities": [
-      "on_off",
-      "volume",
-      "media_playback"
-    ],
-    "actions": [
-      "turn_on",
-      "turn_off",
-      "set_volume",
-      "play",
-      "pause",
-      "stop"
-    ],
-    "relations": [
-      "media_player.dormitorio"
-    ]
-  },
-  {
-    "id": "991dd39ef16471aa6664aeda0177ee5f",
-    "name": "Tá chiquita",
-    "category": "hybrid",
-    "state": {
-      "media_player.ta_chiquita": "unavailable"
-    },
-    "attributes": {
-      "friendly_name": "Tá chiquita",
-      "supported_features": 152461
-    },
-    "capabilities": [
-      "on_off",
-      "volume",
-      "media_playback"
-    ],
-    "actions": [
-      "turn_on",
-      "turn_off",
-      "set_volume",
-      "play",
-      "pause",
-      "stop"
-    ],
-    "relations": [
-      "media_player.ta_chiquita"
-    ]
-  },
-  {
     "id": "e443abe291a4b7359afa277783368dc9",
     "name": "Enchufe tapo p100",
-    "category": "actuator",
+    "category": "hybrid",
     "state": {
       "binary_sensor.enchufe_tapo_p100_conexion_a_la_nube": "on",
       "number.enchufe_tapo_p100_apagar_en": "120",
@@ -108,7 +39,7 @@
   {
     "id": "0d7beae5ea6135097b11231f2c09c552",
     "name": "Tapo_C210",
-    "category": "actuator",
+    "category": "hybrid",
     "state": {
       "button.tapo_c210_girar_a_la_derecha": "unavailable",
       "button.tapo_c210_girar_a_la_izquierda": "unavailable",
@@ -159,7 +90,7 @@
   {
     "id": "6824c9fd14fe1fa71b04c9792db3f28f",
     "name": "Tapo_C210",
-    "category": "actuator",
+    "category": "hybrid",
     "state": {
       "button.tapo_c210_girar_a_la_derecha_2": "unavailable",
       "button.tapo_c210_girar_a_la_izquierda_2": "unavailable",
@@ -205,6 +136,124 @@
       "switch.tapo_c210_deteccion_de_movimiento_2",
       "switch.tapo_c210_deteccion_de_personas_2",
       "switch.tapo_c210_deteccion_de_manipulacion_2"
+    ]
+  },
+  {
+    "id": "abce2599ade636518f3b6988bc9e036b",
+    "name": "Android TV",
+    "category": "actuator",
+    "state": {
+      "media_player.android_tv": "unavailable",
+      "remote.android_tv": "unavailable"
+    },
+    "attributes": {
+      "assumed_state": true,
+      "device_class": "tv",
+      "friendly_name": "Android TV",
+      "supported_features": 153529
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.android_tv",
+      "remote.android_tv"
+    ]
+  },
+  {
+    "id": "de3201f6b44ab1cea1f43780b81a13d1",
+    "name": "Dormitorio",
+    "category": "actuator",
+    "state": {
+      "media_player.google_nest": "unavailable"
+    },
+    "attributes": {
+      "device_class": "speaker",
+      "friendly_name": "Google Nest Mini",
+      "supported_features": 152461
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.google_nest"
+    ]
+  },
+  {
+    "id": "991dd39ef16471aa6664aeda0177ee5f",
+    "name": "Android TV",
+    "category": "actuator",
+    "state": {
+      "media_player.android_tv_2": "unavailable"
+    },
+    "attributes": {
+      "friendly_name": "Android TV",
+      "supported_features": 152449
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.android_tv_2"
+    ]
+  },
+  {
+    "id": "ca082d293b6553e28e98134b246725c9",
+    "name": "Despacho",
+    "category": "actuator",
+    "state": {
+      "media_player.despacho": "off"
+    },
+    "attributes": {
+      "device_class": "speaker",
+      "friendly_name": "Despacho",
+      "supported_features": 152461
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.despacho"
     ]
   }
 ]

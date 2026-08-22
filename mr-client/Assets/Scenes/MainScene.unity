@@ -251,6 +251,17 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &394089684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4987710458060175568, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
+  m_PrefabInstance: {fileID: 9171434735135221956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e435eaf67c0f14eab5085e82a3d9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConfigurationManager
 --- !u!114 &568445334 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2839488153068055946, guid: 3e9f510f36fef71489fba31a3de151b5, type: 3}
@@ -849,6 +860,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 84362871397725336, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
+      propertyPath: hybridPrefab
+      value: 
+      objectReference: {fileID: 1767859580821648129, guid: 2625c3f1f34044f4f806dc58acb33f7f, type: 3}
+    - target: {fileID: 84362871397725336, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
+      propertyPath: sensorPrefab
+      value: 
+      objectReference: {fileID: 1884549452050115501, guid: df789c746fa081e4286decce56706797, type: 3}
     - target: {fileID: 291912317377353922, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
       propertyPath: m_Name
       value: BackendManager
@@ -857,6 +876,10 @@ PrefabInstance:
       propertyPath: popup
       value: 
       objectReference: {fileID: 568445334}
+    - target: {fileID: 5614516538580649685, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
+      propertyPath: configurationManager
+      value: 
+      objectReference: {fileID: 394089684}
     - target: {fileID: 8831287632046842130, guid: 3c67654c5d1c55b4a8bba4e43cfe016f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
