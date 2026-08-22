@@ -3,42 +3,80 @@ using UnityEngine;
 public class DeviceManager : MonoBehaviour
 {
     public ApiClient apiClient;
-    // public DeviceSpawner spawner;
+
+    public DeviceSpawner spawner;
+
+    public ConfigurationPopupController popup; 
+    
+    public ConfigurationManager configurationManager;
+
+    private Snapshot snapshot;
 
     void Start()
     {
-        apiClient.GetSnapshot(snapshot =>
+        apiClient.GetSnapshot(receivedSnapshot =>
+        {
+            if (receivedSnapshot == null)
             {
-                if (snapshot == null)
-                {
-                    Debug.LogError("[APP] Snapshot is NULL");
-                    return;
-                }
-
-                Debug.Log($"[APP] Entities: {snapshot.entities?.Length}");
-
-                Debug.Log($"[APP] Contexts: {snapshot.spatialContexts?.Length}");
+                Debug.LogError("[APP] Snapshot is NULL");
+                return;
             }
-        );
 
-        apiClient.GetUnconfiguredDevices(unconfiguredDevices =>
+            snapshot = receivedSnapshot;
+
+            apiClient.GetUnconfiguredDevices(devices =>
             {
-                if (unconfiguredDevices == null)
+                if (devices == null)
                 {
                     Debug.LogError("[APP] Unconfigured devices is NULL");
                     return;
                 }
 
-                Debug.Log($"[APP] Unconfigured devices: {unconfiguredDevices.Length}");
+                Debug.Log($"[APP] Unconfigured devices: {devices.Length}");
 
-                if (unconfiguredDevices.Length > 0)
+                if (devices.Length > 0)
                 {
-                    string message = unconfiguredDevices.Length == 1 ? "Hay un dispositivo nuevo pendiente de configurar."
-                    : $"Hay {unconfiguredDevices.Length} dispositivos nuevos pendientes de configurar.";
-
-                    Debug.Log("[APP] " + message);
+                    ShowConfigurationPopup(devices.Length);
                 }
-            }
+                else
+                {
+                    ShowConfiguredDevices();
+                }
+            });
+        });
+    }
+
+    private void ShowConfigurationPopup(int pendingDevices)
+    {
+        Debug.Log("[APP] SHOWING CONFIGURATION POPUP");
+        popup.ShowInFrontOfCamera();
+
+        popup.Setup(pendingDevices, () =>
+            {
+                Debug.Log("[APP] Accept clicked"); 
+                popup.StopFollowing();
+                popup.gameObject.SetActive(false);
+                configurationManager.StartConfiguration();
+            },
+            () =>
+            {
+                Debug.Log("[APP] Cancel clicked");
+                popup.StopFollowing();
+                popup.gameObject.SetActive(false);
+                ShowConfiguredDevices();
+            });
+    }
+
+    private void ShowConfiguredDevices()
+    {
+        if (snapshot == null)
+        {
+            return;
+        }
+
+        spawner.SpawnConfiguredDevices(
+            snapshot.spatialContexts
         );
     }
+
 }

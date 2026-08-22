@@ -58,13 +58,7 @@ public class DeviceSpawner : MonoBehaviour
 
         ConfigurableDevice config = go.GetComponent<ConfigurableDevice>();
 
-        if (config != null){
-            config.entityId = device.id;
-
-            config.deviceName = device.name;
-
-            config.category = device.category;
-        }
+        config.Setup(device);
 
         currentConfiguredDevice = go;
 

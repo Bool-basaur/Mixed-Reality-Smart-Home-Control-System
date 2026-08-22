@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4215399684833898367}
   - component: {fileID: 7695922313335677506}
   m_Layer: 0
-  m_Name: TapoP100
-  m_TagString: Untagged
+  m_Name: ActuatorPrefab
+  m_TagString: DigitalTwinDevice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3424367270504730392}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.35, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -125,6 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb442cd74d5eef43997e8b5ca151fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConfigurableDevice
-  entityId: e443abe291a4b7359afa277783368dc9
-  deviceName: Enchufe tapo p100
+  entityId: 
+  deviceName: 
   category: actuator

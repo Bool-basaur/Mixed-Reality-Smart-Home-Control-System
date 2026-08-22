@@ -13,15 +13,16 @@ public class ConfigurationManager : MonoBehaviour{
 
     void Start()
     {
-        apiClient.GetUnconfiguredDevices(devices => {
-                if (devices == null || devices.Length == 0) {
-                    Debug.Log("[APP] No devices pending configuration");
-                    return;
-                }
-                pendingDevices = devices;
-                SpawnNextDevice();
-            }
-        );
+        /* apiClient.GetUnconfiguredDevices(devices => {
+                 if (devices == null || devices.Length == 0) {
+                     Debug.Log("[APP] No devices pending configuration");
+                     return;
+                 }
+                 pendingDevices = devices;
+                 SpawnNextDevice();
+             }
+         );*/
+        Debug.Log("[APP] ConfigurationManager waiting");
     }
 
     void Update(){
@@ -29,6 +30,24 @@ public class ConfigurationManager : MonoBehaviour{
         {
             SaveCurrentDevice();
         }
+    }
+
+    public void StartConfiguration()
+    {
+        apiClient.GetUnconfiguredDevices(devices =>
+        {
+            if (devices == null || devices.Length == 0)
+            {
+                Debug.Log("[APP] No devices pending configuration");
+                return;
+            }
+
+            pendingDevices = devices;
+
+            currentIndex = 0;
+
+            SpawnNextDevice();
+        });
     }
 
     public void SaveCurrentDevice()
@@ -47,7 +66,7 @@ public class ConfigurationManager : MonoBehaviour{
 
         SpatialInformationRequest request = new SpatialInformationRequest();
 
-        request.entityId = config.entityId;
+        request.entityId = config.EntityId;
 
         request.homeId = "main-home";
 

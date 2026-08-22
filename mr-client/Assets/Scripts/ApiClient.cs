@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ApiClient : MonoBehaviour
 {
-    public static string baseUrl = "http://localhost:3000";
+    public static string baseUrl = "http://192.168.1.40:3000";
     private static string snapshotUrl = baseUrl + "/snapshot";
     private static string spatialPath = "/spatial";
     private static string spatialContextsPath = "/spatial-contexts";
