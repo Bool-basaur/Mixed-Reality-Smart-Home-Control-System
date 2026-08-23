@@ -21,8 +21,7 @@ public class ConfigurationPopupController : MonoBehaviour
 
     public void Setup(int pendingDevices, Action onAccept, Action onCancel)
     {
-        string message =
-            pendingDevices == 1
+        string message = pendingDevices == 1
             ? "Hay un dispositivo nuevo pendiente de configurar.\n\n¿Desea configurarlo ahora?"
             : $"Hay {pendingDevices} dispositivos nuevos pendientes de configurar.\n\n¿Desea configurarlos ahora?";
 
@@ -67,23 +66,17 @@ public class ConfigurationPopupController : MonoBehaviour
 
 
     public void ShowInFrontOfCamera(){
-        Debug.Log("[APP] ShowInFrontOfCamera");
         Camera cam = Camera.main;
         followCamera = true;
 
-        if (cam == null)
-        {
-            Debug.LogError("[APP] Main Camera not found");
+        if (cam == null) {
             return;
         }
-
-        Debug.Log("[APP] Main Camera found");
         
         SetPositionAndRotation(cam);
 
         gameObject.SetActive(true);
 
-        Debug.Log("[APP] Popup activated");
     }
 
     public void StopFollowing()

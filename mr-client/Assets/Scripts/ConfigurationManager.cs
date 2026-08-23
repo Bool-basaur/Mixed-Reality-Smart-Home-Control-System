@@ -3,27 +3,15 @@ using UnityEngine.InputSystem;
 public class ConfigurationManager : MonoBehaviour{
     public ApiClient apiClient;
 
-    public DeviceSpawner spawner;
+    public DeviceSpawner spawner; 
+    
+    public DeviceManager deviceManager;
 
     private GameObject currentDevice; 
     
     private UnconfiguredDevice[] pendingDevices;
 
     private int currentIndex = 0;
-
-    void Start()
-    {
-        /* apiClient.GetUnconfiguredDevices(devices => {
-                 if (devices == null || devices.Length == 0) {
-                     Debug.Log("[APP] No devices pending configuration");
-                     return;
-                 }
-                 pendingDevices = devices;
-                 SpawnNextDevice();
-             }
-         );*/
-        Debug.Log("[APP] ConfigurationManager waiting");
-    }
 
     void Update(){
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -57,7 +45,7 @@ public class ConfigurationManager : MonoBehaviour{
             return;
         }
 
-        ConfigurableDevice config = currentDevice.GetComponent<ConfigurableDevice>();
+        PendingConfigurationDevice config = currentDevice.GetComponent<PendingConfigurationDevice>();
 
         if (config == null) {
             Debug.LogError("[APP] ConfigurableDevice component missing");
@@ -96,13 +84,22 @@ public class ConfigurationManager : MonoBehaviour{
 
     private void SpawnNextDevice()
     {
-        if (pendingDevices == null || currentIndex >= pendingDevices.Length) {
+        if (pendingDevices == null || currentIndex >= pendingDevices.Length){
             Debug.Log("[APP] All devices configured");
+
+            deviceManager.RefreshSnapshot(() =>
+            {
+                deviceManager.ShowConfiguredDevices();
+            });
+
             return;
         }
 
         currentDevice = spawner.SpawnUnconfiguredDevice(pendingDevices[currentIndex]);
-
+        PendingConfigurationDevice device = currentDevice.GetComponent<PendingConfigurationDevice>();
+        device.OnDeviceFixed -= SaveCurrentDevice;
+        device.OnDeviceFixed += SaveCurrentDevice;
         Debug.Log("[APP] Configuring: " + pendingDevices[currentIndex].name + " (" + pendingDevices[currentIndex].id + ")");
     }
+
 }

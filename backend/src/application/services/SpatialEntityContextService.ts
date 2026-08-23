@@ -27,27 +27,15 @@ export class SpatialEntityContextService {
 
     this.contextRegistry.clear();
 
-    const entities =
-      this.entityRegistry.getAll();
+    const entities = this.entityRegistry.getAll();
 
-    const spatialInfos =
-      await this.spatialStorage.getAll();
+    const spatialInfos = await this.spatialStorage.getAll();
 
     entities.forEach(entity => {
 
-      const spatialInfo =
-        spatialInfos.find(
-          info =>
-            info.entityId ===
-            entity.id
-        );
+      const spatialInfo = spatialInfos.find( info => info.entityId === entity.id);
 
-      this.contextRegistry.set(
-        new SpatialEntityContext(
-          entity,
-          spatialInfo
-        )
-      );
+      this.contextRegistry.set(new SpatialEntityContext(entity, spatialInfo));
     });
   }
 

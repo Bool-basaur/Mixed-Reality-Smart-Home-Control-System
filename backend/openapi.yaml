@@ -21,18 +21,6 @@ paths:
         "200":
           description: Estado de la aplicación
 
-  /snapshot:
-    get:
-      tags:
-        - Snapshot
-      summary: Obtener snapshot completo
-      responses:
-        "200":
-          description: Snapshot actual
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SystemSnapshot"
 
   /entities:
     get:
@@ -333,20 +321,6 @@ components:
 
   schemas:
 
-    SystemSnapshot:
-      type: object
-
-      properties:
-
-        entities:
-          type: array
-          items:
-            $ref: "#/components/schemas/IoTEntity"
-
-        spatialContexts:
-          type: array
-          items:
-            $ref: "#/components/schemas/SpatialEntityContext"
 
     IoTEntity:
       type: object

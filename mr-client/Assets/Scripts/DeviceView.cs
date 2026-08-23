@@ -1,27 +1,35 @@
 using UnityEngine;
 using TMPro;
-using System.Linq;
 
 public class DeviceView : MonoBehaviour
 {
     public TextMeshProUGUI label;
 
-    private SpatialContext context;
+    private IoTEntity entity;
 
-    public void Setup(SpatialContext c){
-        context = c;
-
-        string capabilities = string.Join(", ",context.entity.capabilities);
-
-        string actions = string.Join(", ", context.entity.actions);
-
-        label.text = context.entity.name + "\n" + context.entity.category + "\n\nCaps: " + capabilities + "\n\nActions: " + actions;
-
-        Debug.Log("[APP] Setup: " + context.entity.name);
-    }
-
-    public void OnClick()
+    public void Setup(IoTEntity deviceEntity)
     {
-        Debug.Log("Clicked: " + context.entity.id);
+        entity = deviceEntity;
+
+        string capabilities =
+            string.Join(
+                ", ",
+                entity.capabilities
+            );
+
+        string actions =
+            string.Join(
+                ", ",
+                entity.actions
+            );
+
+        label.text =
+            entity.name +
+            "\n" +
+            entity.category +
+            "\n\nCaps: " +
+            capabilities +
+            "\n\nActions: " +
+            actions;
     }
 }

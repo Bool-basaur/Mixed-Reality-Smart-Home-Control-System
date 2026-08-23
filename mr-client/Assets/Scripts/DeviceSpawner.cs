@@ -1,82 +1,115 @@
 using UnityEngine;
-
+using System.Collections.Generic;
+using System.Linq;
 public class DeviceSpawner : MonoBehaviour
 {
     public GameObject sensorPrefab;
     public GameObject actuatorPrefab;
     public GameObject hybridPrefab;
 
+    [SerializeField]
+    private GameObject configuredPanelPrefab;
+
+    [SerializeField]
+    private GameObject unconfiguredPanelPrefab;
+
     private GameObject currentConfiguredDevice;
 
-
-    public void SpawnConfiguredDevices(SpatialContext[] contexts){
-        foreach (var context in contexts){
-            if (context.spatialInformation != null &&
-            context.spatialInformation.position != null &&
-            context.spatialInformation.rotation != null){
-                SpawnConfiguredDevice(context);
-            }
-
-        }
-    }
-
-    private GameObject GetPrefab(string category){
-        Debug.Log($"[APP] GetPrefab({category})");
+    private Dictionary<string, ConfiguredDevice> configuredDevices = new Dictionary<string, ConfiguredDevice>();
+    private GameObject GetPrefab(string category)
+    {
         switch (category)
         {
-            case "sensor": return sensorPrefab;
+            case "sensor":
+                return sensorPrefab;
 
-            case "actuator": return actuatorPrefab;
+            case "actuator":
+                return actuatorPrefab;
 
-            case "hybrid": return hybridPrefab;
+            case "hybrid":
+                return hybridPrefab;
 
-            default: return sensorPrefab;
+            default:
+                return sensorPrefab;
         }
     }
-    private void SpawnConfiguredDevice(SpatialContext context){
-        GameObject prefab = GetPrefab(context.entity.category);
 
-        Vector3 position = context.spatialInformation.position.ToVector3();
+    private void SpawnConfiguredDevice(
+    IoTEntity entity,
+    SpatialInformation spatialInfo)
+    {
+        GameObject prefab =
+            GetPrefab(entity.category);
 
-        Quaternion rotation = context.spatialInformation.rotation.ToQuaternion();
+        Vector3 position =
+            spatialInfo.position.ToVector3();
 
-        GameObject go = Instantiate(prefab, position, rotation);
-        Debug.Log($"[APP] Spawning device at {position}");
-        Debug.Log($"[APP] Prefab: {prefab.name}");
-        DeviceView view = go.GetComponent<DeviceView>();
+        Quaternion rotation =
+            spatialInfo.rotation.ToQuaternion();
 
-        if (view != null) view.Setup(context);
+        GameObject go =
+            Instantiate(prefab, position, rotation);
 
+        DeviceView view =
+            go.GetComponent<DeviceView>();
+
+        if (view != null)
+        {
+            view.Setup(entity);
+        }
+
+        ConfiguredDevice configured =
+            go.AddComponent<ConfiguredDevice>();
+
+        configured.Initialize(
+            configuredPanelPrefab);
+
+        configured.Setup(entity);
+
+        configuredDevices[entity.id] =
+            configured;
     }
 
-    public GameObject SpawnUnconfiguredDevice(UnconfiguredDevice device) {
+    public GameObject SpawnUnconfiguredDevice(
+    UnconfiguredDevice device)
+    {
         Camera cam = Camera.main;
-        Vector3 pos = cam.transform.position + cam.transform.forward * 0.5f + cam.transform.up * -0.3f;
-        Quaternion rot = cam.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
-        Debug.Log($"[APP] Device '{device.name}' category '{device.category}'");
-        GameObject prefab = GetPrefab(device.category);
 
-        Debug.Log($"[APP] Spawning {prefab.name}");
-        Debug.Log($"[APP] Position {pos}");
+        Vector3 pos =
+            cam.transform.position +
+            cam.transform.forward * 0.5f +
+            cam.transform.up * -0.3f;
 
-        GameObject go = Instantiate(prefab, pos, rot);
+        Quaternion rot =
+            cam.transform.rotation *
+            Quaternion.Euler(0f, 180f, 0f);
 
-        Debug.Log($"[APP] Spawned {go.name}");
+        GameObject prefab =
+            GetPrefab(device.category);
 
-        ConfigurableDevice config = go.GetComponent<ConfigurableDevice>();
+        GameObject go =
+            Instantiate(prefab, pos, rot);
 
-        config.Setup(device);
+        PendingConfigurationDevice pending =
+            go.AddComponent<PendingConfigurationDevice>();
+        Debug.Log($"[APP] SPAWNING UNCONFIGURED: {device.name}");
+        pending.Initialize(
+            unconfiguredPanelPrefab);
+
+        pending.Setup(device);
 
         currentConfiguredDevice = go;
 
         return go;
     }
 
-    public GameObject GetCurrentConfiguredDevice(){
+    public GameObject GetCurrentConfiguredDevice()
+    {
         return currentConfiguredDevice;
     }
 
-    public void ClearCurrentConfiguredDevice(){
+    public void ClearCurrentConfiguredDevice()
+    {
         if (currentConfiguredDevice != null)
         {
             Destroy(currentConfiguredDevice);
@@ -84,4 +117,86 @@ public class DeviceSpawner : MonoBehaviour
         }
     }
 
+    public void UpdateOrSpawnDevices(SpatialContext[] contexts)
+    {
+        foreach (var context in contexts)
+        {
+            if (
+                context.spatialInformation == null ||
+                context.spatialInformation.position == null ||
+                context.spatialInformation.rotation == null
+            )
+            {
+                continue;
+            }
+
+            IoTEntity entity =
+                context.entity;
+
+            SpatialInformation spatialInfo =
+                context.spatialInformation;
+
+            if (
+                configuredDevices.TryGetValue(
+                    entity.id,
+                    out ConfiguredDevice existing
+                )
+            )
+            {
+                UpdateDevice(
+                    existing,
+                    entity,
+                    spatialInfo
+                );
+            }
+            else
+            {
+                SpawnConfiguredDevice(
+                    entity,
+                    spatialInfo
+                );
+            }
+        }
+
+        RemoveMissingDevices(contexts);
+    }
+
+    private void UpdateDevice(ConfiguredDevice device, IoTEntity entity, SpatialInformation spatialInfo)
+    {
+        device.UpdateEntity(entity);
+
+        device.transform.position =
+            spatialInfo.position.ToVector3();
+
+        device.transform.rotation =
+            spatialInfo.rotation.ToQuaternion();
+
+        DeviceView view =
+            device.GetComponent<DeviceView>();
+
+        if (view != null)
+        {
+            view.Setup(entity);
+        }
+    }
+
+    private void RemoveMissingDevices(SpatialContext[] contexts)
+    {
+        HashSet<string> validIds = new HashSet<string>(contexts.Select(c => c.entity.id));
+
+        List<string> devicesToRemove =
+            configuredDevices.Keys
+                .Where(id =>
+                    !validIds.Contains(id))
+                .ToList();
+
+        foreach (string id in devicesToRemove)
+        {
+            Destroy(
+                configuredDevices[id].gameObject
+            );
+
+            configuredDevices.Remove(id);
+        }
+    }
 }

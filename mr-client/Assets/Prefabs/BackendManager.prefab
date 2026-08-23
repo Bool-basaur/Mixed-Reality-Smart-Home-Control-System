@@ -63,7 +63,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeviceManager
   apiClient: {fileID: 4485021948126500814}
   spawner: {fileID: 84362871397725336}
-  popup: {fileID: 0}
+  popup: {fileID: 2839488153068055946, guid: 3e9f510f36fef71489fba31a3de151b5, type: 3}
+  configurationManager: {fileID: 0}
 --- !u!114 &84362871397725336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +80,8 @@ MonoBehaviour:
   sensorPrefab: {fileID: 3424367270504730392, guid: 8972d2b7d64863e489d542e5976f8c75, type: 3}
   actuatorPrefab: {fileID: 3424367270504730392, guid: 8972d2b7d64863e489d542e5976f8c75, type: 3}
   hybridPrefab: {fileID: 3424367270504730392, guid: 8972d2b7d64863e489d542e5976f8c75, type: 3}
+  configuredPanelPrefab: {fileID: 6524656651913419674, guid: 9a2a819d7f2fc874d995282120c19a67, type: 3}
+  unconfiguredPanelPrefab: {fileID: 6052676390037395390, guid: 9be15045efa252c48ba03c9f3cbf21de, type: 3}
 --- !u!114 &4485021948126500814
 MonoBehaviour:
   m_ObjectHideFlags: 0

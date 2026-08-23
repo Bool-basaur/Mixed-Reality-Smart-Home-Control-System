@@ -1,19 +1,12 @@
-using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class IoTEntity
+public class DeviceInfo
 {
     public string id;
     public string name;
     public string category;
-    public string mainState;
+    public string state;
 
     public List<string> capabilities;
     public List<string> actions;
-    public List<string> relations;
-
-    public IoTEntity()
-    {
-    }
 }

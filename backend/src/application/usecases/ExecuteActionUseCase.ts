@@ -12,17 +12,13 @@ export class ExecuteActionUseCase {
     params: any
   ): Promise<Result<void>> {
 
-    const entity =
-      this.registry.getById(entityId);
+    const entity = this.registry.getById(entityId);
 
     if (!entity) {
-      return Result.failure(
-        "Entity not found"
-      );
+      return Result.failure("Entity not found");
     }
 
-    const ha =
-      this.registry.getHA();
+    const ha = this.registry.getHA();
 
     if (!ha) {
       return Result.failure(
@@ -30,10 +26,7 @@ export class ExecuteActionUseCase {
       );
     }
 
-    const capability =
-      entity.capabilities.find(
-        c => c.supports(action)
-      );
+    const capability =  entity.capabilities.find(c => c.supports(action));
 
     if (!capability) {
       return Result.failure(

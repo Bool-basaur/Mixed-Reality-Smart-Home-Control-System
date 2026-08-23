@@ -4,5 +4,6 @@ using System;
 public class SpatialContext
 {
     public IoTEntity entity;
+
     public SpatialInformation spatialInformation;
 }

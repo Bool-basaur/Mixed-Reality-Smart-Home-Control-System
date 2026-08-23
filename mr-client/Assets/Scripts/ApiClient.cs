@@ -6,36 +6,45 @@ using System.Collections;
 public class ApiClient : MonoBehaviour
 {
     public static string baseUrl = "http://192.168.1.40:3000";
-    private static string snapshotUrl = baseUrl + "/snapshot";
     private static string spatialPath = "/spatial";
     private static string spatialContextsPath = "/spatial-contexts";
     private static string unconfiguredDevices = baseUrl + spatialPath + spatialContextsPath + "/unconfigured";
     private static string spatialInformationUrl = baseUrl + spatialPath + "/spatial-information";
+    private static string spatialContextsUrl = baseUrl + spatialPath + spatialContextsPath;
 
-    public void GetSnapshot(Action<Snapshot> onSuccess){
-        StartCoroutine(GetSnapshotCoroutine(onSuccess));
+    public void GetSpatialContexts(
+    Action<SpatialContext[]> onSuccess)
+    {
+        StartCoroutine(
+            GetSpatialContextsCoroutine(
+                onSuccess
+            )
+        );
     }
 
-    IEnumerator GetSnapshotCoroutine(Action<Snapshot> onSuccess){
+    IEnumerator GetSpatialContextsCoroutine(Action<SpatialContext[]> onSuccess) {
+        Debug.Log("[APP] Calling: " + spatialContextsUrl);
 
-        Debug.Log("[APP] Calling: " + snapshotUrl);
-
-        UnityWebRequest request = UnityWebRequest.Get(snapshotUrl);
+        UnityWebRequest request = UnityWebRequest.Get(spatialContextsUrl);
 
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success){
+        if (request.result !=
+            UnityWebRequest.Result.Success)
+        {
             Debug.LogError("[APP] ERROR: " + request.error);
+
             yield break;
         }
 
-        string json =  request.downloadHandler.text;
+        string json =
+            request.downloadHandler.text;
 
-        Debug.Log( "[APP] Snapshot received:\n" + json);
+        Debug.Log("[APP] Spatial contexts received:\n" + json);
 
-        Snapshot snapshot =  JsonUtility.FromJson<Snapshot>(json);
+        SpatialContext[] contexts = JsonArrayHelper.FromJson<SpatialContext>(json);
 
-        onSuccess?.Invoke(snapshot);
+        onSuccess?.Invoke(contexts);
     }
 
     public void GetUnconfiguredDevices(Action<UnconfiguredDevice[]> onSuccess){

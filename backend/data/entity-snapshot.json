@@ -143,88 +143,16 @@
     "name": "Android TV",
     "category": "actuator",
     "state": {
-      "media_player.android_tv": "unavailable",
       "remote.android_tv": "unavailable"
     },
     "attributes": {
-      "assumed_state": true,
-      "device_class": "tv",
       "friendly_name": "Android TV",
-      "supported_features": 153529
+      "supported_features": 4
     },
-    "capabilities": [
-      "on_off",
-      "volume",
-      "media_playback"
-    ],
-    "actions": [
-      "turn_on",
-      "turn_off",
-      "set_volume",
-      "play",
-      "pause",
-      "stop"
-    ],
+    "capabilities": [],
+    "actions": [],
     "relations": [
-      "media_player.android_tv",
       "remote.android_tv"
-    ]
-  },
-  {
-    "id": "de3201f6b44ab1cea1f43780b81a13d1",
-    "name": "Dormitorio",
-    "category": "actuator",
-    "state": {
-      "media_player.google_nest": "unavailable"
-    },
-    "attributes": {
-      "device_class": "speaker",
-      "friendly_name": "Google Nest Mini",
-      "supported_features": 152461
-    },
-    "capabilities": [
-      "on_off",
-      "volume",
-      "media_playback"
-    ],
-    "actions": [
-      "turn_on",
-      "turn_off",
-      "set_volume",
-      "play",
-      "pause",
-      "stop"
-    ],
-    "relations": [
-      "media_player.google_nest"
-    ]
-  },
-  {
-    "id": "991dd39ef16471aa6664aeda0177ee5f",
-    "name": "Android TV",
-    "category": "actuator",
-    "state": {
-      "media_player.android_tv_2": "unavailable"
-    },
-    "attributes": {
-      "friendly_name": "Android TV",
-      "supported_features": 152449
-    },
-    "capabilities": [
-      "on_off",
-      "volume",
-      "media_playback"
-    ],
-    "actions": [
-      "turn_on",
-      "turn_off",
-      "set_volume",
-      "play",
-      "pause",
-      "stop"
-    ],
-    "relations": [
-      "media_player.android_tv_2"
     ]
   },
   {
@@ -232,9 +160,21 @@
     "name": "Despacho",
     "category": "actuator",
     "state": {
-      "media_player.despacho": "off"
+      "media_player.despacho": "paused"
     },
     "attributes": {
+      "volume_level": 0.5433070659637451,
+      "is_volume_muted": false,
+      "media_content_id": "Bluetooth Audio",
+      "media_content_type": "music",
+      "media_duration": 5286.254,
+      "media_position": 2801.842,
+      "media_position_updated_at": "2026-08-23T17:26:32.778688+00:00",
+      "media_title": "5x10 Érase un funeral con sorpresa.",
+      "media_album_name": "Aqui no Hay Quien Viva",
+      "app_id": "89EA58C1",
+      "app_name": "BluetoothIot",
+      "entity_picture_local": null,
       "device_class": "speaker",
       "friendly_name": "Despacho",
       "supported_features": 152461

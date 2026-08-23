@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class DeviceManager : MonoBehaviour
 {
@@ -10,19 +11,24 @@ public class DeviceManager : MonoBehaviour
     
     public ConfigurationManager configurationManager;
 
-    private Snapshot snapshot;
+    [SerializeField]
+    private float refreshInterval = 10f;
+
+    private SpatialContext[] spatialContexts;
 
     void Start()
     {
-        apiClient.GetSnapshot(receivedSnapshot =>
+        apiClient.GetSpatialContexts(receivedContexts =>
         {
-            if (receivedSnapshot == null)
+            if (receivedContexts == null)
             {
-                Debug.LogError("[APP] Snapshot is NULL");
+                Debug.LogError("[APP] Spatial contexts is NULL");
                 return;
             }
 
-            snapshot = receivedSnapshot;
+            spatialContexts = receivedContexts;
+
+            StartCoroutine(RefreshLoop());
 
             apiClient.GetUnconfiguredDevices(devices =>
             {
@@ -48,35 +54,58 @@ public class DeviceManager : MonoBehaviour
 
     private void ShowConfigurationPopup(int pendingDevices)
     {
-        Debug.Log("[APP] SHOWING CONFIGURATION POPUP");
         popup.ShowInFrontOfCamera();
 
-        popup.Setup(pendingDevices, () =>
-            {
-                Debug.Log("[APP] Accept clicked"); 
+        popup.Setup(pendingDevices, () => {
                 popup.StopFollowing();
                 popup.gameObject.SetActive(false);
                 configurationManager.StartConfiguration();
             },
-            () =>
-            {
-                Debug.Log("[APP] Cancel clicked");
+            () => {
                 popup.StopFollowing();
                 popup.gameObject.SetActive(false);
                 ShowConfiguredDevices();
             });
     }
 
-    private void ShowConfiguredDevices()
+    public void ShowConfiguredDevices()
     {
-        if (snapshot == null)
+        if (spatialContexts == null)
         {
             return;
         }
 
-        spawner.SpawnConfiguredDevices(
-            snapshot.spatialContexts
+        spawner.UpdateOrSpawnDevices(
+            spatialContexts
         );
     }
 
+    public void RefreshSnapshot(Action onComplete = null)
+    {
+        apiClient.GetSpatialContexts(receivedContexts =>
+        {
+            if (receivedContexts == null)
+            {
+                Debug.LogError("[APP] Spatial contexts is NULL");
+                return;
+            }
+
+            spatialContexts = receivedContexts;
+
+            onComplete?.Invoke();
+        });
+    }
+
+    private System.Collections.IEnumerator RefreshLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(refreshInterval);
+
+            RefreshSnapshot(() =>
+            {
+                ShowConfiguredDevices();
+            });
+        }
+    }
 }
