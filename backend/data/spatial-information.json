@@ -48,22 +48,6 @@
     }
   },
   {
-    "entityId": "abce2599ade636518f3b6988bc9e036b",
-    "homeId": "main-home",
-    "roomId": "main-room",
-    "zoneId": "main-zone",
-    "position": {
-      "x": -0.3883044719696045,
-      "y": 0.7855083346366882,
-      "z": -0.6206571459770203
-    },
-    "rotation": {
-      "x": 346.78375244140625,
-      "y": 169.1874237060547,
-      "z": 322.82452392578125
-    }
-  },
-  {
     "entityId": "ca082d293b6553e28e98134b246725c9",
     "homeId": "main-home",
     "roomId": "main-room",
@@ -93,6 +77,22 @@
       "x": 0,
       "y": 90,
       "z": 0
+    }
+  },
+  {
+    "entityId": "abce2599ade636518f3b6988bc9e036b",
+    "homeId": "main-home",
+    "roomId": "main-room",
+    "zoneId": "main-zone",
+    "position": {
+      "x": 0.7198714017868042,
+      "y": 1.1748446226119995,
+      "z": 0.5468384623527527
+    },
+    "rotation": {
+      "x": 334.278564453125,
+      "y": 47.41822052001953,
+      "z": 295.3553161621094
     }
   }
 ]
