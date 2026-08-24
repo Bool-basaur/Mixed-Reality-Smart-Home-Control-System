@@ -4,6 +4,7 @@
     "homeId": "main-home",
     "roomId": "main-room",
     "zoneId": "main-zone",
+    "anchorId": null,
     "position": {
       "x": 0.1602644920349121,
       "y": 0.7499695420265198,
@@ -20,6 +21,7 @@
     "homeId": "main-home",
     "roomId": "main-room",
     "zoneId": "main-zone",
+    "anchorId": null,
     "position": {
       "x": -0.2867111563682556,
       "y": 0.7892263531684875,
@@ -36,6 +38,7 @@
     "homeId": "main-home",
     "roomId": "main-room",
     "zoneId": "main-zone",
+    "anchorId": null,
     "position": {
       "x": -0.901523768901825,
       "y": 1.1332919597625732,
@@ -52,6 +55,7 @@
     "homeId": "main-home",
     "roomId": "main-room",
     "zoneId": "main-zone",
+    "anchorId": null,
     "position": {
       "x": 0.21286875009536743,
       "y": 1.2868454456329346,
@@ -68,6 +72,7 @@
     "homeId": "casa",
     "roomId": "salon",
     "zoneId": "tv",
+    "anchorId": null,
     "position": {
       "x": 1.5,
       "y": 0.8,
@@ -84,6 +89,7 @@
     "homeId": "main-home",
     "roomId": "main-room",
     "zoneId": "main-zone",
+    "anchorId": null,
     "position": {
       "x": 0.7198714017868042,
       "y": 1.1748446226119995,

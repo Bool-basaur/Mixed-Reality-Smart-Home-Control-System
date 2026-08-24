@@ -163,13 +163,12 @@
       "media_player.despacho": "paused"
     },
     "attributes": {
-      "volume_level": 0.5433070659637451,
+      "volume_level": 0.6771653294563293,
       "is_volume_muted": false,
       "media_content_id": "Bluetooth Audio",
       "media_content_type": "music",
-      "media_duration": 5286.254,
-      "media_position": 3102.498,
-      "media_position_updated_at": "2026-08-23T17:31:34.789777+00:00",
+      "media_position": 0,
+      "media_position_updated_at": "2026-08-24T17:35:53.786144+00:00",
       "media_title": "5x10 Érase un funeral con sorpresa.",
       "media_album_name": "Aqui no Hay Quien Viva",
       "app_id": "89EA58C1",
@@ -194,6 +193,34 @@
     ],
     "relations": [
       "media_player.despacho"
+    ]
+  },
+  {
+    "id": "991dd39ef16471aa6664aeda0177ee5f",
+    "name": "Android TV",
+    "category": "actuator",
+    "state": {
+      "media_player.android_tv_2": "unavailable"
+    },
+    "attributes": {
+      "friendly_name": "Android TV",
+      "supported_features": 152461
+    },
+    "capabilities": [
+      "on_off",
+      "volume",
+      "media_playback"
+    ],
+    "actions": [
+      "turn_on",
+      "turn_off",
+      "set_volume",
+      "play",
+      "pause",
+      "stop"
+    ],
+    "relations": [
+      "media_player.android_tv_2"
     ]
   }
 ]

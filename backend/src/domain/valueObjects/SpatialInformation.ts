@@ -7,6 +7,8 @@ export class SpatialInformation {
     public readonly roomId?: string,
     public readonly zoneId?: string,
 
+    public readonly anchorId?: string | null,
+
     public readonly position?: {
       x: number;
       y: number;

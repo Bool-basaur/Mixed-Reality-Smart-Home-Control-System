@@ -23,36 +23,25 @@ export class GetAllSpatialContextsUseCase {
           name: context.entity.name,
           category: context.entity.category,
 
-          mainState: this.resolveState(
-            context.entity
-          ),
+          mainState: this.resolveState(context.entity),
 
           state: context.entity.state,
 
-          attributes:
-            context.entity.attributes,
+          attributes: context.entity.attributes,
 
-          capabilities:
-            context.entity.capabilities.map(
-              capability => capability.name
-            ),
+          capabilities: context.entity.capabilities.map(capability => capability.name),
 
-          actions:
-            context.entity.actions,
+          actions: context.entity.actions,
 
-          relations:
-            context.entity.relations
+          relations: context.entity.relations
         },
 
-        spatialInformation:
-          context.spatialInformation
+        spatialInformation: context.spatialInformation
       })
     );
   }
 
-  private resolveState(
-  entity: IoTEntity
-): string {
+  private resolveState(entity: IoTEntity): string {
 
   const stateEntries =
     Object.entries(entity.state);
