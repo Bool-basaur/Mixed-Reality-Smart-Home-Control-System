@@ -75,9 +75,7 @@ public class DeviceManager : MonoBehaviour
             return;
         }
 
-        spawner.UpdateOrSpawnDevices(
-            spatialContexts
-        );
+        spawner.UpdateOrSpawnDevices(spatialContexts);
     }
 
     public void RefreshSnapshot(Action onComplete = null)

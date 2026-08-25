@@ -9,7 +9,9 @@ public class SpatialInformationRequest
 
     public string roomId;
 
-    public string zoneId;
+    public string zoneId; 
+    
+    public string anchorId;
 
     public Position position;
 

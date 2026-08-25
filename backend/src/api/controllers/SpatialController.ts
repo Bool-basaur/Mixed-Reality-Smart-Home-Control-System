@@ -33,7 +33,7 @@ export const saveSpatialInformation = async (
     return res.status(400).json({error: "Missing entityId"});
   } 
   
-  const spatialInfo = new SpatialInformation(body.entityId, body.homeId, body.roomId, body.zoneId, body.position, body.rotation);
+  const spatialInfo = new SpatialInformation(body.entityId, body.homeId, body.roomId, body.zoneId, body.anchorId, body.position, body.rotation);
 
   await setSpatialInformationUseCase.execute(spatialInfo);
 

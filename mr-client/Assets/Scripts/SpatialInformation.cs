@@ -9,6 +9,8 @@ public class SpatialInformation
     public string roomId;
     public string zoneId;
 
+    public string anchorId;
+
     public Position position;
     public Rotation rotation;
 }

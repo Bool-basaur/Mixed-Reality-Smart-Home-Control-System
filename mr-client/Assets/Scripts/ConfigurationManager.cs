@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+using System;
 public class ConfigurationManager : MonoBehaviour{
     public ApiClient apiClient;
 
@@ -11,8 +14,14 @@ public class ConfigurationManager : MonoBehaviour{
     
     private UnconfiguredDevice[] pendingDevices;
 
+    private ARAnchorManager anchorManager;
+
     private int currentIndex = 0;
 
+    private void Start()
+    {
+        anchorManager = FindFirstObjectByType<ARAnchorManager>();
+    }
     void Update(){
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
@@ -38,7 +47,7 @@ public class ConfigurationManager : MonoBehaviour{
         });
     }
 
-    public void SaveCurrentDevice()
+    public async void SaveCurrentDevice()
     {
         if (currentDevice == null) {
             Debug.LogWarning("[APP] No device selected");
@@ -52,6 +61,15 @@ public class ConfigurationManager : MonoBehaviour{
             return;
         }
 
+        Pose pose = new Pose(currentDevice.transform.position, currentDevice.transform.rotation);
+
+        var anchorResult = await anchorManager.TryAddAnchorAsync(pose);
+        if (!anchorResult.status.IsSuccess() || anchorResult.value == null) {
+            Debug.LogError("[ANCHOR] Failed to create anchor");
+            return;
+        }
+        var saveResult = await anchorManager.TrySaveAnchorAsync(anchorResult.value);
+
         SpatialInformationRequest request = new SpatialInformationRequest();
 
         request.entityId = config.EntityId;
@@ -62,12 +80,23 @@ public class ConfigurationManager : MonoBehaviour{
 
         request.zoneId = "main-zone";
 
+        request.anchorId = saveResult.value.guid.ToString();
+
         request.position = new Position
             {
                 x = currentDevice.transform.position.x,
                 y = currentDevice.transform.position.y,
                 z = currentDevice.transform.position.z
             };
+
+
+        Guid guid = new Guid(request.anchorId);
+
+        SerializableGuid serializableGuid = new SerializableGuid(guid);
+
+        var afterloadresult = await anchorManager.TryLoadAnchorAsync(serializableGuid);
+
+        Debug.Log("anchor load result: " + afterloadresult);
 
         Vector3 euler = currentDevice.transform.rotation.eulerAngles;
 
