@@ -159,14 +159,21 @@ public class DeviceInfoPanelController : MonoBehaviour
             action,
             () =>
             {
-                deviceManager.RefreshSnapshot(() =>
-                {
-                    deviceManager.ShowConfiguredDevices();
-
-                    actionsLoadingContainer.SetActive(false);
-                });
+                StartCoroutine(RefreshAfterDelay());
             }
         );
+    }
+
+    private IEnumerator RefreshAfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
+
+        deviceManager.RefreshSnapshot(() =>
+        {
+            deviceManager.ShowConfiguredDevices();
+
+            actionsLoadingContainer.SetActive(false);
+        });
     }
 
     private void ClosePanel()
