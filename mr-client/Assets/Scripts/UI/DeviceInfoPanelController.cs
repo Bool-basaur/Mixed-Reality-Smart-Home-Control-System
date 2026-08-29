@@ -1,11 +1,16 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class DeviceInfoPanelController : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text titleText;
+    private TMP_Text titleText; 
+    
+    [SerializeField]
+    private Button exitButton;
 
     [SerializeField]
     private TMP_Text stateText;
@@ -19,6 +24,28 @@ public class DeviceInfoPanelController : MonoBehaviour
     [SerializeField]
     private ActionButton actionButtonPrefab;
 
+    [SerializeField]
+    private GameObject actionsLoadingContainer;
+
+    private ApiClient apiClient;
+
+    private DeviceManager deviceManager;
+
+    private void Awake()
+    {
+        apiClient = FindFirstObjectByType<ApiClient>();
+        deviceManager = FindFirstObjectByType<DeviceManager>();
+    }
+    private void Start()
+    {
+        exitButton.onClick.AddListener(ClosePanel);
+    }
+
+    private void OnDestroy()
+    {
+        exitButton.onClick.RemoveListener(ClosePanel);
+    }
+
     public void Setup(IoTEntity entity)
     {
         titleText.text = entity.name;
@@ -28,6 +55,8 @@ public class DeviceInfoPanelController : MonoBehaviour
         capabilitiesText.text = BuildCapabilities(entity);
 
         GenerateActionButtons(entity);
+
+        actionsLoadingContainer.SetActive(false);
     }
 
 
@@ -68,13 +97,9 @@ public class DeviceInfoPanelController : MonoBehaviour
 
             ActionButton button = Instantiate(actionButtonPrefab, actionsContainer);
 
-            button.Setup(
-                BeautifyAction(powerAction),
-                () =>
+            button.Setup(BeautifyAction(powerAction), () =>
                 {
-                    Debug.Log(
-                        $"Execute {powerAction}"
-                    );
+                    ExecuteAction(entity.id, powerAction);
                 }
             );
         }
@@ -89,9 +114,9 @@ public class DeviceInfoPanelController : MonoBehaviour
 
             RectTransform rt = button.GetComponent<RectTransform>();
 
-            button.Setup(BeautifyAction(action),  () =>
+            button.Setup(BeautifyAction(action), () =>
                 {
-                    Debug.Log($"Execute {action}");
+                    ExecuteAction(entity.id, action);
                 }
             );
         }
@@ -123,5 +148,29 @@ public class DeviceInfoPanelController : MonoBehaviour
             "stop_stream" => "Detener streaming",
             _ => action.Replace("_", " ")
         };
+    }
+
+    private void ExecuteAction(string entityId, string action)
+    {
+        actionsLoadingContainer.SetActive(true);
+
+        apiClient.ExecuteAction(
+            entityId,
+            action,
+            () =>
+            {
+                deviceManager.RefreshSnapshot(() =>
+                {
+                    deviceManager.ShowConfiguredDevices();
+
+                    actionsLoadingContainer.SetActive(false);
+                });
+            }
+        );
+    }
+
+    private void ClosePanel()
+    {
+        gameObject.SetActive(false);
     }
 }

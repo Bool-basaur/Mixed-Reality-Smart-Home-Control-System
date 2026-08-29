@@ -10,7 +10,8 @@ public class ApiClient : MonoBehaviour
     private static string spatialContextsPath = "/spatial-contexts";
     private static string unconfiguredDevices = baseUrl + spatialPath + spatialContextsPath + "/unconfigured";
     private static string spatialInformationUrl = baseUrl + spatialPath + "/spatial-information";
-    private static string spatialContextsUrl = baseUrl + spatialPath + spatialContextsPath;
+    private static string spatialContextsUrl = baseUrl + spatialPath + spatialContextsPath; 
+    private static string entitiesUrl = baseUrl + "/entities";
 
     public void GetSpatialContexts(
     Action<SpatialContext[]> onSuccess)
@@ -102,4 +103,34 @@ public class ApiClient : MonoBehaviour
 
         onSuccess?.Invoke();
     }
+
+    public void ExecuteAction(string entityId, string action, Action onSuccess = null){
+
+        StartCoroutine(ExecuteActionCoroutine(entityId, action, onSuccess));
+    }
+
+    private IEnumerator ExecuteActionCoroutine(string entityId, string action, Action onSuccess){
+        string url =$"{entitiesUrl}/{entityId}/actions/{action}";
+
+        Debug.Log("[APP] POST " + url);
+
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("[APP] Execute action error: " + request.error);
+
+            yield break;
+        }
+
+        Debug.Log($"[APP] Action '{action}' executed");
+
+        onSuccess?.Invoke();
+    }
+
+
 }
