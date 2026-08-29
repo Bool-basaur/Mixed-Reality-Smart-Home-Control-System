@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ApiClient : MonoBehaviour
 {
-    public static string baseUrl = "http://192.168.1.40:3000";
+    public static string baseUrl = "http://192.168.1.30:3000";
     private static string spatialPath = "/spatial";
     private static string spatialContextsPath = "/spatial-contexts";
     private static string unconfiguredDevices = baseUrl + spatialPath + spatialContextsPath + "/unconfigured";
