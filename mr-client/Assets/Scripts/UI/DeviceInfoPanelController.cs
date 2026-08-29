@@ -14,7 +14,10 @@ public class DeviceInfoPanelController : MonoBehaviour
     private TMP_Text capabilitiesText;
 
     [SerializeField]
-    private TMP_Text actionsText;
+    private Transform actionsContainer;
+
+    [SerializeField]
+    private ActionButton actionButtonPrefab;
 
     public void Setup(IoTEntity entity)
     {
@@ -24,7 +27,7 @@ public class DeviceInfoPanelController : MonoBehaviour
 
         capabilitiesText.text = BuildCapabilities(entity);
 
-        actionsText.text = BuildActions(entity);
+        GenerateActionButtons(entity);
     }
 
 
@@ -44,24 +47,69 @@ public class DeviceInfoPanelController : MonoBehaviour
             )
         );
     }
-
-    private string BuildActions(IoTEntity entity)
+    private void GenerateActionButtons(IoTEntity entity)
     {
-        if (entity.actions == null ||
-            entity.actions.Count == 0)
+        Debug.Log($"Generating buttons for {entity.name}");
+        foreach (Transform child in actionsContainer)
         {
-            return "-";
+            Destroy(child.gameObject);
         }
 
-        return string.Join(
-            "\n",
-            entity.actions.Select(
-                action =>
-                    $"• {BeautifyAction(action)}"
-            )
-        );
-    }
+        if (entity.actions == null)
+        {
+            return;
+        }
 
+        bool hasPowerActions = entity.actions.Contains("turn_on") && entity.actions.Contains("turn_off");
+
+        if (hasPowerActions)
+        {
+            string powerAction = entity.mainState == "on" ? "turn_off" : "turn_on";
+
+            ActionButton button = Instantiate(actionButtonPrefab, actionsContainer);
+
+            button.Setup(
+                BeautifyAction(powerAction),
+                () =>
+                {
+                    Debug.Log(
+                        $"Execute {powerAction}"
+                    );
+                }
+            );
+        }
+
+        foreach (string action in entity.actions)
+        {
+            if (action == "turn_on" || action == "turn_off"){
+                continue;
+            }
+
+            ActionButton button = Instantiate(actionButtonPrefab, actionsContainer);
+
+            //Debug.Log($"Creating button for {action}");
+            RectTransform rt = button.GetComponent<RectTransform>();
+
+            /*Debug.Log(
+                $"Button: {button.name}" +
+                $"\nLocalPos: {rt.localPosition}" +
+                $"\nAnchoredPos: {rt.anchoredPosition}" +
+                $"\nSize: {rt.sizeDelta}" +
+                $"\nScale: {rt.localScale}"
+            ); 
+            Debug.Log($"Container children: {actionsContainer.childCount}");
+            Debug.Log($"Parent: {button.transform.parent.name}");
+            Debug.Log($"World pos: {button.transform.position}");*/
+
+            button.Setup(BeautifyAction(action),  () =>
+                {
+                    Debug.Log(
+                        $"Execute {action}"
+                    );
+                }
+            );
+        }
+    }
     private string BeautifyCapability(string capability)
     {
         return capability switch
