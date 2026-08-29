@@ -87,25 +87,11 @@ public class DeviceInfoPanelController : MonoBehaviour
 
             ActionButton button = Instantiate(actionButtonPrefab, actionsContainer);
 
-            //Debug.Log($"Creating button for {action}");
             RectTransform rt = button.GetComponent<RectTransform>();
-
-            /*Debug.Log(
-                $"Button: {button.name}" +
-                $"\nLocalPos: {rt.localPosition}" +
-                $"\nAnchoredPos: {rt.anchoredPosition}" +
-                $"\nSize: {rt.sizeDelta}" +
-                $"\nScale: {rt.localScale}"
-            ); 
-            Debug.Log($"Container children: {actionsContainer.childCount}");
-            Debug.Log($"Parent: {button.transform.parent.name}");
-            Debug.Log($"World pos: {button.transform.position}");*/
 
             button.Setup(BeautifyAction(action),  () =>
                 {
-                    Debug.Log(
-                        $"Execute {action}"
-                    );
+                    Debug.Log($"Execute {action}");
                 }
             );
         }

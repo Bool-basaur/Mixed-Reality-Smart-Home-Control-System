@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DeviceGazeDetector : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class DeviceGazeDetector : MonoBehaviour
 
 
     private void Update() {
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(-1)){           
+            return;          
+        }
         Ray ray = new Ray(transform.position, transform.forward);
 
         if (Physics.SphereCast(ray, 0.1f, out RaycastHit hit,  maxDistance)) {
