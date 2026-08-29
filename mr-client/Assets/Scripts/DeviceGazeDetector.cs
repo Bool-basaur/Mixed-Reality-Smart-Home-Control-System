@@ -14,7 +14,7 @@ public class DeviceGazeDetector : MonoBehaviour
     private void Update() {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if (Physics.SphereCast(ray, 0.5f, out RaycastHit hit,  maxDistance)) {
+        if (Physics.SphereCast(ray, 0.1f, out RaycastHit hit,  maxDistance)) {
             ConfiguredDevice device = hit.collider.GetComponentInParent<ConfiguredDevice>();
             if (device != null && hit.collider.CompareTag("DigitalTwinDevice"))
             {
