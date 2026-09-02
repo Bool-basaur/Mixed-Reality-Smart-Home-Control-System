@@ -43,60 +43,28 @@ export class GetAllSpatialContextsUseCase {
 
   private resolveState(entity: IoTEntity): string {
 
-  const stateEntries =
-    Object.entries(entity.state);
+    const primarySwitch = Object.entries(entity.state).filter(([key]) => key.startsWith("switch.")).sort((a, b) => a[0].length - b[0].length)[0];
 
-  const primaryState =
-    stateEntries.find(([key]) =>
-      key.startsWith("switch.")
-    );
+    if (!primarySwitch) {
+      return "off";
+    }
 
-  if (primaryState) {
-    return this.normalizeState(
-      String(primaryState[1])
-    );
+    return this.normalizeState( String(primarySwitch[1]));
   }
 
-  const mediaPlayerState =
-    stateEntries.find(([key]) =>
-      key.startsWith("media_player.")
-    );
+  private normalizeState(state: string): string {
 
-  if (mediaPlayerState) {
-    return this.normalizeState(
-      String(mediaPlayerState[1])
-    );
+    const value =
+      state.toLowerCase();
+
+    if (
+      value === "unavailable" ||
+      value === "unknown" ||
+      value === "off"
+    ) {
+      return "off";
+    }
+
+    return "on";
   }
-
-  const cameraState =
-    stateEntries.find(([key]) =>
-      key.startsWith("camera.")
-    );
-
-  if (cameraState) {
-    return this.normalizeState(
-      String(cameraState[1])
-    );
-  }
-
-  return "off";
-}
-
-private normalizeState(
-  state: string
-): string {
-
-  const value =
-    state.toLowerCase();
-
-  if (
-    value === "unavailable" ||
-    value === "unknown" ||
-    value === "off"
-  ) {
-    return "off";
-  }
-
-  return "on";
-}
 }

@@ -99,7 +99,7 @@ public class DeviceInfoPanelController : MonoBehaviour
 
             button.Setup(BeautifyAction(powerAction), () =>
                 {
-                    ExecuteAction(entity.id, powerAction);
+                    ExecuteAction(entity.id, powerAction, entity.mainState);
                 }
             );
         }
@@ -116,7 +116,7 @@ public class DeviceInfoPanelController : MonoBehaviour
 
             button.Setup(BeautifyAction(action), () =>
                 {
-                    ExecuteAction(entity.id, action);
+                    ExecuteAction(entity.id, action, entity.mainState);
                 }
             );
         }
@@ -150,14 +150,11 @@ public class DeviceInfoPanelController : MonoBehaviour
         };
     }
 
-    private void ExecuteAction(string entityId, string action)
+    private void ExecuteAction(string entityId, string action, string previousState)
     {
         actionsLoadingContainer.SetActive(true);
 
-        apiClient.ExecuteAction(
-            entityId,
-            action,
-            () =>
+        apiClient.ExecuteAction(entityId, action, () =>
             {
                 StartCoroutine(RefreshAfterDelay());
             }
@@ -166,7 +163,7 @@ public class DeviceInfoPanelController : MonoBehaviour
 
     private IEnumerator RefreshAfterDelay()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(15f);
 
         deviceManager.RefreshSnapshot(() =>
         {
@@ -180,4 +177,5 @@ public class DeviceInfoPanelController : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }

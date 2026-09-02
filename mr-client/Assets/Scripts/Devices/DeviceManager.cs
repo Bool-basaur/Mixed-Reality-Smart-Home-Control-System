@@ -106,4 +106,23 @@ public class DeviceManager : MonoBehaviour
             });
         }
     }
+
+    public IoTEntity GetEntity(string entityId)
+    {
+        if (spatialContexts == null)
+        {
+            return null;
+        }
+
+        foreach (var context in spatialContexts)
+        {
+            if (context.entity != null &&
+                context.entity.id == entityId)
+            {
+                return context.entity;
+            }
+        }
+
+        return null;
+    }
 }
