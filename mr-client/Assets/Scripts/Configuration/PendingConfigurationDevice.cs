@@ -44,11 +44,9 @@ public class PendingConfigurationDevice : MonoBehaviour
 
         devicePanelGO = Instantiate(panelPrefab, transform);
 
-        devicePanelGO.transform.localPosition =
-            new Vector3(-1f, 0.12f, 0f);
+        devicePanelGO.transform.localPosition = new Vector3(-1f, 1f, -0.5f);
 
-        panel =
-            devicePanelGO.GetComponent<UnconfiguredDeviceInfoPanelController>();
+        panel = devicePanelGO.GetComponent<UnconfiguredDeviceInfoPanelController>();
 
         devicePanelGO.SetActive(true);
 
