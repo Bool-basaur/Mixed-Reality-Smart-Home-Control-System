@@ -29,9 +29,11 @@ public class ConfiguredDevice : MonoBehaviour
             return;
         }
 
-        devicePanelGO = Instantiate(panelPrefab, transform); 
+        devicePanelGO = Instantiate(panelPrefab, transform);
 
-        devicePanelGO.transform.localPosition = new Vector3(-1.2f, 0.12f, 0f);
+        Vector3 dirToCamera = (Camera.main.transform.position - transform.position).normalized;
+
+        devicePanelGO.transform.position =  transform.position + transform.right * -0.3f + dirToCamera * 0.25f;
 
         panel = devicePanelGO.GetComponent<DeviceInfoPanelController>();
 

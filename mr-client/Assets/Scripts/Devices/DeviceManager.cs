@@ -1,7 +1,11 @@
 using UnityEngine;
 using System;
 
-public class DeviceManager : MonoBehaviour
+public class 
+    
+    
+    
+    DeviceManager : MonoBehaviour
 {
     public ApiClient apiClient;
 
@@ -54,6 +58,7 @@ public class DeviceManager : MonoBehaviour
 
     private void ShowConfigurationPopup(int pendingDevices)
     {
+        Debug.Log("[APP] ShowConfigurationPopup");
         popup.ShowInFrontOfCamera();
 
         popup.Setup(pendingDevices, () => {
