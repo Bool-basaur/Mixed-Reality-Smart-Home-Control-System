@@ -8,7 +8,6 @@ import { config } from "./config/config";
 import entityRoutes from "./api/routes/entitiesRoutes";
 import healthRoutes from "./api/routes/healthRoutes";
 import spatialRoutes from "./api/routes/spatialRoutes";
-import snapshotRoutes from "./api/routes/snapshotRoutes"
 
 import { HomeAssistantClient } from "./infrastructure/ha/HomeAssistantClient";
 import { MockHomeAssistantClient } from "./infrastructure/ha/MockHomeAssistantClient";
@@ -48,10 +47,6 @@ export const startServer = async () => {
       authMiddleware,
       spatialRoutes);
 
-    app.use("/snapshot",
-      authMiddleware,
-      snapshotRoutes);
-
   } else {
 
     app.use("/entities",
@@ -60,8 +55,6 @@ export const startServer = async () => {
     app.use("/spatial",
       spatialRoutes);
 
-    app.use("/snapshot",
-      snapshotRoutes);
   }
 
   /* ---------------- CACHE / REDIS ---------------- */

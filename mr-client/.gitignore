@@ -31,6 +31,8 @@ Assets/AddressableAssetsData/*/*.bin*
 *.user
 *.userprefs
 *.tmp
+.vs/
+*.suo
 
 # ============ OS ============
 .DS_Store
@@ -43,6 +45,7 @@ Thumbs.db
 
 # ============ Logs ============
 *.log
+*_BurstDebugInformation_DoNotShip/
 
 # ============ Android ============
 .gradle/
@@ -56,3 +59,11 @@ Assets/Plugins/Android/*.aar.unitypackage
 # ============  Tooling local  ============ 
 .utmp/
 .vsconfig
+
+
+# ============ Asset recovery ============
+
+Assets/_Recovery/
+Assets/XR/Temp/
+Assets/_Recovery.meta
+Assets/XR/Temp.meta

@@ -21,7 +21,7 @@ export class IoTEntityFactory {
 
     const capabilities = CapabilityRegistry.map(device.entities);
 
-    const category = this.resolveCategory(domain );
+    const category = this.resolveCategory(device.entities );
     logger.info(
       "IoTEntity created",
       {
@@ -43,30 +43,34 @@ export class IoTEntityFactory {
     );
   }
 
-  private static resolveCategory(
-    domain: string
-  ): IoTEntityCategory {
+  private static resolveCategory(entities: HAEntity[]): IoTEntityCategory {
 
-    switch (domain) {
+    const domains = entities.map(
+      e => e.entity_id.split(".")[0]
+    );
 
-      case "sensor":
-        return "sensor";
+    const hasSensor =
+      domains.includes("sensor") ||
+      domains.includes("binary_sensor") ||
+      domains.includes("camera");
 
-      case "camera":
-      case "media_player":
-      case "climate":
-        return "hybrid";
+    const hasActuator =
+      domains.includes("switch") ||
+      domains.includes("light") ||
+      domains.includes("fan") ||
+      domains.includes("cover") ||
+      domains.includes("lock") ||
+      domains.includes("button");
 
-      case "switch":
-      case "light":
-      case "fan":
-      case "cover":
-      case "lock":
-        return "actuator";
-
-      default:
-        return "actuator";
+    if (hasSensor && hasActuator) {
+      return "hybrid";
     }
+
+    if (hasSensor) {
+      return "sensor";
+    }
+
+    return "actuator";
   }
 
   private static buildState(
