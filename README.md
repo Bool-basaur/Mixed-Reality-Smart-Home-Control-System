@@ -88,7 +88,7 @@ Base URL: `http://localhost:3000`
 
 - `POST /spatial-information`
 
-- `GET /spatial-informatio/:entityId`
+- `GET /spatial-information/:entityId`
 
 
 #### Spatial Contexts
