@@ -155,3 +155,12 @@ The prototype currently supports:
 - Sensors
 - Actuators
 - Hybrid devices
+
+### Execution
+
+The Mixed Reality client can be executed in two ways:
+
+- Unity Editor (Play Mode).
+- Meta Quest 3 deployment through Build & Run.
+
+
